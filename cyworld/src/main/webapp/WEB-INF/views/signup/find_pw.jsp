@@ -40,7 +40,8 @@
 					return;
 				}
 				
-				alert("메일로 임시비밀번호의 발급이 완료되었습니다");
+				alert("메일로 임시비밀번호 발급이 완료되었습니다");
+				location.href = "login.do";
 			}
 		}
 	</script>
