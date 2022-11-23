@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="m">
+	
+	<!-- 일촌평 조회 -->
+	<select id="ilchon_list" resultType="main" parameterType="int">
+		select * from Ilchonpyeong where ilIdx=#{idx} order by num DESC
+	</select>
+
+	<!-- 새 글 추가 -->
+	<insert id = "main_insert" parameterType="main">
+		insert into Ilchonpyeong values(
+			#{num},
+			#{ilchonpyeongText},
+			#{ilIdx}
+	<!-- VO나 Map에 있는 key 값을 가져올 때 #{} 이런 식으로 쓴다.  -->
+		)
+	</insert>
+		
+	<!-- 일촌평 갯수 구하기 -->
+	<select id="countNum" resultType="int">
+		select count(*) from Ilchonpyeong
+	</select>
+	
+	<!-- 가장 최근에 작성한 일촌평 구하기 -->
+	<select id="maxNum" resultType="int">
+		select max(num) from Ilchonpyeong
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

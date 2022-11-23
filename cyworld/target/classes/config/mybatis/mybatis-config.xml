@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+	<!-- 패키지를 가지고있는 특정 클래스의 별칭 -->
+	<!-- type에 적힌 특정 클래스를 작성할때 alias에 적힌 명칭으로 바꿔서 작성하면 된다. -->
+	<typeAliases>
+		<typeAlias type="vo.SignUpVO" alias="signup"/>
+		<typeAlias type="vo.MainVO" alias="main"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="config/mybatis/mapper/signup.xml" />
+		<mapper resource="config/mybatis/mapper/main.xml" />
+	</mappers>
+</configuration>

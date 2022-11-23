@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="s">
+	
+	<!-- 플랫폼별 가입자 조회 -->
+	<select id="join" resultType="signup" parameterType="signup">
+		select * from signup where platform=#{platform} and email=#{email}
+	</select>
+	
+	<!-- ID 중복 확인 -->
+	<select id="doubleCheck" resultType="signup" parameterType="signup">
+		select * from signup where userID=#{userID}
+	</select>
+	
+	<!-- 가입 성공시 고객 정보 저장 -->
+	<insert id="joinSuccess" parameterType="signup">
+		insert into signup values(
+			seq_signup_idx.nextVal,
+			#{name},
+			#{userID},
+			#{info},
+			#{infoR},
+			#{identityNum},
+			#{gender},
+			#{email},
+			#{phoneNumber},
+			#{address},
+			#{addressDetail},
+			#{platform},
+			#{minimi},
+			#{dotoryNum}
+		)
+	</insert>
+	
+	<!-- ID 찾기 -->
+	<select id="findID" resultType="signup" parameterType="signup">
+		select userId from signup where name=#{name} and phoneNumber=#{phoneNumber}
+	</select>
+	
+	<!-- PW 찾기 -->
+	<select id="findPW" resultType="signup" parameterType="signup">
+		select info from signup where name=#{name} and userId=#{userID}
+	</select>
+	
+	<!-- 임시 PW 갱신 -->
+	<update id="newPw" parameterType="String">
+		update signup set info=#{mail_key} where userId=#{userId}
+	</update>
+	
+	<!-- IDX기준 회원정보 -->
+	<select id="selectIdx" resultType="signup" parameterType="signup">
+		select * from signup where idx=#{idx}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

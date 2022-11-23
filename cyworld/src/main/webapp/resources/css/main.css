@@ -1,0 +1,120 @@
+  /* https://projects.verou.me/css3patterns/#blueprint-grid
+           배경 격자무늬 생성  */
+        body { height: 100vh;
+            background-color: rgb(103, 106, 109);
+            background-image: linear-gradient(rgba(255, 255, 255, .3) 3px, transparent 3px),
+                linear-gradient(90deg, rgba(255, 255, 255, .3) 3px, transparent 3px),
+                linear-gradient(rgba(255, 255, 255, .3) 3px, transparent 3px),
+                linear-gradient(90deg, rgba(255, 255, 255, .3) 3px, transparent 3px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+            overflow: hidden;
+        }
+   /* position */
+   .container { 
+    padding-top: 10px;
+     height:860px;
+     width: 1800px;
+    margin: auto;
+    border-radius: 100px;
+    display: flex;
+    position: relative;
+    }
+    .left-section { width:30%; background-color: rgb(158, 218, 241); border-radius: 80px; }
+    .right-section { width:70%; background-color: rgb(158, 218, 241); border-radius: 80px; position: relative;  }  
+   
+    .left-dashed-line {width:98%; height: 800px; border-radius: 50px; margin: 30px; border: 3px dashed white; position: relative; left: -20px; border-right: none;}
+    .right-dashed-line {width:99%;  height: 800px; border-radius: 50px; margin: 30px; 
+    border: 3px dashed white; position: relative; right: 32px;
+    border-left: none;}
+    
+    .left-gray-background {width:98%; height: 780px; background-color: rgb(235, 232, 232); border-radius: 50px; margin: 10px; 
+        position: relative;  left: 5px;
+    }
+     .right-gray-background{width:99%;  height: 780px; background-color: rgb(235, 232, 232);  border-radius: 50px; margin: 10px; 
+        position: relative;  right: 13px;
+   } 
+
+   .left-aside {width:90%; background-color: white; height: 690px; border-radius: 30px; margin: 10px;  position: relative; left: 10px; top: 25px;
+    box-shadow: 10px 10px  10px rgba(0, 0, 0, 0.356);}
+    .right-aside{width:94%; background-color: white; height: 690px; border-radius: 30px; margin: 10px;
+        position: relative;  right: -25px; top:25px; box-shadow: 10px 10px  10px rgba(0, 0, 0, 0.356); z-index: 1;
+   } 
+
+    .left-aside> .item{width: 100px; height: 25px; background: linear-gradient(120deg, rgb(192, 192, 192) 5% , white );border-radius: 50px; position: relative; margin-bottom: 80px; left: 443px; top: 90px; z-index: 1; border: 1px solid rgba(0, 0, 0, 0.178); box-shadow: 10px 10px  20px rgba(0, 0, 0, 0.356); z-index: 2;} 
+   .left-aside> .item2 { top:260px;}  
+
+   /* content detail */
+   /* left content */
+   .todayBanner { position: relative; left: 80px; top:25px; 
+   font-size: 18px; font-weight: bold; word-spacing: 30px;}
+   /* word-spacing: 글자 간격 넓힘 */
+   .todayHere { color:rgb(243, 43, 43)}
+   .todayIcon {position: relative; width: 300px; height: 50px; border: 1px solid rgb(182, 180, 180); left: 80px; top: -410px; color: rgb(140, 208, 248);
+   }
+   .todayIcon img{position: absolute; left: 170px; top:7px;}
+   .todayIconText{ font-size: 18px; font-weight: bold; position: absolute; margin: 10px; left: 15px;}
+   .left-image {position: relative; width: 300px; height: 310px; border: 1px solid black; left: 80px; top:-400px;
+    }
+    /* leftImg css 바꿔야 함 */
+   .leftImg{ width: 300px; height: 360px;}
+   .left-textarea { overflow: hidden; position: relative; width: 300px; height: 70px; left: 80px; top:-345px; border: none;}
+   .myFriend { 
+    position: relative;
+    width: 280px; 
+padding: .8em .5em; 
+border: 1px solid #999;
+font-family: inherit;  
+background: url(./images/arrow.png) no-repeat 95% 50%; 
+border-radius: 0px; 
+-webkit-appearance: none; 
+-moz-appearance: none;
+appearance: none;
+top:-250px;
+left: 88px;
+font-size: 18px;
+}
+.history { position: relative; top: -345px; left: 70px; }
+.history > img {position: absolute; left: 10px; top: -5px; }
+.history > h3 {position: absolute; width:258px; left: 50px; border-bottom: 1px solid black;}
+
+/* right content */
+.title { position: relative; left: 80px; top:27px; 
+   font-size: 18px; font-weight: bold;  color: skyblue; }
+   /* .titleLink { position: relative; left: 930px; top:3px; 
+   font-size: 18px; font-weight: bold;} */
+   .miniRoomBox { position: relative; left: 80px; top:20px; width: 200px; height: 50px; border: 1px solid rgb(182, 180, 180); border-radius: 15px 15px 7px 7px;
+ margin-bottom: 10px;}
+.miniRoomBox > p {font-size: 24px; color: skyblue; font-weight: bold; position: relative; top:7px; text-align: center; }
+.miniRoom > img{position: absolute; width: 930px; height: 330px; top: 51px; border-top: 1px solid black;}
+.Crayon { position: absolute; top:210px; left: 425px;}
+.Ilchonpyeong { position:absolute; width:932px; height: 40px; background-color: lightgray; left: 80px; top: 410px;}
+.Ilchonpyeong > span { font-size: 20px; color: rgb(89, 192, 233); font-weight: bold; position: absolute; left: 25px; top: 5px;}
+.Ilchonpyeong > input {width: 740px; height: 25px; font-size: 18px; 
+position: absolute; left:110px; top: 5px;}
+.Ilchonpyeong > .Ic-registration {width: 70px; height: 30px;
+    position: absolute; left:858px; top: 4px;
+}
+input::placeholder {
+  color: gray;
+  padding-left: 20px;
+}
+.IlchonpyeongList { width:930px; height:200px; background-color: skyblue; position:absolute;
+	top:460px; left:80px;
+}
+.Ilchon { border-bottom: 1px solid black; height:40px; font-size: 18px; line-height: 40px; }
+/* tabs */
+.tabs input {display: none;}
+.tab-btns>label { width: 100px; height: 55px; position: relative; margin-bottom: 5px; background-color:rgb(40, 125, 175); left:1190px; top:-720px;  font-size: 20px; padding-left:15px; text-align: center; padding-top: 25px; border-radius: 0 20px 20px 0;  color: white;
+border:  1px solid black; display: flex;
+}
+
+.tabs> #tab1:checked ~.tab-btns > #btn1 { background-color: white; color: black;}
+.tabs> #tab2:checked ~.tab-btns > #btn2 { background-color: white; color: black;}
+.tabs> #tab3:checked ~.tab-btns > #btn3 { background-color: white; color: black;}
+.tabs> #tab4:checked ~.tab-btns > #btn4 { background-color: white; color: black;}
+.tabs> #tab5:checked ~.tab-btns > #btn5 { background-color: white; color: black;}
+/* 반응형 페이지 만들기  */
+@media  screen and (max-width:1830px) {
+            .container {width: 98%;}
+        }
