@@ -14,7 +14,7 @@
 	</form>
 	
 	<!-- Ajax 사용을 위한 js를 로드 -->
-	<script src="/bbs/resources/js/httpRequest.js"></script>
+	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		// ID 중복 확인
 		function findID(f) {
@@ -37,6 +37,7 @@
 				}
 				
 				alert("아이디는 '" + data + "' 입니다");
+				location.href = "login.do";
 			}
 		}
 	</script>

@@ -26,9 +26,11 @@
 		<label>주민번호 : </label><input name="identityNum" id="identityNum" type="text" placeholder="주민번호 13자리를 입력해주세요" maxlength="14"> <br>
 		<label>성별 : </label><input name="gender" type="radio" value="male"><label>남자</label>
 							 <input name="gender" type="radio" value="female"><label>여자</label> <br>
-		<label>이메일 : </label><input name="email" type="text">
-		<input type="button" value="인증번호 전송"> <br>
-		<label>인증번호 : </label><input type="text"> <br>
+		<label>이메일 : </label><input id="email" name="email" type="text">
+		<input type="button" value="이메일 인증" onclick="emailCheckSend();"> <br>
+		<label>인증번호 : </label><input id="i_email" type="text">
+								<input id="h_email" type="hidden">
+		<input type="button" value="인증 확인" onclick="emailCheck();"> <br>
 		<label>휴대전화 : </label><input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"> <br>
 		<label>주소 : </label><input class="address_kakao" name="address" type="text">
 		<input class="address_kakao" type="button" value="주소찾기"> <br>
@@ -37,7 +39,8 @@
 	</form>
 	
 	<!-- Ajax 사용을 위한 js를 로드 -->
-	<script src="/bbs/resources/js/httpRequest.js"></script>
+	<script src="/cyworld/resources/js/httpRequest.js"></script>
+	<!-- ID 중복 Ajax -->
 	<script>
 		// ID 중복 확인
 		function doubleCheck() {
@@ -46,10 +49,10 @@
 			// ID 중복 확인을 위한 URL, ID 입력값
 			let url = "double_check.do";
 			let param = "userID=" + userID;
-			sendRequest(url, param, resultFn, "POST");
+			sendRequest(url, param, resultId, "POST");
 		}
 		// 콜백메소드
-		function resultFn() {
+		function resultId() {
 			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				// "{'result':'no'}"
 				let data = xhr.responseText;
@@ -67,6 +70,49 @@
 				alert("아이디 중복");
 				doubleId.value = "0";
 			}
+		}
+	</script>
+	
+	<!-- email 인증 Ajex -->
+	<script>
+		// 이메일 인증
+		function emailCheckSend() {
+			let email = document.getElementById("email").value; // email 입력값 가져오기
+			
+			// 인증번호 전송 위한 URL과 email
+			let url = "emailCheck.do";
+			let param = "email=" + encodeURIComponent(email);
+			sendRequest(url, param, resultEmail, "POST");
+		}
+		// 콜백메소드
+		function resultEmail() {
+			if ( xhr.readyState == 4 && xhr.status == 200 ) {
+				
+				let data = xhr.responseText; // 데이터 받아오기
+				let h_email = document.getElementById("h_email"); // 인증번호 체크용
+				
+				if ( data == "false" ) {
+					alert("인증번호 전송실패");
+					return;
+				}
+				
+				alert("인증번호 전송완료");
+				h_email.value = data;
+			}
+		}
+		// 인증 확인 메소드
+		function emailCheck() {
+			let i_email = document.getElementById("i_email").value; // 인증번호 입력값
+			let h_email = document.getElementById("h_email").value; // 인증번호 체크용
+			
+			if ( i_email != h_email ) {
+				alert("인증번호가 다릅니다");
+				return;
+			}
+			
+			alert("인증이 완료되었습니다");
+			// 인증이 완료되면 더이상 수정하지 못하게 막는 작업
+			document.getElementById("i_email").readOnly = true;
 		}
 	</script>
 	

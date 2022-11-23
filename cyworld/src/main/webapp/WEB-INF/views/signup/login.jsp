@@ -51,7 +51,7 @@
 	
 	<!-- cyworld 로그인 -->
 	<!-- Ajax사용을 위한 js를 추가 -->
-	<script src="/check/resources/js/httpRequest.js"></script>
+	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		// ID 찾기
 		function find_id() {

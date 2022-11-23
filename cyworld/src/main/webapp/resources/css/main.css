@@ -39,6 +39,7 @@
     box-shadow: 10px 10px  10px rgba(0, 0, 0, 0.356);}
     .right-aside{width:94%; background-color: white; height: 690px; border-radius: 30px; margin: 10px;
         position: relative;  right: -25px; top:25px; box-shadow: 10px 10px  10px rgba(0, 0, 0, 0.356); z-index: 1;
+   overflow: auto;
    } 
 
     .left-aside> .item{width: 100px; height: 25px; background: linear-gradient(120deg, rgb(192, 192, 192) 5% , white );border-radius: 50px; position: relative; margin-bottom: 80px; left: 443px; top: 90px; z-index: 1; border: 1px solid rgba(0, 0, 0, 0.178); box-shadow: 10px 10px  20px rgba(0, 0, 0, 0.356); z-index: 2;} 
@@ -99,10 +100,12 @@ input::placeholder {
   color: gray;
   padding-left: 20px;
 }
-.IlchonpyeongList { width:930px; height:200px; background-color: skyblue; position:absolute;
-	top:460px; left:80px;
+/* .IlchonpyeongList { width:930px; height:200px; background-color: skyblue; position:absolute;
+   top:460px; left:80px;
+} */
+.Ilchon {  position:relative; width:930px; border-bottom: 1px solid lightgray; height:40px; font-size: 18px; line-height: 40px; top:400px; left:77px;
+   margin-bottom:10px; 
 }
-.Ilchon { border-bottom: 1px solid black; height:40px; font-size: 18px; line-height: 40px; }
 /* tabs */
 .tabs input {display: none;}
 .tab-btns>label { width: 100px; height: 55px; position: relative; margin-bottom: 5px; background-color:rgb(40, 125, 175); left:1190px; top:-720px;  font-size: 20px; padding-left:15px; text-align: center; padding-top: 25px; border-radius: 0 20px 20px 0;  color: white;

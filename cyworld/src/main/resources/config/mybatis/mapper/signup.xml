@@ -41,12 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- PW 찾기 -->
 	<select id="findPW" resultType="signup" parameterType="signup">
-		select info from signup where name=#{name} and userId=#{userID}
+		select info from signup where name=#{name} and userId=#{userID} and email=#{email}
 	</select>
 	
 	<!-- 임시 PW 갱신 -->
-	<update id="newPw" parameterType="String">
-		update signup set info=#{mail_key} where userId=#{userId}
+	<update id="newPw" parameterType="java.util.HashMap">
+		update signup set info=#{2} where userId=#{1}
 	</update>
 	
 	<!-- IDX기준 회원정보 -->

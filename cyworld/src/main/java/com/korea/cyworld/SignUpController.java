@@ -1,5 +1,6 @@
 package com.korea.cyworld;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -29,7 +30,7 @@ public class SignUpController {
 		this.main_dao = main_dao;
 	}
 	
-	@RequestMapping(value= {"/", "/logout.do"})
+	@RequestMapping(value= {"/", "login.do", "/logout.do"})
 	public String login() {
 		return Common.S_PATH + "login.jsp";
 	}
@@ -51,6 +52,7 @@ public class SignUpController {
 		// 로그인이 소셜 로그인일때 (카카오 및 네이버)
 		// 플랫폼별 가입자 조회 - vo.getPlatform + vo.getEmail
 		SignUpVO joinVo = signUp_dao.selectOnePlatformEmail(vo);
+		System.out.println(joinVo);
 		
 		// 조회된 값이 없을때
 		if ( joinVo == null ) {
@@ -85,6 +87,50 @@ public class SignUpController {
 		return result;
 	}
 	
+	// 이메일 인증
+	@RequestMapping("/emailCheck.do")
+	@ResponseBody
+	public String emailCheck(SignUpVO vo) {
+		String mail_key = new MailKey().getKey(10, false); //랜덤키 길이 설정
+		// Mail Server 설정
+		String charSet = "UTF-8";
+		String hostSMTP = "smtp.naver.com";		
+		String hostSMTPid = "sksh0000@naver.com"; // 본인의 아이디 입력		
+		String hostSMTPpwd = "a1029384756"; // 비밀번호 입력
+		
+		// 보내는 사람 EMail, 제목, 내용 
+		String fromEmail = "sksh0000@naver.com"; // 보내는 사람 eamil
+		String fromName = "관리자";  // 보내는 사람 이름
+		String subject = "이메일 인증번호 발송"; // 제목
+		
+		// 받는 사람 E-Mail 주소
+		String mail = vo.getEmail();  // 받는 사람 email
+		Properties props = System.getProperties();
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		
+		try {
+			HtmlEmail email = new HtmlEmail();
+			email.setDebug(true);
+			email.setCharset(charSet);
+			email.setSSL(true);
+			email.setHostName(hostSMTP);
+			email.setSmtpPort(587);	// SMTP 포트 번호 입력
+
+			email.setAuthentication(hostSMTPid, hostSMTPpwd);
+			email.setTLS(true);
+			email.addTo(mail);
+			email.setFrom(fromEmail, fromName, charSet);
+			email.setSubject(subject);
+			email.setHtmlMsg("<p>"+ mail_key + "</p>"); // 본문 내용
+			email.send();
+			return mail_key;
+		} catch (Exception e) {
+			System.out.println(e);
+			return "false";
+		}
+	}
+	
 	// ID 찾기 페이지 이동
 	@RequestMapping("/findID.do")
 	public String findID() {
@@ -108,8 +154,10 @@ public class SignUpController {
 	}
 	// PW 찾기
 	@RequestMapping("/findPwCheck.do")
+	@ResponseBody
 	public String findPwCheck(SignUpVO vo) {
 		SignUpVO pwVo = signUp_dao.selectOnePw(vo);
+		System.out.println(pwVo);
 		if ( pwVo == null ) {
 			return "no";
 		}
@@ -118,7 +166,7 @@ public class SignUpController {
 		String charSet = "UTF-8";
 		String hostSMTP = "smtp.naver.com";		
 		String hostSMTPid = "sksh0000@naver.com"; // 본인의 아이디 입력		
-		String hostSMTPpwd = "p46281379!"; // 비밀번호 입력
+		String hostSMTPpwd = "a1029384756"; // 비밀번호 입력
 		
 		// 보내는 사람 EMail, 제목, 내용 
 		String fromEmail = "sksh0000@naver.com"; // 보내는 사람 eamil
@@ -141,13 +189,21 @@ public class SignUpController {
 
 			email.setAuthentication(hostSMTPid, hostSMTPpwd);
 			email.setTLS(true);
-			email.addTo(mail, charSet);
+			email.addTo(mail);
 			email.setFrom(fromEmail, fromName, charSet);
 			email.setSubject(subject);
 			email.setHtmlMsg("<p>"+ mail_key + "</p>"); // 본문 내용
 			email.send();
+			HashMap<String, String> m_key = new HashMap<String, String>();
+			m_key.put("1", vo.getUserID());
+			m_key.put("2", mail_key);
 			
-			signUp_dao.updateNewPw(mail_key);
+			// Map구조 파악용
+			//HashMap<String, Object> map = new HashMap<String, Object>();
+			//map.put("a", vo);
+			//map.put("b", mail_key);
+			
+			signUp_dao.updateNewPw(m_key);
 			return mail_key;
 		} catch (Exception e) {
 			System.out.println(e);

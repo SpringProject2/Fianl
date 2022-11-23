@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 
 import vo.SignUpVO;
@@ -43,8 +45,8 @@ public class SignUpDAO {
 	}
 	
 	// 임시 PW 갱신
-	public int updateNewPw(String mail_key) {
-		int res = sqlSession.update("s.newPw", mail_key);
+	public int updateNewPw(HashMap<String, String> m_key) {
+		int res = sqlSession.update("s.newPw", m_key);
 		return res;
 	}
 	
