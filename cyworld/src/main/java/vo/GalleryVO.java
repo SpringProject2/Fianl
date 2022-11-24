@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class GalleryVO {
 	private int galleryCommentStep, galleryCommentRef, galleryContentRef, galleryFolderDepth, galleryFolderStep, galleryFolderRef, galleryLike, gallIdx;
-	private String galleryTopCategory, galleryMiddleCategory, galleryContent, galleryRegdate, galleryCommentRegdate, galleryCommentContent, galleryCommentName, galleryFileName, galleryFileName2;
+	private String galleryTopCategory, galleryMiddleCategory, galleryContent, galleryRegdate, galleryCommentRegdate, galleryCommentContent, galleryCommentName, galleryFileName, galleryFileExtension;
 	
 	//파일을 받기위한 클래스
 	private MultipartFile galleryFile;
@@ -30,12 +30,12 @@ public class GalleryVO {
 		this.galleryFileName = galleryFileName;
 	}
 	
-	public String getGalleryFileName2() {
-		return galleryFileName2;
+	public String getGalleryFileExtension() {
+		return galleryFileExtension;
 	}
 
-	public void setGalleryFileName2(String galleryFileName2) {
-		this.galleryFileName2 = galleryFileName2;
+	public void setGalleryFileExtension(String galleryFileExtension) {
+		this.galleryFileExtension = galleryFileExtension;
 	}
 
 	public String getGalleryCommentName() {

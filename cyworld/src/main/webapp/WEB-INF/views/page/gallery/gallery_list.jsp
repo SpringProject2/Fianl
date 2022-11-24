@@ -26,9 +26,13 @@
 				<div class="type_galleryFile">
 					<!-- 첨부된 이미지가 있는 경우에만 img태그를 보여주자! -->
 					<c:if test="${ vo.galleryFileName ne 'no_file' }">
-						<img src="/cyworld/resources/upload/${ vo.galleryFileName }" width="200"/>
-						<video name="galleryFile" autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }" width="200"/>
-						<!-- video태그 autoplay : 자동 재생 / controls loop : 반복 재생 / muted : 음소거 -->
+						<c:if test="${ vo.galleryFileExtension eq 'image' }">
+							<img src="/cyworld/resources/upload/${ vo.galleryFileName }" width="200"/>
+						</c:if>
+						<c:if test="${ vo.galleryFileExtension eq 'video' }">
+							<video autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }" width="200"/>
+							<!-- video태그 autoplay : 자동 재생 / controls loop : 반복 재생 / muted : 음소거 -->
+						</c:if>
 					</c:if>
 				</div>
 			
@@ -61,7 +65,6 @@
 	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
-
 	<script>
 		function del(f){
 			
@@ -71,7 +74,8 @@
 			
 			//idx를 Ajax를 통해서 서버로 전달
 			var url = "delete_gallery.do";
-			var param = "galleryContentRef=" + f.galleryContentRef.value;
+			var param = "idx=" + ${idx} + 
+						"&galleryContentRef=" + f.galleryContentRef.value;
 			//준비된 두 개의 정보를 콜백메서드로 전달
 			sendRequest( url, param, resultDel, "GET" );
 		}
@@ -88,7 +92,6 @@
 					alert("삭제 실패");
 					return;
 				}
-				
 				alert("삭제성공");
 				location.href="gallery.do?idx=${idx}";
 			}
@@ -100,7 +103,6 @@
 			f.method = "get";
 			f.submit();
 		}
-		
 	</script>
 	<!-- 파일 수정 가져오기 -->
 	<script>

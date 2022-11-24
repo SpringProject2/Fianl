@@ -398,6 +398,7 @@ public class SignUpController {
 				e.printStackTrace();
 			}
 		}
+		
 		// 해당 idx로 사진첩 조회
 		int countNum = gallery_dao.selectCountNum(idx);
 		// 사진첩에 글이 한개도 없을경우
@@ -408,13 +409,19 @@ public class SignUpController {
 			vo.setGallIdx(idx);
 			// 게시글의 파일 이름 부여
 			vo.setGalleryFileName(galleryFileName);
-			String result = "no";
-			int res = gallery_dao.insert(vo);
-			if ( res == 1 ) {
-				return "redirect:gallery.do?idx=" + idx;
+			// 확장자 구하기
+			String extension = vo.getGalleryFileName().substring( vo.getGalleryFileName().lastIndexOf( "." ) + 1 );
+			System.out.println(vo.getGalleryFileExtension());
+			if ( extension.equals("mp4")  ) {
+				vo.setGalleryFileExtension("video");
+			} else {
+				vo.setGalleryFileExtension("image");
 			}
+			gallery_dao.insert(vo);
+			
 			return "redirect:gallery.do?idx=" + idx;
 		}
+		
 		// 작성된 글이 있을경우
 		// 해당 idx로 가장 최근에 작성한 일촌평 찾기
 		int maxNum = gallery_dao.selectMaxNum(idx);
@@ -424,105 +431,113 @@ public class SignUpController {
 		vo.setGallIdx(idx);
 		// 게시글의 파일 이름 부여
 		vo.setGalleryFileName(galleryFileName);
-		String result = "no";
-		int res = gallery_dao.insert(vo);
-		if ( res == 1 ) {
-			return "redirect:gallery.do?idx=" + idx;
+		// 확장자 구하기
+		String extension = vo.getGalleryFileName().substring( vo.getGalleryFileName().lastIndexOf( "." ) + 1 );
+		System.out.println(vo.getGalleryFileExtension());
+		if ( extension.equals("mp4")  ) {
+			vo.setGalleryFileExtension("video");
+		} else {
+			vo.setGalleryFileExtension("image");
 		}
+		gallery_dao.insert(vo);
+		
 		return "redirect:gallery.do?idx=" + idx;
 	}
 	
-//	// 게시글 삭제
-//	@RequestMapping("/delete_gallery.do")
-//	@ResponseBody // Ajax로 요청된 메서드는 결과를 콜백메서드로 돌려주기 위해 반드시 @ResponseBody가 필요!!
-//	public String delete(Integer idx, int galleryContentRef) {
-//		// delete.do?idx=1
-//		int res = gallery_dao.delete(galleryContentRef);
-//		
-//		String result = "no";
-//		if (res == 1) {
-//			result = "yes";
-//		}
-//		
-//		// yes, no값을 가지고 콜백메서드(resultFn)로 돌아간다
-//		// 콜백으로 리턴되는 값은 영문으로 보내준다
-//		return result;
-//	}
-//	
-//	// 글 수정 폼으로 전환
-//	@RequestMapping("/modify_form.do")
-//	public String modify_form(Integer idx, int galleryContentRef, Model model) {
-//		// modify_form.do?idx=2&pwd=1111&c_pwd=1111
-//		GalleryVO vo = gallery_dao.selectOne(galleryContentRef);
-//		
-//		if (vo!=null) {
-//			model.addAttribute("vo", vo);
-//			model.addAttribute(idx);
-//		}
-//		
-//		return Common.GP_PATH + "gallery_modify_form.jsp";
-//		
-//	}
-//	
-////	@RequestMapping("/modify_image_delete")
-////	public String modify_image_delete() {
-////		
-////	}
-//	
-//	// 게시글 수정하기
-//	@RequestMapping("/modify_gallery.do")
-//	@ResponseBody
-//	public String modify(GalleryVO vo) {
-//		
-//		String webPath = "/resources/upload/";
-//		String savePath = app.getRealPath(webPath);// 절대경로
-//		System.out.println("경로 : " + savePath);
-//		
-//		// 업로드를 위해 파라미터로 넘어온 사진의 정보
-//		System.out.println(vo.getGalleryFile());
-//		MultipartFile galleryFile = vo.getGalleryFile();
-//		String galleryFileName = "no_file";
-//		//업로드 된 파일이 존재할 때!!
-//		if(!galleryFile.isEmpty()) {
-//			//업로드가 된 실제 파일의 이름
-//			galleryFileName = galleryFile.getOriginalFilename();
-//			
-//			//이미지를 저장할 경로를 지정
-//			File saveFile = new File(savePath, galleryFileName);
-//			
-//			if(!saveFile.exists()) {
-//				saveFile.mkdirs();
-//			}else {
-//				
-//				//동일파일명 변경
-//				long time = System.currentTimeMillis();
-//				galleryFileName = String.format("%d_%s", time, galleryFileName);
-//				saveFile = new File(savePath, galleryFileName);
-//				
-//			}
-//			
-//			try {
-//				//업로드를 위한 파일을 실제로 등록해주는 메서드
-//				galleryFile.transferTo(saveFile);
-//			} catch (IllegalStateException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//				
-//		}
-//				
-//		vo.setGalleryFileName(galleryFileName);
-//		
-//		int res = gallery_dao.update(vo);
-//		
-//		String result = "{'result':'no'}";
-//		if (res != 0) {
-//			result = "{'result':'yes'}";
-//		}
-//		
-//			return result;
-//	}
+	// 게시글 삭제
+	@RequestMapping("/delete_gallery.do")
+	@ResponseBody // Ajax로 요청된 메서드는 결과를 콜백메서드로 돌려주기 위해 반드시 @ResponseBody가 필요!!
+	public String delete(Integer idx, int galleryContentRef) {
+		// 해당 idx 사용자의 게시글 번호
+		HashMap<String, Integer> galleryKey = new HashMap<String, Integer>();
+		galleryKey.put("1", idx);
+		galleryKey.put("2", galleryContentRef);
+		
+		int res = gallery_dao.delete(galleryKey);
+		
+		String result = "no";
+		if (res == 1) {
+			result = "yes";
+		}
+		
+		// yes, no값을 가지고 콜백메서드(resultFn)로 돌아간다
+		// 콜백으로 리턴되는 값은 영문으로 보내준다
+		return result;
+	}
+	
+	// 글 수정 폼으로 전환
+	@RequestMapping("/modify_form.do")
+	public String modify_form(Integer idx, int galleryContentRef, Model model) {
+		// 해당 idx 사용자의 게시글 번호
+		HashMap<String, Integer> galleryKey = new HashMap<String, Integer>();
+		galleryKey.put("1", idx);
+		galleryKey.put("2", galleryContentRef);
+		GalleryVO vo = gallery_dao.selectOne(galleryKey);
+		
+		if (vo!=null) {
+			model.addAttribute("vo", vo);
+		}
+		
+		return Common.GP_PATH + "gallery_modify_form.jsp";
+		
+	}
+	
+	// 게시글 수정하기
+	@RequestMapping("/modify_gallery.do")
+	public String modify(GalleryVO vo) {
+		// 절대 경로 생성
+		String webPath = "/resources/upload/";
+		String savePath = app.getRealPath(webPath);// 절대경로
+		System.out.println("경로 : " + savePath);
+		
+		// 업로드를 위해 파라미터로 넘어온 사진의 정보
+		
+		MultipartFile galleryFile = vo.getGalleryFile();
+		String galleryFileName = vo.getGalleryFileName();
+		//업로드 된 파일이 존재할 때!!
+		if(!galleryFile.isEmpty()) {
+			// 먼저 가지고 있던 파일 삭제
+			File delFile = new File(savePath, vo.getGalleryFileName());
+			delFile.delete();
+			
+			//업로드가 된 실제 파일의 이름
+			galleryFileName = galleryFile.getOriginalFilename();
+			
+			//이미지를 저장할 경로를 지정
+			File saveFile = new File(savePath, galleryFileName);
+			
+			if(!saveFile.exists()) {
+				saveFile.mkdirs();
+			}else {
+				
+				//동일파일명 변경
+				long time = System.currentTimeMillis();
+				galleryFileName = String.format("%d_%s", time, galleryFileName);
+				saveFile = new File(savePath, galleryFileName);
+				
+			}
+			
+			try {
+				//업로드를 위한 파일을 실제로 등록해주는 메서드
+				galleryFile.transferTo(saveFile);
+				vo.setGalleryFileName(galleryFileName);
+				// 확장자 구하기
+				String extension = vo.getGalleryFileName().substring( vo.getGalleryFileName().lastIndexOf( "." ) + 1 );
+				System.out.println(vo.getGalleryFileExtension());
+				if ( extension.equals("mp4")  ) {
+					vo.setGalleryFileExtension("video");
+				} else {
+					vo.setGalleryFileExtension("image");
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+				
+		}
+		
+		int res = gallery_dao.update(vo);
+		return "redirect:gallery.do?idx=" + vo.getGallIdx();
+	}
 }

@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -39,14 +40,14 @@ public class GalleryDAO {
 	}
 	
 	//글 삭제
-	public int delete( int galleryContentRef ) {
-		int res = sqlSession.delete("g.gallery_delete", galleryContentRef);
+	public int delete( HashMap<String, Integer> galleryKey ) {
+		int res = sqlSession.delete("g.gallery_delete", galleryKey);
 		return res;
 	}
 	
 	//수정을 위한 게시글 한 건 조회
-	public GalleryVO selectOne( int galleryContentRef ) {
-		GalleryVO vo = sqlSession.selectOne("g.gallery_one", galleryContentRef);
+	public GalleryVO selectOne( HashMap<String, Integer> galleryKey ) {
+		GalleryVO vo = sqlSession.selectOne("g.gallery_one", galleryKey);
 		return vo;
 	}
 	

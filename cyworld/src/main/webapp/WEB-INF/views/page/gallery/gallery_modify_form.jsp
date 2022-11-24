@@ -9,7 +9,7 @@
 </head>
 <body>
 	<form method="post" enctype="multipart/form-data">
-		<input type="text" value="${ param.idx }">
+		<input name="gallIdx" type="text" value="${ vo.gallIdx }">
 		<input type="text" name="galleryContentRef" value="${ vo.galleryContentRef }">
 		
 		<table border="1" align="center">
@@ -25,11 +25,15 @@
 				<th>파일</th>
 					<td>
 						<c:if test="${ vo.galleryFileName ne 'no_file' }">
-							<img class="galleryFileName2" src="/cyworld/resources/upload/${ vo.galleryFileName }" width="100"/>
-							<video class="galleryFileName2" autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }" width="100"/>
-							<!-- video태그 autoplay : 자동 재생 / controls loop : 반복 재생 / muted : 음소거 -->
+							<c:if test="${ vo.galleryFileExtension eq 'image' }">
+								<img src="/cyworld/resources/upload/${ vo.galleryFileName }" width="100"/>
+							</c:if>
+							<c:if test="${ vo.galleryFileExtension eq 'video' }">
+								<video autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }" width="100"/>
+								<!-- video태그 autoplay : 자동 재생 / controls loop : 반복 재생 / muted : 음소거 -->
+							</c:if>
 						</c:if>
-						<div class="galleryFileName2">${ vo.galleryFileName }</div>
+						<input name="galleryFileName" value="${ vo.galleryFileName }" readonly>
 					</td>
 			</tr>
 			
@@ -48,47 +52,11 @@
 		</table>
 	</form>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->	
-	<!-- Ajax활용을 위한 js파일 로드 -->
-	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
-		function modify(f){
-			//encodeURIComponent : 특수문자가 포함되어 있는 경우에 내용을 그대로 서버로 전달하기 위해
-			//존재하는 메서드
-			
-			let galleryFileName2 = document.getElementsByClassName("galleryFileName2");
-			
-			if ( galleryFileName2[0] == null ) {
-				galleryFileName2 = galleryFileName2[1];
-			} else if ( galleryFileName2[1] == null ) {
-				galleryFileName2 = galleryFileName2[0];
-			}
-		
-			var url = "modify_gallery.do";
-			var param = "galleryContentRef=" + f.galleryContentRef.value +
-			            "&galleryContent=" + encodeURIComponent(f.galleryContent.value) +
-			            "&galleryFile=" + encodeURIComponent(f.galleryFile.value);
-			sendRequest( url, param, sendCallback, "POST");
-		}
-		
-		function sendCallback(){
-			
-			if( xhr.readyState == 4 && xhr.status == 200 ){
-				//"{'result':'no'}"
-				var data = xhr.responseText;
-				
-				//문자열 구조로 넘어온 data를 실제 JSON타입으로 변경
-				var json = (new Function('return'+data))();
-				
-				if( json.result == 'no' ){
-					alert("수정실패");
-					return;
-				}
-				
-				alert("수정성공");
-				location.href="gallery.do?idx=${param.idx}";
-				
-			}
-			
+		function modify(f) {
+			f.action = "modify_gallery.do";
+			f.method = "post";
+			f.submit();
 		}
 	</script>
 </body>
