@@ -12,10 +12,12 @@
 	<typeAliases>
 		<typeAlias type="vo.SignUpVO" alias="signup"/>
 		<typeAlias type="vo.MainVO" alias="main"/>
+		<typeAlias type="vo.GalleryVO" alias="gallery"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="config/mybatis/mapper/signup.xml" />
 		<mapper resource="config/mybatis/mapper/main.xml" />
+		<mapper resource="config/mybatis/mapper/gallery.xml" />
 	</mappers>
 </configuration>

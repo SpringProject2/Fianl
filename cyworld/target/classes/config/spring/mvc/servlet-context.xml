@@ -34,6 +34,7 @@
 	<beans:bean class="com.korea.cyworld.SignUpController">
 		<beans:property name="signUp_dao" ref="signUp_daoBean"/>
 		<beans:property name="main_dao" ref="main_daoBean"/>
+		<beans:property name="gallery_dao" ref="gallery_daoBean"/>
 	</beans:bean>
 	
 </beans:beans>

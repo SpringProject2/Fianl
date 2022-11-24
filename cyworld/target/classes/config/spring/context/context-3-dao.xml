@@ -10,5 +10,9 @@
 	<bean id="main_daoBean" class="dao.MainDAO">
 		<constructor-arg ref="sqlSessionBean"/>
 	</bean>
+	
+	<bean id="gallery_daoBean" class="dao.GalleryDAO">
+		<property name="sqlSession" ref="sqlSessionBean"/>
+	</bean>
 		
 </beans>

@@ -15,6 +15,7 @@
 </head>
 <body>
    <input id="idx" name="idx" type="text" value="${ vo.idx }">
+   <input type="button" value="사진첩" onclick="location.href = 'gallery.do?idx=${vo.idx}'">
    <h2>${ vo.name }님 가입을 환영합니다.</h2>
    <input type="button" value="로그아웃" onclick="location.href='logout.do'">
    <input type="button" value="네이버 로그아웃" onclick="naverLogout();">
