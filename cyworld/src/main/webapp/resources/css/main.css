@@ -68,6 +68,7 @@
 padding: .8em .5em; 
 border: 1px solid #999;
 font-family: inherit;  
+/* 이미지 경로 설정 방식 */
 background: url("../images/arrow.png") no-repeat 95% 50%;
 border-radius: 0px; 
 -webkit-appearance: none; 

@@ -14,6 +14,7 @@
 	Idx : <input id="idx" name="idx" type="text" value="${ vo.idx }">
 	SessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionIdx }">
 	<input type="button" value="사진첩" onclick="location.href = 'gallery.do?idx=${vo.idx}'">
+	<input type="button" value="방명록" onclick="location.href = 'guestbook.do?idx=${vo.idx}'">
 	<h2 class="leftName">${ vo.name }님 안녕하세요!</h2>
 	<input id="btn_cover" class="cy_logout" type="button" value="로그아웃" onclick="location.href='logout.do'">
 	<input id="btn_cover" class="na_logout" type="button" value="네이버 로그아웃" onclick="naverLogout();">

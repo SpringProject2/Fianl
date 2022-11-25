@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gb">
+	
+	<!-- 갤러리 조회  -->
+	<select id="guestbook_list" resultType="guestbook" parameterType="int">
+		select * from guestbook where guestIdx=#{idx} order by guestbookContentRef DESC
+		<!-- idx 내림차순 -->
+	</select>
+	
+	<!-- idx에 해당하는 방명록 갯수 구하기 -->
+	<select id="countNum" resultType="int" parameterType="int">
+		select count(*) from guestbook where guestIdx=#{idx}
+	</select>
+	
+	<!-- idx에 해당하는 최신 방명록 가져오기 -->
+	<select id="maxNum" resultType="int" parameterType="int">
+		select max(guestbookContentRef) from guestbook where guestIdx=#{idx}
+	</select>
+	
+	<!-- 새 글 추가 -->
+	<insert id="guestbook_insert" parameterType="guestbook">
+		insert into GuestBook values(
+			#{guestbookContentRef},
+			#{guestbookContentName},
+			#{guestbookContent},
+			SYSDATE,
+			#{guestIdx}
+		)
+	</insert>
+	
+	<!-- 글 삭제 -->
+	<delete id="guestbook_delete" parameterType="guestbook">
+		delete from guestbook where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
+	</delete>
+	
+	<!-- 수정을 위한 게시글 한 건 조회 -->
+    <select id="guestbook_one" resultType="guestbook" parameterType="guestbook">
+        select * from guestbook where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
+    </select>
+
+    <!-- 글 수정 -->
+    <update id="guestbook_update" parameterType="guestbook">
+        update guestbook set
+        	guestbookContent = #{ guestbookContent },
+        	guestbookContentName = #{ guestbookContentName },
+        	guestbookRegdate = SYSDATE
+        	where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
+    </update>
+    
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

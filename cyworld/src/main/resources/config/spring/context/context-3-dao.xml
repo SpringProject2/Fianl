@@ -3,15 +3,23 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+	<!-- SignUpDAO	 -->
 	<bean id="signUp_daoBean" class="dao.SignUpDAO">
 		<property name="sqlSession" ref="sqlSessionBean"/>
 	</bean>
 	
+	<!-- MainDAO	 -->
 	<bean id="main_daoBean" class="dao.MainDAO">
 		<constructor-arg ref="sqlSessionBean"/>
 	</bean>
 	
+	<!-- GalleryDAO	 -->
 	<bean id="gallery_daoBean" class="dao.GalleryDAO">
+		<property name="sqlSession" ref="sqlSessionBean"/>
+	</bean>
+	
+	<!-- GuestBookDAO	 -->
+	<bean id="guestbook_daoBean" class="dao.GuestBookDAO">
 		<property name="sqlSession" ref="sqlSessionBean"/>
 	</bean>
 		

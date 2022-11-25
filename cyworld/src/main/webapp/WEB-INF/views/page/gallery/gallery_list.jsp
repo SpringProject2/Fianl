@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="/cyworld/resources/css/gallery.css">
 </head>
 <body>
-	<input id="idx" name="idx" type="text" value="${ idx }">
 
 	<div id="main_box">
 	
@@ -21,6 +20,7 @@
 	<c:forEach var="vo" items="${ list }">
 	
 		<div class="gallery_box">
+		
 			<form>
 		
 				<div class="type_galleryFile">

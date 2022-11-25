@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import dao.GalleryDAO;
+import dao.GuestBookDAO;
 import dao.MainDAO;
 import dao.SignUpDAO;
 import mail.MailKey;
 import util.Common;
 import vo.GalleryVO;
+import vo.GuestBookVO;
 import vo.MainVO;
 import vo.SignUpVO;
 
@@ -40,8 +42,9 @@ public class SignUpController {
 	SignUpDAO signUp_dao;
 	MainDAO main_dao;
 	GalleryDAO gallery_dao;
+	GuestBookDAO guestbook_dao;
 	
-	// SI방식
+	// SI / CI 방식
 	public void setSignUp_dao(SignUpDAO signUp_dao) {
 		this.signUp_dao = signUp_dao;
 	}
@@ -50,6 +53,9 @@ public class SignUpController {
 	}
 	public void setGallery_dao(GalleryDAO gallery_dao) {
 		this.gallery_dao = gallery_dao;
+	}
+	public void setGuestbook_dao(GuestBookDAO guestbook_dao) {
+		this.guestbook_dao = guestbook_dao;
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value= {"/", "login.do"})
@@ -414,7 +420,7 @@ public class SignUpController {
 	}
 
 	@RequestMapping("/insert_form.do")
-	public String insert_form() {
+	public String gallery_insert_form() {
 		return Common.GP_PATH + "gallery_insert_form.jsp";
 	}
 	
@@ -596,5 +602,93 @@ public class SignUpController {
 		
 		int res = gallery_dao.update(vo);
 		return "redirect:gallery.do?idx=" + vo.getGallIdx();
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//방명록 조회
+	@RequestMapping("/guestbook.do")
+	public String guestbook_list (Integer idx, Model model) {
+		
+		List<GuestBookVO> list = guestbook_dao.selectList(idx);
+		model.addAttribute("list", list); //바인딩
+		return Common.GBP_PATH + "guestbook_list.jsp"; //포워딩
+	}
+	
+	// 방명록 작성페이지로 이동
+	@RequestMapping("/guestbook_insert_form.do")
+	public String guestbook_insert_form() {
+		return Common.GBP_PATH + "guestbook_insert_form.jsp";
+	}
+	
+	//새 글 작성
+	@RequestMapping("/guestbook_insert.do")
+	public String guestbook_insert(Integer idx, GuestBookVO vo) {
+		// 해당 idx로 사진첩 조회
+		int countNum = guestbook_dao.selectCountNum(idx);
+		// 사진첩에 글이 한개도 없을경우
+		if ( countNum == 0 ) {
+			// 사진첩에 번호 부여
+			vo.setGuestbookContentRef(1);
+			// 게시글에 해당 사용자의 idx부여
+			vo.setGuestIdx(idx);
+			guestbook_dao.insert(vo);
+			
+			return "redirect:guestbook.do?idx=" + idx;
+		}
+		
+		// 작성된 글이 있을경우
+		// 해당 idx로 가장 최근에 작성한 일촌평 찾기
+		int maxNum = guestbook_dao.selectMaxNum(idx);
+		// 가져온 최근 게시글 번호에 1추가
+		vo.setGuestbookContentRef(maxNum + 1);
+		// 게시글에 해당 사용자의 idx부여
+		vo.setGuestIdx(idx);
+		guestbook_dao.insert(vo);
+		
+		return "redirect:guestbook.do?idx=" + idx;
+	}
+	
+	//방명록 삭제
+	@RequestMapping("/guestbook_delete.do")
+	@ResponseBody // Ajax로 요청된 메서드는 결과를 콜백 메서드로 돌아가기 위해 반드시 필요한 어노테이션
+	public String guestbook_delete(GuestBookVO vo) {
+		
+		int res = guestbook_dao.delete(vo);
+		
+		String result = "no";
+		if (res == 1) {
+			result = "yes";
+		}
+		
+		// yes, no값을 가지고 콜백메서드(resultFn)로 돌아간다
+		// 콜백으로 리턴되는 값은 영문으로 보내준다
+		return result;
+	}
+	
+	// 글 수정 폼으로 전환
+	@RequestMapping("/guestbook_modify_form.do")
+	public String guestbook_modify_form(GuestBookVO vo, Model model) {
+		// modify_form.do?idx=2&pwd=1111&c_pwd=1111
+		GuestBookVO updateVo = guestbook_dao.selectOne(vo);
+		
+		if ( updateVo != null ) {
+			model.addAttribute("vo", updateVo);
+		}
+		
+		return Common.GBP_PATH + "guestbook_modify_form.jsp";
+	}
+    
+	// 게시글 수정하기
+	@RequestMapping("/guestbook_modify.do")
+	@ResponseBody
+	public String guestbook_modify(GuestBookVO vo) {
+		
+		int res = guestbook_dao.update(vo);
+		
+		String result = "{'result':'no'}";
+		if (res != 0) {
+			result = "{'result':'yes'}";
+		}
+		
+		return result;
 	}
 }
