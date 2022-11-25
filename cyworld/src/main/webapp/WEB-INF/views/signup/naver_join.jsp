@@ -10,13 +10,15 @@
 <link rel="stylesheet" href="/cyworld/resources/css/naverJoin.css">
 </head>
 <body>
-<div class="container">
-        <section class="section">
-                <div class="dashed-line">
-                    <div class="gray-background">
-                        <div class="main">
-                            <img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
-                            <form>
+	<div class="container">
+		<section class="section">
+			<div class="dashed-line">
+				<div class="gray-background">
+					<div class="main">
+					
+						<img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
+						
+						<form>
                                 <input name="platform" type="hidden" value="${ vo.platform }">
                                 <input name="name" type="hidden" value="${ vo.name }">
                                 <input name="gender" type="hidden" value="${ vo.gender }">
@@ -35,7 +37,7 @@
                 </div>
         </section>
 </div>
-	
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<!-- 다음 주소 api -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

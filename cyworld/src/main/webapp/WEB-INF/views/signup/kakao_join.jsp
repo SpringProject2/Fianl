@@ -10,32 +10,35 @@
 <link rel="stylesheet" href="/cyworld/resources/css/kakaoJoin.css">
 </head>
 <body>
-<div class="container ">
-        <section class="section">
-                <div class="dashed-line">
-                    <div class="gray-background">
-                        <div class="main">
-                            <img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
-                            <form>
-                                <input name="platform" type="hidden" value="${ vo.platform }">
-                                <input name="gender" type="hidden" value="${ vo.gender }">
-                                <input name="email" type="hidden" value="${ vo.email }">
-                                <p class="name">이름<br>  <input name="name" type="text"> </p>
-                                <p class="rNum">주민번호<br> <input name="identityNum" id="identityNum" type="text" placeholder="주민번호 13자리를 입력해주세요" maxlength="14"> </p>
-                                <p class="phone">휴대전화<br><input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"> </p>
-                                <p class="address">
-                                       주소<br><input id="addressText" class="address_kakao" name="address" type="text">
-                                    <input id="btn-cover" class="address_kakao" type="button" value="주소찾기">
-                                </p> 
-                                <p class="rAddress">상세 주소<br> <input class="address_kakao" name="addressDetail" type="text"> </p>
-                                <input class="join" id="btn-cover" type="button" value="가입" onclick="join(this.form)">
-                            </form>
-                    </div>
-                </div>
-                </div>
-        </section>
-</div>
-	
+	<div class="container ">
+		<section class="section">
+			<div class="dashed-line">
+				<div class="gray-background">
+					<div class="main">
+					
+						<img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
+						
+						<form>
+							<input name="platform" type="hidden" value="${ vo.platform }">
+							<input name="gender" type="hidden" value="${ vo.gender }">
+							<input name="email" type="hidden" value="${ vo.email }">
+							<p class="name">이름 <br>  <input name="name" type="text"> </p>
+							<p class="rNum">주민번호 <br> <input name="identityNum" id="identityNum" type="text" placeholder="주민번호 13자리를 입력해주세요" maxlength="14"> </p>
+							<p class="phone">휴대전화 <br><input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"> </p>
+							<p class="address">
+								주소 <br> <input id="addressText" class="address_kakao" name="address" type="text">
+										<input id="btn-cover" class="address_kakao" type="button" value="주소찾기">
+							</p> 
+							<p class="rAddress">상세 주소 <br> <input class="address_kakao" name="addressDetail" type="text"> </p>
+							<input class="join" id="btn-cover" type="button" value="가입" onclick="join(this.form)">
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<!-- 다음 주소 api -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

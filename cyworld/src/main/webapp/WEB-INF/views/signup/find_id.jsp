@@ -10,24 +10,26 @@
 <link rel="stylesheet" href="/cyworld/resources/css/findId.css">
 </head>
 <body>
- <div class="container ">
-        <section class="section">
-                <div class="dashed-line">
-                    <div class="gray-background">
-                        <div class="main">
-                            <img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
-                            <form>
-                               <div class="myname">이름<br> <input class="nameText" name="name" type="text"></div>
-                                <div id="phone">휴대전화<br> <input class="phoneText" id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"></div> 
-                                <input id="btn-cover" type="button" value="아이디 찾기" onclick="findID(this.form)">
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-        </section>
-</div>
-	
+	<div class="container ">
+		<section class="section">
+			<div class="dashed-line">
+				<div class="gray-background">
+					<div class="main">
+					
+						<img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
+						
+						<form>
+							<div class="myname">이름 <br> <input class="nameText" name="name" type="text"></div>
+							<div id="phone">휴대전화 <br> <input class="phoneText" id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"></div> 
+							<input id="btn-cover" type="button" value="아이디 찾기" onclick="findID(this.form)">
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
