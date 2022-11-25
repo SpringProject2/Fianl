@@ -9,32 +9,15 @@
 <link rel="stylesheet" href="/cyworld/resources/css/reset.css">
 <link rel="stylesheet" href="/cyworld/resources/css/animate.css">
 <link rel="stylesheet" href="/cyworld/resources/css/main.css">
-<style>
- 
-</style>
 </head>
 <body>
-	idx : <input id="idx" name="idx" type="text" value="${ vo.idx }"> <br>
-	sessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionIdx }"> <br>
+	Idx : <input id="idx" name="idx" type="text" value="${ vo.idx }">
+	SessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionIdx }">
 	<input type="button" value="사진첩" onclick="location.href = 'gallery.do?idx=${vo.idx}'">
-	<h2>${ vo.name }님 가입을 환영합니다.</h2>
-	<input type="button" value="로그아웃" onclick="location.href='logout.do'">
-	<input type="button" value="네이버 로그아웃" onclick="naverLogout();">
-	<input type="button" value="카카오 로그아웃" onclick="kakaoLogout();">
-	
-	<!-- 회원 검색 -->
-	<!-- 아이디, 이메일 검색 -->
-	<form method="post">
-		<select class="searchList" name="searchType">
-			<option value="name">이름</option>
-			<option value="userID">아이디</option>
-			<option value="email">이메일</option>
-		</select>
-		<input name="idx" type="hidden" value="${ vo.idx }">
-		<input name="searchValue" type="text">
-		<input type="button" value="검색" onclick="search(this.form);">
-	</form>
-	
+	<h2 class="leftName">${ vo.name }님 안녕하세요!</h2>
+	<input id="btn_cover" class="cy_logout" type="button" value="로그아웃" onclick="location.href='logout.do'">
+	<input id="btn_cover" class="na_logout" type="button" value="네이버 로그아웃" onclick="naverLogout();">
+	<input id="btn_cover" class="ka_logout" type="button" value="카카오 로그아웃" onclick="kakaoLogout();">
 	<div class="container">
 		<section class="left-section">
 			<div class="left-dashed-line">
@@ -70,7 +53,18 @@
 					<p class="title"><a href="#">Test 싸이월드 Title입니다. 누르면 무슨 기능이였더라?</a></p>
 					<!-- a태그 = 새로고침  -->
 					<!-- <p class="titleLink"><a href="#">http://www.zenghyun.com</a></p> -->
-					
+					<!-- 회원 검색 -->
+					<!-- 아이디, 이메일 검색 -->
+					<form method="post">
+						<select class="searchList" name="searchType">
+							<option value="name">이름</option>
+							<option value="id">아이디</option>
+							<option value="email">이메일</option>
+						</select>
+						<input  class="searchtext" type="text" name="searchValue"></input>
+						<input class="search" type="submit" value="검색" onclick="search(this.form);"></input>
+						<input type="hidden" name="idx" value="${vo.idx }">	
+					</form>
 					<aside class="right-aside">
 						<div class="miniRoomBox"><p>Mini Room</p>
 							<div class="miniRoom"><img src="resources/images/mainroom.png" alt=""></div>
@@ -78,10 +72,10 @@
 						</div>
 						<form method="post">
 							<div class="Ilchonpyeong">
-								
+							
 								<span>일촌평</span> <input type="text" name="ilchonpyeongText" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요"></input>
 								<input class="Ic-registration" type="button" value="확인" onclick="registration(this.form);"></input>
-							
+								
 							</div>
 						</form>
 						<c:forEach var="vo" items="${ list }">

@@ -1,4 +1,4 @@
-  /* https://projects.verou.me/css3patterns/#blueprint-grid
+ /* https://projects.verou.me/css3patterns/#blueprint-grid
            배경 격자무늬 생성  */
         body { height: 100vh;
             background-color: rgb(103, 106, 109);
@@ -47,6 +47,7 @@
 
    /* content detail */
    /* left content */
+   .leftName {color:white;}
    .todayBanner { position: relative; left: 80px; top:25px; 
    font-size: 18px; font-weight: bold; word-spacing: 30px;}
    /* word-spacing: 글자 간격 넓힘 */
@@ -58,28 +59,32 @@
    .left-image {position: relative; width: 300px; height: 310px; border: 1px solid black; left: 80px; top:-400px;
     }
     /* leftImg css 바꿔야 함 */
+    #idx {width:25px;}
    .leftImg{ width: 300px; height: 360px;}
    .left-textarea { overflow: hidden; position: relative; width: 300px; height: 70px; left: 80px; top:-345px; border: none;}
    .myFriend { 
-    position: relative;
+     position: relative;
     width: 280px; 
 padding: .8em .5em; 
 border: 1px solid #999;
 font-family: inherit;  
-background: url(./images/arrow.png) no-repeat 95% 50%; 
+background: url("../images/arrow.png") no-repeat 95% 50%;
 border-radius: 0px; 
 -webkit-appearance: none; 
 -moz-appearance: none;
 appearance: none;
 top:-250px;
 left: 88px;
-font-size: 18px;
+font-size: 18px; 
 }
 .history { position: relative; top: -345px; left: 70px; }
 .history > img {position: absolute; left: 10px; top: -5px; }
 .history > h3 {position: absolute; width:258px; left: 50px; border-bottom: 1px solid black;}
 
 /* right content */
+.cy_logout { position:absolute; left:1570px; top:10px;}
+.na_logout { position:absolute; left:1660px; top:10px;}
+.ka_logout { position:absolute; left:1790px; top:10px;}
 .title { position: relative; left: 80px; top:27px; 
    font-size: 18px; font-weight: bold;  color: skyblue; }
    /* .titleLink { position: relative; left: 930px; top:3px; 
@@ -106,6 +111,9 @@ input::placeholder {
 .Ilchon {  position:relative; width:930px; border-bottom: 1px solid lightgray; height:40px; font-size: 18px; line-height: 40px; top:400px; left:77px;
    margin-bottom:10px; 
 }
+.searchList { position:absolute; left:780px;}
+.searchtext {position:absolute; left: 850px;}
+.search {position:absolute; left:1080px;}
 /* tabs */
 .tabs input {display: none;}
 .tab-btns>label { width: 100px; height: 55px; position: relative; margin-bottom: 5px; background-color:rgb(40, 125, 175); left:1190px; top:-720px;  font-size: 20px; padding-left:15px; text-align: center; padding-top: 25px; border-radius: 0 20px 20px 0;  color: white;
@@ -117,6 +125,18 @@ border:  1px solid black; display: flex;
 .tabs> #tab3:checked ~.tab-btns > #btn3 { background-color: white; color: black;}
 .tabs> #tab4:checked ~.tab-btns > #btn4 { background-color: white; color: black;}
 .tabs> #tab5:checked ~.tab-btns > #btn5 { background-color: white; color: black;}
+
+#btn_cover {  border: 1px solid skyblue;
+            background-color: #7c7c7c;
+            color: #77d7ff;
+            padding: 5px;
+            border-radius: 5px; font-weight: bold;
+            }
+#btn_cover:hover{
+            color:white;
+            background-color: skyblue;
+            
+        } 
 /* 반응형 페이지 만들기  */
 @media  screen and (max-width:1830px) {
             .container {width: 98%;}

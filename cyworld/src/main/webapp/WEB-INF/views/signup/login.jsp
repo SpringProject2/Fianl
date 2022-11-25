@@ -5,41 +5,53 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-	#btn_login {
-		font-size: 40px;
-		
-	}
-</style>
+<link rel="stylesheet" href="/cyworld/resources/css/reset.css">
+<link rel="stylesheet" href="/cyworld/resources/css/animate.css">
+<link rel="stylesheet" href="/cyworld/resources/css/login.css">
 </head>
 <body>
-	<form id="ff">
-		<label>ID : </label><input name="userID" type="text"> <br>
-		<label>PWD : </label><input name="info" type="password"> <br>
-		<input id="btn_login" type="button" value="로그인" onclick="loginCheck(this.form)">
-	</form>
-	
-	<!-- cyworld 회원가입 -->
-	<form action="login_authentication.do" method="POST">
-		<input name="platform" type="hidden" value="cyworld">
-		<input type="submit" value="회원가입">
-	</form>
-	
-	<!-- 네이버 로그인 버튼 -->
-	<div id="naverIdLogin"></div>
-	
-	<!-- 카카오 로그인 버튼 -->
-	<a href="javascript:kakaoLogin();"><img src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style="height: 40px; width: auto"></a>
-	<!-- 카카오 회원가입 -->
-	<form id="kf" action="login_authentication.do" method="POST">
-		<input name="platform" type="hidden" value="kakao">
-		<input name="email" id="email" type="hidden">
-		<input name="gender" id="gender" type="hidden">
-	</form>
-	
-	<input type="button" value="아이디 찾기" onclick="find_id();">
-	<input type="button" value="비밀번호 찾기" onclick="find_pw();">
-	<input type="button" value="비회원으로 입장" onclick="nmain();">
+<div class="container ">
+        <section class="section">
+                <div class="dashed-line">
+                    <div class="gray-background">
+                        <div class="main">
+                            <img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
+                            <img class="login-minimi" alt="" src="resources/images/minimi_main.png">
+                          
+<div class="user-info">
+    <form id="ff">
+    <p class="userID">ID :&nbsp;<input name="userID" type="text"></p>
+    <p class="userPW">PW :&nbsp;<input name="info" type="password"> </p>
+    <p class="login"><input id="btn-cover" type="button" value="로그인" onclick="loginCheck(this.form)"></p>
+    </form>
+    
+    <!-- cyworld 회원가입 -->
+    <form action="login_authentication.do" method="POST">
+    <input name="platform" type="hidden" value="cyworld">
+    <p class="join"><input id="btn-cover" type="submit" value="회원가입"></p>
+    </form>
+    
+    <!-- 네이버 로그인 버튼 -->
+    <div  class="naver" id="naverIdLogin"></div>
+    
+    <!-- 카카오 로그인 버튼 -->
+    <a class="kakao" href="javascript:kakaoLogin();"><img src="https://www.gb.go.kr/Main/Images/ko/member/certi_kakao_login.png" style="height: 40px; width: auto"></a>
+    <!-- 카카오 회원가입 -->
+    <form id="kf" action="login_authentication.do" method="POST">
+    <input name="platform" type="hidden" value="kakao">
+    <input name="email" id="email" type="hidden">
+    <input name="gender" id="gender" type="hidden">
+    </form>
+    
+    <input id="btn-cover" class="findID" type="button" value="아이디 찾기" onclick="find_id();">
+    <input id="btn-cover" class="findPW" type="button" value="비밀번호 찾기" onclick="find_pw();">
+    <input id="btn-cover" class="none-join" type="button" value="비회원으로 입장" onclick="nmain();">
+</div>
+</div>
+                    </div>
+                </div>
+        </section>
+</div>
 	
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<!-- 비회원 접속 -->
@@ -115,7 +127,7 @@
 		const naverLogin = new naver.LoginWithNaverId(
 				{
 					clientId: "eSWj7IYuFA0SbZBBHqva", // 네이버에서 발급받은 API 사용 ID
-					callbackUrl: "http://localhost:8080/cyworld/login_naver_callback.do", // 로그인을 하고 정보동의 후 이동할 페이지 - 네이버에서 미리 등록해야한다.
+					callbackUrl: "http://localhost:9090/cyworld/login_naver_callback.do", // 로그인을 하고 정보동의 후 이동할 페이지 - 네이버에서 미리 등록해야한다.
 					loginButton: {color: "green", type: 3, height: 40}, // 위에 작성한 <div>태그에 만들어줄 로그인 버튼 모양 설정
 					isPopup: false, // callbackUrl을 팝업창으로 열건지 선택 - true : 팝업 / false : 다음 페이지 
 					callbackHandle: true // 콜백메소드에 핸들메소드 사용여부

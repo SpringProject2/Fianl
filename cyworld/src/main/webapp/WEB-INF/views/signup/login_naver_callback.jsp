@@ -5,20 +5,20 @@
 <head>
 </head>
 <body>
-	<!-- 네이버 회원가입 -->
-	<form id="ff" action="login_authentication.do" method="POST">
-		<input name="platform" type="hidden" value="naver">
-		<input name="name" id="name" type="hidden">
-		<input name="gender" id="gender" type="hidden">
-		<input name="email" id="email" type="hidden">
-	</form>
+<!-- 네이버 회원가입 -->
+   <form id="ff" action="login_authentication.do" method="POST">
+      <input name="platform" type="hidden" value="naver">
+      <input name="name" id="name" type="hidden">
+      <input name="gender" id="gender" type="hidden">
+      <input name="email" id="email" type="hidden">
+   </form>
 	
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 	<script>
 		const naverLogin = new naver.LoginWithNaverId(
 				{
 					clientId: "eSWj7IYuFA0SbZBBHqva",
-					callbackUrl: "http://localhost:8080/cyworld/login_naver_callback.do",
+					callbackUrl: "http://localhost:9090/cyworld/login_naver_callback.do",
 					isPopup: false,
 					callbackHandle: true
 				}

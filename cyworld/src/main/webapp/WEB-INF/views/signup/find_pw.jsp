@@ -5,14 +5,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/cyworld/resources/css/reset.css">
+<link rel="stylesheet" href="/cyworld/resources/css/animate.css">
+<link rel="stylesheet" href="/cyworld/resources/css/findpw.css">
 </head>
 <body>
-	<form>
-		<label>이름 : </label><input name="name" type="text"> <br>
-		<label>ID : </label><input name="userID" type="text">
-		<label>이메일 : </label><input name="email" type="text">
-		<input type="button" value="비밀번호 찾기" onclick="findPW(this.form)">
-	</form>
+<div class="container ">
+        <section class="section">
+                <div class="dashed-line">
+                    <div class="gray-background">
+                        <div class="main">
+                            <img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
+                            <form>
+                                <p class="myName">이름<br> <input name="name" type="text"> </p>
+                                <p class="myId">ID<br> <input id="userID" name="userID" type="text"></p>
+                                <p class="myEmail">이메일<br> <input name="email" type="text"></p>
+                                <input id="btn-cover" type="button" value="비밀번호 찾기" onclick="findPW(this.form)">
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+</div>
 	
 	<!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
