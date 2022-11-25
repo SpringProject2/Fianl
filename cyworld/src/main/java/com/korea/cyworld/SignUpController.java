@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,22 @@ public class SignUpController {
 		this.gallery_dao = gallery_dao;
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	@RequestMapping(value= {"/", "login.do", "/logout.do"})
+	@RequestMapping(value= {"/", "login.do"})
 	public String login() {
-		return Common.S_PATH + "login.jsp";
+		HttpSession session = request.getSession();
+		
+		if ( session.getAttribute("login") == null ) {
+			return Common.S_PATH + "login.jsp";
+		}
+		return "redirect:main.do?idx=" + session.getAttribute("login");
+	}
+	
+	@RequestMapping("/logout.do")
+	public String logout() {
+		// 세션을 비운다
+		HttpSession session = request.getSession();
+		session.removeAttribute("login");
+		return "redirect:login.do";
 	}
 	
 	@RequestMapping("/login_naver_callback.do")
@@ -253,9 +267,18 @@ public class SignUpController {
 		if ( !loginCheckVo.getInfo().equals(pw) ) {
 			return "{'result':'no_info'}";
 		}
-		
+		SignUpVO sessionId = signUp_dao.selectOneDoubleCheck(id);
 		// 모두 일치
 		// 로그인 가능
+		// 로그인 유지를 위한 세션 부여
+		HttpSession session = request.getSession();
+		
+		String show = (String)session.getAttribute("login");
+		if ( show == null ) {
+			// 로그인 세션 부여
+			session.setAttribute("login", sessionId.getIdx());
+		}
+		System.out.println(session.getAttribute("login"));
 		return "{'result':'clear'}";
 	}
 	
@@ -295,13 +318,19 @@ public class SignUpController {
 	@RequestMapping("/main.do")
 	public String main(Integer idx, Model model) {
 		if ( idx < 0 ) {
-			return "redirect:nmain.do?idx=" + -1;
+			return "redirect:nmain.do?idx=" + 1;
 		}
 		SignUpVO idxVo = signUp_dao.selectOneIdx(idx);
 		model.addAttribute("vo", idxVo);
 		// 로그인한 사용자의 idx에 해당하는 일촌평만 긁어온다.
 		List<MainVO> list = main_dao.selectList(idx);
 		model.addAttribute("list", list);
+		HttpSession session = request.getSession();
+		
+		if ( session.getAttribute("login") == null ) {
+			return Common.S_PATH + "login.jsp";
+		}
+		model.addAttribute("sessionIdx", session.getAttribute("login"));
 		return Common.P_PATH + "main.jsp";
 	}
 	
@@ -310,6 +339,34 @@ public class SignUpController {
 	public String nmanin(Integer idx, Model model) {
 		model.addAttribute(idx);
 		return Common.P_PATH + "nmain.jsp";
+	}
+	
+	// 이름 및 ID 및 Email로 유저 검색
+	@RequestMapping("/main_search.do")
+	@ResponseBody
+	public HashMap<String, Object> main_search(SignUpVO vo, String searchType, String searchValue) {
+		if ( searchType.equals("name") ) {
+			List<SignUpVO> list = main_dao.selectSearchName(searchValue);
+			HashMap<String, Object> searchVal = new HashMap<String, Object>();
+			searchVal.put("searchList", list);
+			searchVal.put("code", "ok");
+			return searchVal;
+		} else if ( searchType.equals("userID") ) {
+			List<SignUpVO> list = main_dao.selectSearchId(searchValue);
+			HashMap<String, Object> searchVal = new HashMap<String, Object>();
+			searchVal.put("searchList", list);
+			searchVal.put("code", "ok");
+			return searchVal;
+		} else if ( searchType.equals("email") ) {
+			List<SignUpVO> list = main_dao.selectSearchEmail(searchValue);
+			HashMap<String, Object> searchVal = new HashMap<String, Object>();
+			searchVal.put("searchList", list);
+			searchVal.put("code", "ok");
+			return searchVal;
+		}
+		HashMap<String, Object> searchVal = new HashMap<String, Object>();
+		searchVal.put("code", "no");
+		return searchVal;
 	}
 	
 	//일촌평  쓰기 

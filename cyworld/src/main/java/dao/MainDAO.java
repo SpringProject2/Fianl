@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import vo.MainVO;
+import vo.SignUpVO;
 
 public class MainDAO {
 
@@ -17,6 +18,22 @@ public class MainDAO {
 	//일촌평 전체목록 조회
 	public List<MainVO> selectList(int idx){
 		List<MainVO> list = sqlSession.selectList("m.ilchon_list", idx);
+		return list;
+	}
+	
+	// 이름으로 검색한 사용자 조회
+	public List<SignUpVO> selectSearchName(String searchValue) {
+		List<SignUpVO> list = sqlSession.selectList("m.main_search_name", searchValue);
+		return list;
+	}
+	// 이름으로 검색한 사용자 조회
+	public List<SignUpVO> selectSearchId(String searchValue) {
+		List<SignUpVO> list = sqlSession.selectList("m.main_search_id", searchValue);
+		return list;
+	}
+	// 이름으로 검색한 사용자 조회
+	public List<SignUpVO> selectSearchEmail(String searchValue) {
+		List<SignUpVO> list = sqlSession.selectList("m.main_search_email", searchValue);
 		return list;
 	}
 	
