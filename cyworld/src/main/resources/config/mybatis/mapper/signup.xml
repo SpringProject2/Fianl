@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- IDX기준 회원정보 -->
-	<select id="selectIdx" resultType="signup" parameterType="signup">
+	<select id="selectIdx" resultType="signup" parameterType="Object">
 		select * from signup where idx=#{idx}
 	</select>
 </mapper>

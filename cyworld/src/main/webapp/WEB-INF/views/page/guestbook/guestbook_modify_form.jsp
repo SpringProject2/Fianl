@@ -14,16 +14,16 @@
 		<table border="1" align="center">
 		
 			<caption>:::방명록 수정:::</caption>
-			<tr>
-				<th>작성자</th>
-				<td><input type="text" name="guestbookContentName" value="${vo.guestbookContentName}" readonly></td>
-			</tr>
 			
 			<tr>
 				<th>내용</th>
 				<td><pre><textarea rows="5" cols="50" name="guestbookContent">${vo.guestbookContent}</textarea></pre></td>
 			</tr>
 			
+			<tr>
+				<th>작성자</th>
+				<td><input type="text" name="guestbookContentName" value="${vo.guestbookContentName}" readonly></td>
+			</tr>
 			
 			<tr>
 				<td colspan="2" align="center">

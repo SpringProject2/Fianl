@@ -14,6 +14,8 @@
 		<typeAlias type="vo.MainVO" alias="main"/>
 		<typeAlias type="vo.GalleryVO" alias="gallery"/>
 		<typeAlias type="vo.GuestBookVO" alias="guestbook"/>
+		<typeAlias type="vo.GalleryLikeVO" alias="glike"/>
+		<typeAlias type="vo.GuestBookLikeVO" alias="gblike"/>
 	</typeAliases>
 	
 	<mappers>
@@ -21,5 +23,7 @@
 		<mapper resource="config/mybatis/mapper/main.xml" />
 		<mapper resource="config/mybatis/mapper/gallery.xml" />
 		<mapper resource="config/mybatis/mapper/guestbook.xml" />
+		<mapper resource="config/mybatis/mapper/gallerylike.xml" />
+		<mapper resource="config/mybatis/mapper/guestbooklike.xml" />
 	</mappers>
 </configuration>

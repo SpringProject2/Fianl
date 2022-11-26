@@ -38,6 +38,17 @@
 			let name = f.name.value;
 			let phoneNumber = f.phoneNumber.value;
 			
+			// 유효성 검사
+			
+			if ( name == '' ) {
+				alert("이름을 입력하세요");
+				return;
+			}
+			if ( phoneNumber == '' ) {
+				alert("휴대전화 번호를 입력하세요");
+				return;
+			}
+			
 			// ID 중복 확인을 위한 URL, ID 입력값
 			let url = "findIdCheck.do";
 			let param = "name=" + name + "&phoneNumber=" + phoneNumber;

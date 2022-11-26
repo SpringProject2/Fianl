@@ -12,7 +12,7 @@
 	method="post"
 	속성이 필수적으로 추가되어 있어야 한다 -->
 	<form method="post" enctype="multipart/form-data">
-		<input name="idx" type="text" value="${ vo.guestIdx }">
+		<input name="idx" type="text" value="${ param.idx }">
 		<table border="1" align="center">
 			<caption>새 글 쓰기</caption>
 			
@@ -29,7 +29,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input type="button" value="글쓰기" onclick="insert(this.form);">
-					<input type="button" value="취소" onclick="location.href='gallery.do?idx={vo.guestIdx}'">
+					<input type="button" value="취소" onclick="location.href='gallery.do?idx={vo.gallIdx}'">
 				</td>
 			</tr>
 		</table>

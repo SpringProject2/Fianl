@@ -3,7 +3,7 @@ package vo;
 public class GuestBookVO {
 	
 	
-	private int guestbookContentRef, guestIdx;
+	private int guestbookContentRef, guestIdx, guestbookLikeNum;
 	private String guestbookContent, guestbookRegdate, guestbookContentName;
 	
 	public int getGuestbookContentRef() {
@@ -35,5 +35,11 @@ public class GuestBookVO {
 	}
 	public void setGuestbookContentName(String guestbookContentName) {
 		this.guestbookContentName = guestbookContentName;
-	}	
+	}
+	public int getGuestbookLikeNum() {
+		return guestbookLikeNum;
+	}
+	public void setGuestbookLikeNum(int guestbookLikeNum) {
+		this.guestbookLikeNum = guestbookLikeNum;
+	}
 }

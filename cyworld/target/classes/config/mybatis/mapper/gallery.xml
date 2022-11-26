@@ -15,11 +15,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="gallery_insert" parameterType="gallery">
 		insert into GALLERY values(
 			#{galleryContentRef},
-			#{ galleryContent },
-			#{ galleryFileName },
+			#{galleryContent},
+			#{galleryFileName},
 			SYSDATE,
 			#{gallIdx},
-			#{galleryFileExtension}
+			#{galleryFileExtension},
+			#{galleryLikeNum}
         )
 	</insert>
 	
@@ -46,29 +47,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 글 수정 -->
 	<update id="gallery_update" parameterType="gallery">
 		update gallery set
-			galleryContent = #{ galleryContent },
-			galleryFileName = #{ galleryFileName },
-			galleryRegdate = sysdate,
-			galleryFileExtension = #{galleryFileExtension}
+			galleryContent=#{galleryContent},
+			galleryFileName=#{galleryFileName},
+			galleryRegdate=sysdate,
+			galleryFileExtension=#{galleryFileExtension},
+			galleryLikeNum=#{galleryLikeNum}
 			where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
 	</update>
-	
-	<!-- 좋아요 -->
-	<!-- <select id="findLike" resultType="int">
-		select count(*) from gallery where  
-	</select> -->
-	
-	<!-- 댓글수정 -->
-	<!--
-	<update id="galleryComment_update" parameterType="gallery">
-		update gallery set
-		galleryCommentRef = #{ galleryCommentRef },
-		galleryCommentStep = #{ galleryCommentStep },
-		galleryCommentName = #{ galleryCommentName },
-		galleryCommentRegdate = SYSDATE,
-		galleryCommentContent = #{ galleryCommentContent }
-	</update>
-	 -->
 </mapper>
 
 

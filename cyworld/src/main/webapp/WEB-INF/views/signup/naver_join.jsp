@@ -19,24 +19,25 @@
 						<img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
 						
 						<form>
-                                <input name="platform" type="hidden" value="${ vo.platform }">
-                                <input name="name" type="hidden" value="${ vo.name }">
-                                <input name="gender" type="hidden" value="${ vo.gender }">
-                                <input name="email" type="hidden" value="${ vo.email }">
-                                <p class="iNum">주민번호<br> <input name="identityNum" id="identityNum" type="text" placeholder="주민번호 13자리를 입력해주세요" maxlength="14"></p> 
-                                <p class="phone">휴대전화<br> <input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"> </p>
-                                <p class="address">
-                                       주소<br> <input class="address_kakao" name="address" type="text">
-                                    <div class="findAddress"><input id="btn-cover" class="address_kakao" type="button" value="주소찾기"></div>
-                                </p>
-                                <p class="rAddress">상세 주소<br> <input class="address_kakao" name="addressDetail" type="text"> </p>
-                                <input id="btn-cover" class="join" type="button" value="가입" onclick="join(this.form)">
-                            </form>
-                    </div>
-                </div>
-                </div>
-        </section>
-</div>
+							<input name="platform" type="hidden" value="${ vo.platform }">
+							<input name="name" type="hidden" value="${ vo.name }">
+							<input name="gender" type="hidden" value="${ vo.gender }">
+							<input name="email" type="hidden" value="${ vo.email }">
+							<p class="iNum">주민번호<br> <input name="identityNum" id="identityNum" type="text" placeholder="주민번호 13자리를 입력해주세요" maxlength="14"></p> 
+							<p class="phone">휴대전화<br> <input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"> </p>
+							<p class="address">
+								주소<br> <input class="address_kakao" name="address" type="text">
+								<div class="findAddress"><input id="btn-cover" class="address_kakao" type="button" value="주소찾기"></div>
+							</p>
+							<p class="rAddress">상세 주소<br> <input class="address_kakao" name="addressDetail" type="text"> </p>
+							<input id="btn-cover" class="join" type="button" value="가입" onclick="join(this.form)">
+						</form>
+					
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<!-- 다음 주소 api -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -155,6 +156,32 @@
 		
 		// DB저장하러 이동
 		function join(f) {
+			let identityNum = f.identityNum.value;
+			let phoneNumber = f.phoneNumber.value;
+			let address = f.address.value;
+			let addressDetail = f.addressDetail.value;
+			
+			// 유효성 검사
+			
+			if ( identityNum == '' ) {
+				alert("주민번호를 입력하세요");
+				return;
+			}
+			if ( phoneNumber == '' ) {
+				alert("휴대전화 번호를 입력하세요");
+				return;
+			}
+			if ( address == '' ) {
+				alert("주소를 입력하세요");
+				return;
+			}
+			if ( addressDetail == '' ) {
+				alert("상세 주소를 입력하세요");
+				return;
+			}
+			
+			alert("가입이 완료되었습니다");
+			alert("로그인 페이지로 이동합니다");
 			f.action = "welcome.do";
 			f.method = "POST";
 			f.submit();

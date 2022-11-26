@@ -3,12 +3,14 @@ package vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class GalleryVO {
-	private int galleryCommentStep, galleryCommentRef, galleryContentRef, galleryFolderDepth, galleryFolderStep, galleryFolderRef, galleryLike, gallIdx;
-	private String galleryTopCategory, galleryMiddleCategory, galleryContent, galleryRegdate, galleryCommentRegdate, galleryCommentContent, galleryCommentName, galleryFileName, galleryFileExtension;
-	
-	//파일을 받기위한 클래스
-	private MultipartFile galleryFile;
-	
+	private int galleryCommentStep, galleryCommentRef, galleryFolderDepth, galleryFolderStep, galleryFolderRef;
+	private String galleryTopCategory, galleryMiddleCategory, galleryCommentRegdate, galleryCommentContent, galleryCommentName;
+	////////// 게시물 영역 //////////
+	private int gallIdx, galleryContentRef, galleryLikeNum; // 해당 유저의 게시판 idx, 게시물 번호, 게시물 좋아요 수, 좋아요 테이블
+	private String galleryContent, galleryRegdate, galleryFileName, galleryFileExtension; // 게시물 내용, 게시물 작성 날짜, 파일 이름, 파일 확장자
+	// 파일을 받기위한 클래스
+	private MultipartFile galleryFile; // 물리적 파일
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	// getter/setter
 	public MultipartFile getGalleryFile() {
 		return galleryFile;
@@ -16,6 +18,14 @@ public class GalleryVO {
 	
 	public void setGalleryFile(MultipartFile galleryFile) {
 		this.galleryFile = galleryFile;
+	}
+	
+	public int getGalleryLikeNum() {
+		return galleryLikeNum;
+	}
+
+	public void setGalleryLikeNum(int galleryLikeNum) {
+		this.galleryLikeNum = galleryLikeNum;
 	}
 	
 	public int getGallIdx() {
@@ -97,15 +107,7 @@ public class GalleryVO {
 	public void setGalleryFolderRef(int galleryFolderRef) {
 		this.galleryFolderRef = galleryFolderRef;
 	}
-
-	public int getGalleryLike() {
-		return galleryLike;
-	}
-
-	public void setGalleryLike(int galleryLike) {
-		this.galleryLike = galleryLike;
-	}
-
+	
 	public String getGalleryTopCategory() {
 		return galleryTopCategory;
 	}

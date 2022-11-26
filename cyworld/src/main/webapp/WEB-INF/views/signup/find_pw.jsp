@@ -40,6 +40,21 @@
 			let userID = f.userID.value;
 			let email = f.email.value;
 			
+			// 유효성 검사
+			
+			if ( name == '' ) {
+				alert("이름을 입력하세요");
+				return;
+			}
+			if ( userID == '' ) {
+				alert("아이디를 입력하세요");
+				return;
+			}
+			if ( email == '' ) {
+				alert("이메일을 입력하세요");
+				return;
+			}
+			
 			// ID 중복 확인을 위한 URL, ID 입력값
 			let url = "findPwCheck.do";
 			let param = "name=" + name +
@@ -53,7 +68,7 @@
 				let data = xhr.responseText;
 				
 				if ( data == "no" ) {
-					alert("해당 ID의 비밀번호를 찾지 못하였습니다");
+					alert("가입된 정보가 없습니다");
 					return;
 				}
 				

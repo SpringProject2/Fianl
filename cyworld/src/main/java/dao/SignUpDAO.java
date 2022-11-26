@@ -51,7 +51,7 @@ public class SignUpDAO {
 	}
 	
 	// IDX기준 회원정보 가져오기
-	public SignUpVO selectOneIdx(int idx) {
+	public SignUpVO selectOneIdx(Object idx) {
 		SignUpVO vo = sqlSession.selectOne("s.selectIdx", idx);
 		return vo;
 	}

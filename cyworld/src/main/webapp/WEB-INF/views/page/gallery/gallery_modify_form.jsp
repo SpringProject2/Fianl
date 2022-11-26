@@ -10,7 +10,9 @@
 <body>
 	<form method="post" enctype="multipart/form-data">
 		<input name="gallIdx" type="text" value="${ vo.gallIdx }">
-		<input type="text" name="galleryContentRef" value="${ vo.galleryContentRef }">
+		<input name="galleryContentRef" type="text" value="${ vo.galleryContentRef }">
+		<input name="galleryLikeNum" type="text" value="${ vo.galleryLikeNum }">
+		<input name="galleryFileExtension" type="text" value="${ vo.galleryFileExtension }">
 		
 		<table border="1" align="center">
 		

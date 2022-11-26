@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,17 @@
 			
 			<tr>
 				<th>작성자</th>
-				<td><input name="guestbookContentName"></td>
+				<c:if test="${ sessionUser.platform eq 'cyworld' }">
+					<td><input name="guestbookContentName" value="${ sessionUser.userID }" readonly></td>
+				</c:if>
+				
+				<c:if test="${ sessionUser.platform eq 'kakao' }">
+					<td><input name="guestbookContentName" value="${ sessionUser.email } (카카오 사용자)" readonly></td>
+				</c:if>
+				
+				<c:if test="${ sessionUser.platform eq 'naver' }">
+					<td><input name="guestbookContentName" value="${ sessionUser.email } (네이버 사용자)" readonly></td>
+				</c:if>
 			</tr>
 			
 			<tr>

@@ -22,6 +22,7 @@
 						<div class="user-info">
 							<!-- 로그인 -->
 							<form id="ff">
+								<input name="platform" type="hidden" value="cyworld">
 								<p class="userID">ID :&nbsp;<input name="userID" type="text"></p>
 								<p class="userPW">PW :&nbsp;<input name="info" type="password"> </p>
 								<p class="login"><input id="btn-cover" type="button" value="로그인" onclick="loginCheck(this.form)"></p>
@@ -116,12 +117,13 @@
 				alert("로그인 성공");
 				// 입력한 ID와 비밀번호를 들고 메인 페이지로 이동
 				const ff = document.getElementById("ff");
-				ff.action = "welcome.do";
+				ff.action = "login_authentication.do";
 				ff.method = "POST";
 				ff.submit();
 			}
 		}
 	</script>
+	
 	<!-- 네이버 로그인 API -->
 	<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 	<script type="text/javascript">
@@ -138,6 +140,7 @@
 		// 로그인 정보동의 시작
 		naverLogin.init();
 	</script>
+	
 	<!-- 카카오 로그인 API -->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script>

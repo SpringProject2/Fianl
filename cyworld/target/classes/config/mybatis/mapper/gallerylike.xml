@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gl">
+	
+	<!-- 갤러리 좋아요 -->
+	<!-- 좋아요를 눌렀는지 확인 작업 -->
+	<select id="selectLike" resultType="glike" parameterType="glike">
+		select * from gallerylike where galleryLikeIdx=#{galleryLikeIdx} and galleryLikeRef=#{galleryLikeRef} and galleryLikeSession=#{galleryLikeSession}
+	</select>
+	
+	<!-- 게시물 좋아요 추가 -->
+	<insert id="addLike" parameterType="glike">
+		insert into gallerylike values(
+			#{galleryLikeIdx},
+			#{galleryLikeRef},
+			#{galleryLikeSession}
+		)
+	</insert>
+	
+	<!-- 게시물 좋아요 취소 -->
+	<delete id="cancleLike" parameterType="glike">
+		delete from gallerylike where galleryLikeIdx=#{galleryLikeIdx} and galleryLikeRef=#{galleryLikeRef} and galleryLikeSession=#{galleryLikeSession}
+	</delete>
+	
+	<!-- 게시물 좋아요 갯수 구하기 -->
+	<select id="likeCountNum" resultType="int" parameterType="glike">
+		select count(galleryLikeSession) from gallerylike where galleryLikeIdx=#{galleryLikeIdx} and galleryLikeRef=#{galleryLikeRef}
+	</select>
+	
+	<!-- 구해낸 게시물 좋아요 갯수를 보여주기위해 컬럼에 작성하기 -->
+	<update id="likeNum" parameterType="gallery">
+		update gallery
+			set galleryLikeNum=#{galleryLikeNum}
+			where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
+	</update>
+	
+	<!-- 게시글 삭제시 해당 좋아요 내역도 모두 삭제 -->
+	<delete id="deleteLikeAll" parameterType="glike">
+		delete from gallerylike where galleryLikeIdx=#{galleryLikeIdx} and galleryLikeRef=#{galleryLikeRef}
+	</delete>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

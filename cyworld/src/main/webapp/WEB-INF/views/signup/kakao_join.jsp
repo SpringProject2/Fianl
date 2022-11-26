@@ -156,6 +156,37 @@
 		
 		// DB저장하러 이동
 		function join(f) {
+			let name = f.name.value;
+			let identityNum = f.identityNum.value;
+			let phoneNumber = f.phoneNumber.value;
+			let address = f.address.value;
+			let addressDetail = f.addressDetail.value;
+			
+			// 유효성 검사
+			
+			if ( name == '' ) {
+				alert("이름을 입력하세요");
+				return;
+			}
+			if ( identityNum == '' ) {
+				alert("주민번호를 입력하세요");
+				return;
+			}
+			if ( phoneNumber == '' ) {
+				alert("휴대전화 번호를 입력하세요");
+				return;
+			}
+			if ( address == '' ) {
+				alert("주소를 입력하세요");
+				return;
+			}
+			if ( addressDetail == '' ) {
+				alert("상세 주소를 입력하세요");
+				return;
+			}
+			
+			alert("가입이 완료되었습니다");
+			alert("로그인 페이지로 이동합니다");
 			f.action = "welcome.do";
 			f.method = "POST";
 			f.submit();

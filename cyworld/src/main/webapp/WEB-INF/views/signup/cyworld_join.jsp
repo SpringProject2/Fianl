@@ -34,12 +34,14 @@
 								성별 <br> <input name="gender" type="radio" value="male">&nbsp; 남자
 										<input name="gender" type="radio" value="female">&nbsp; 여자
 							</p>
-							<p class="email">이메일 <br> <input name="email" type="text"></p>
-							<input class="sendANum" id="btn-cover" type="button" value="인증번호 전송"> 
-							<p class="ANum">인증번호 <br> <input type="text"></p> 
+							<p class="email">이메일 <br> <input id="email" name="email" type="text"></p>
+							<input class="sendANum" id="btn-cover" type="button" value="인증번호 전송" onclick="emailCheckSend();">
+							<p class="ANum">인증번호 <br> <input id="i_email" type="text"></p>
+														<input id="h_email" type="hidden"> <!-- 추가코드 -->
+							<input class="sendANum" type="button" value="인증번호 확인" onclick="emailCheck();"> <!-- 추가된 코드 -->
 							<p class="phone">휴대전화 <br> <input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"></p> 
 							<p class="address">주소 <br> <input class="address_kakao" name="address" type="text"></p>
-							<input class="address2" id="btn-cover" type="button" value="주소찾기"> <br>
+							<input class="address2 address_kakao" id="btn-cover" type="button" value="주소찾기"> <br>
 							<p class="rAddress">상세 주소 <br> <input class="address_kakao" name="addressDetail" type="text"></p>
 							<input class="mJoin" id="btn-cover" type="button" value="가입" onclick="cyworldJoin(this.form);">
 						</form>
@@ -116,6 +118,11 @@
 		function emailCheck() {
 			let i_email = document.getElementById("i_email").value; // 인증번호 입력값
 			let h_email = document.getElementById("h_email").value; // 인증번호 체크용
+			
+			if ( i_email == '' ) {
+				alert("인증번호를 입력하세요")
+				return;
+			}
 			
 			if ( i_email != h_email ) {
 				alert("인증번호가 다릅니다");
@@ -260,13 +267,18 @@
 			let name = f.name.value;
 			let identityNum = f.identityNum.value;
 			let gender = f.gender.value;
+			
+			// 이메일 인증 체크
 			let email = f.email.value;
+			let i_email = document.getElementById("i_email").value; // 인증번호 입력값
+			let h_email = document.getElementById("h_email").value; // 인증번호 체크용
+			
 			let phoneNumber = f.phoneNumber.value;
 			let address = f.address.value;
 			let addressDetail = f.addressDetail.value;
-			let platform = f.platform.value;
 			
 			// 유효성 검사
+			
 			if ( userID == '' ) {
 				alert("아이디를 입력하세요");
 				return;
@@ -314,6 +326,14 @@
 				alert("이메일을 입력하세요");
 				return;
 			}
+			if ( i_email == '' ) {
+				alert("인증번호를 입력하세요")
+				return;
+			}
+			if ( i_email != h_email ) {
+				alert("인증번호가 다릅니다");
+				return;
+			}
 			if ( phoneNumber == '' ) {
 				alert("휴대전화 번호를 입력하세요");
 				return;
@@ -327,7 +347,9 @@
 				return;
 			}
 			
-			// 메인 페이지로 이동
+			// 가입 성공
+			alert("가입이 완료되었습니다");
+			alert("로그인 페이지로 이동합니다");
 			f.action = "welcome.do";
 			f.method = "POST";
 			f.submit();

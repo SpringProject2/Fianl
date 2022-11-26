@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import vo.GuestBookLikeVO;
 import vo.GuestBookVO;
 
 
@@ -54,6 +55,42 @@ public class GuestBookDAO {
 	//게시글 수정
 	public int update(GuestBookVO vo) {
 		int res = sqlSession.update("gb.guestbook_update", vo);
+		return res;
+	}
+	///////////////////좋아요 구역/////////////////////
+	// 좋아요를 이미 눌렀는지 확인하기 위한 작업
+	public GuestBookLikeVO selectOneLike(GuestBookLikeVO vo) {
+		GuestBookLikeVO likeVo = sqlSession.selectOne("gbl.selectLike", vo);
+		return likeVo;
+	}
+	
+	// 게시물 좋아요 추가
+	public int insertLike(GuestBookLikeVO vo) {
+		int res = sqlSession.insert("gbl.addLike", vo);
+		return res;
+	}
+	
+	// 게시물 좋아요 취소
+	public int deleteLike(GuestBookLikeVO vo) {
+		int res = sqlSession.delete("gbl.cancleLike", vo);
+		return res;
+	}
+	
+	// 게시물 좋아요 갯수 구하기 -->
+	public int selectLikeCountNum(GuestBookLikeVO vo) {
+		int res = sqlSession.selectOne("gbl.likeCountNum", vo);
+		return res;
+	}
+	
+	// --> 구해낸 게시물 좋아요 갯수를 보여주기위해 컬럼에 작성하기
+	public int updateLikeNum(GuestBookVO vo) {
+		int res = sqlSession.update("gbl.likeNum", vo);
+		return res;
+	}
+	
+	// 게시글 삭제시 해당 좋아요 내역도 모두 삭제
+	public int deleteLikeAll(GuestBookLikeVO vo) {
+		int res = sqlSession.delete("gbl.deleteLikeAll", vo);
 		return res;
 	}
 }

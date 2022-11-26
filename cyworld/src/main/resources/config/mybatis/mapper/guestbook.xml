@@ -24,10 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="guestbook_insert" parameterType="guestbook">
 		insert into GuestBook values(
 			#{guestbookContentRef},
-			#{guestbookContentName},
 			#{guestbookContent},
+			#{guestbookContentName},
 			SYSDATE,
-			#{guestIdx}
+			#{guestIdx},
+			#{guestbookLikeNum}
 		)
 	</insert>
 	
@@ -46,7 +47,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update guestbook set
         	guestbookContent = #{ guestbookContent },
         	guestbookContentName = #{ guestbookContentName },
-        	guestbookRegdate = SYSDATE
+        	guestbookRegdate = SYSDATE,
+        	guestbookLikeNum=#{guestbookLikeNum}
         	where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
     </update>
     

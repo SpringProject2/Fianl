@@ -24,11 +24,13 @@
 			<form>
 		
 				<div class="type_galleryFile">
-					<!-- 첨부된 이미지가 있는 경우에만 img태그를 보여주자! -->
+					<!-- 첨부된 이미지가 있는 경우에만 img 및 viedo태그를 보여주자! -->
 					<c:if test="${ vo.galleryFileName ne 'no_file' }">
+						<!-- 확장자가 img일때 -->
 						<c:if test="${ vo.galleryFileExtension eq 'image' }">
 							<img src="/cyworld/resources/upload/${ vo.galleryFileName }" width="200"/>
 						</c:if>
+						<!-- 확장자가 videl일때 -->
 						<c:if test="${ vo.galleryFileExtension eq 'video' }">
 							<video autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }" width="200"/>
 							<!-- video태그 autoplay : 자동 재생 / controls loop : 반복 재생 / muted : 음소거 -->
@@ -39,18 +41,11 @@
 				<div class="type_gallerycontent">
 				<pre>${ vo.galleryContent }</pre> <br>
 				작성일자 : ${ vo.galleryRegdate }<br>
+				<span>${ vo.galleryLikeNum }</span>
+				<input type="button" value="좋아요" onclick="like(this.form)">
 				</div>
 			
-				<!--  <div class="type_galleryLike"> 좋아요 : ${ vo.galleryLike }</div>
-			
-				<div class="type_galleryComment"> 
-				댓글 작성자 : ${ vo.galleryCommentName } <br>
-				댓글 작성일자 : ${ vo.galleryCommentRegdate } <br>
-				댓글 내용 : ${ vo.galleryCommentContent }
-				</div>
-				-->
-			
-				<input type="text" name="idx" value="${ idx }">
+				<input type="text" name="gallIdx" value="${ idx }">
 				<input type="text" name="galleryContentRef" value="${ vo.galleryContentRef }">
 				<input type="button" value="수정" onclick="modify(this.form);">
 				<input type="button" value="삭제" onclick="del(this.form);">
@@ -79,9 +74,8 @@
 			//준비된 두 개의 정보를 콜백메서드로 전달
 			sendRequest( url, param, resultDel, "GET" );
 		}
-		
-		//콜백메서드를 생성
-		function resultDel(){
+		// 삭제 콜백메서드를 생성
+		function resultDel() {
 			//서버에서 넘어온 데이터를 받아오기 위한 메서드
 			if( xhr.readyState == 4 && xhr.status == 200 ){
 				
@@ -103,15 +97,25 @@
 			f.method = "get";
 			f.submit();
 		}
-	</script>
-	<!-- 파일 수정 가져오기 -->
-	<script>
-		document.addEventListener("DOMContentLoaded", function(){
-
-	 	// Handler when the DOM is fully loaded
-
-		});
-
+		
+		// 좋아요 구하기
+		function like(f) {
+			let gallIdx = f.gallIdx.value;
+			let galleryContentRef = f.galleryContentRef.value;
+			
+			let url = "gallery_like.do";
+			let param = "gallIdx=" + gallIdx +
+						"&galleryContentRef=" + galleryContentRef;
+			sendRequest(url, param, resultLike, "GET");
+		}
+		// 좋아요 콜백메소드 생성
+		function resultLike() {
+			if( xhr.readyState == 4 && xhr.status == 200 ){
+				//xhr.responseText : 컨트롤러에서 return으로 보내준 결과값
+				let data = xhr.responseText;
+				location.href = "gallery.do?idx=${idx}"
+			}
+		}
 	</script>
 </body>
 </html>

@@ -25,7 +25,9 @@ import dao.SignUpDAO;
 import mail.MailKey;
 import util.Common;
 import vo.GalleryVO;
+import vo.GuestBookLikeVO;
 import vo.GuestBookVO;
+import vo.GalleryLikeVO;
 import vo.MainVO;
 import vo.SignUpVO;
 
@@ -61,10 +63,10 @@ public class SignUpController {
 	@RequestMapping(value= {"/", "login.do"})
 	public String login() {
 		HttpSession session = request.getSession();
-		
 		if ( session.getAttribute("login") == null ) {
 			return Common.S_PATH + "login.jsp";
 		}
+		
 		return "redirect:main.do?idx=" + session.getAttribute("login");
 	}
 	
@@ -81,21 +83,33 @@ public class SignUpController {
 		return Common.S_PATH + "login_naver_callback.jsp";
 	}
 	
-	// 각 플랫폼별로 회원가입 페이지로 이동
+	// 각 플랫폼별 가입자와 비가입자 구별
 	@RequestMapping("/login_authentication.do")
 	public String login_authentication(SignUpVO vo, Model model) {
 		// 플랫폼이 cyworld일때
 		if ( vo.getPlatform().equals("cyworld") ) {
-			model.addAttribute("vo", vo);
-			return Common.S_PATH + "cyworld_join.jsp";
+			// 가져온 정보중에 ID가 없을경우 - 회원가입
+			if ( vo.getUserID() == null ) {
+				model.addAttribute("vo", vo);
+				return Common.S_PATH + "cyworld_join.jsp";
+			}
+			// 가져온 정보중에 ID가 있을경우 - 로그인
+			// 로그인한 ID로 회원정보 조회
+			SignUpVO loginVo = signUp_dao.selectOneDoubleCheck(vo.getUserID());
+			HttpSession session = request.getSession();
+			if ( session.getAttribute("login") == null ) {
+				// 로그인 세션 부여
+				session.setAttribute("login", loginVo.getIdx());
+			}
+			// 세션을 들고 메인페이지로 이동
+			return "redirect:main.do?idx=" + session.getAttribute("login");
 		}
 		
-		// 로그인이 소셜 로그인일때 (카카오 및 네이버)
+		// 플랫폼이 소셜 로그인일때 (카카오 및 네이버)
 		// 플랫폼별 가입자 조회 - vo.getPlatform + vo.getEmail
 		SignUpVO joinVo = signUp_dao.selectOnePlatformEmail(vo);
-		System.out.println(joinVo);
 		
-		// 조회된 값이 없을때
+		// 조회된 값이 없을때 - 회원가입으로 이동
 		if ( joinVo == null ) {
 			// 플랫폼이 카카오일때
 			if ( vo.getPlatform().equals("kakao") ) {
@@ -108,8 +122,16 @@ public class SignUpController {
 				return Common.S_PATH + "naver_join.jsp";
 			}
 		}
-		// 조회된 값이 있을때
-		return "redirect:main.do?idx=" + joinVo.getIdx(); // 환영 페이지로 포워딩
+		
+		// 조회된 값이 있을때 - 로그인 성공
+		// 소셜로그인이면 이곳에서 세션을 발급받는다
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 로그인 세션 부여
+			session.setAttribute("login", joinVo.getIdx());
+		}
+		// 세션을 들고 메인페이지로 이동
+		return "redirect:main.do?idx=" + session.getAttribute("login");
 	}
 	
 	// ID 중복체크
@@ -278,46 +300,41 @@ public class SignUpController {
 		// 로그인 가능
 		// 로그인 유지를 위한 세션 부여
 		HttpSession session = request.getSession();
-		
-		String show = (String)session.getAttribute("login");
-		if ( show == null ) {
+		if ( session.getAttribute("login") == null ) {
 			// 로그인 세션 부여
 			session.setAttribute("login", sessionId.getIdx());
 		}
-		System.out.println(session.getAttribute("login"));
 		return "{'result':'clear'}";
 	}
 	
-	// 회원가입 및 로그인시 메인페이지로 가기전 한번 거치는 장소
+	// 회원가입시 추가적으로 더 필요한 정보를 넣기위한 장소
 	@RequestMapping("/welcome.do")
 	public String welcome(SignUpVO vo, Model model) {
-		// ID로 가입자인지 조회
-		SignUpVO loginVo = signUp_dao.selectOneDoubleCheck(vo.getUserID());
 		// cyworld로 회원가입자가 들어올때
-		if ( loginVo == null ) {
-			if ( vo.getPlatform().equals("cyworld") ) {
-				// 아직 없는 정보값들 임의로 지정
-				vo.setMinimi("");
-				vo.setDotoryNum(0);
-				// 가입 성공시 고객 정보 저장
-				signUp_dao.insertJoinSuccess(vo);
-				SignUpVO joinVo = signUp_dao.selectOneDoubleCheck(vo.getUserID());
-				return "redirect:main.do?idx=" + joinVo.getIdx();
-			}
-			// 소셜 회원가입자가 들어올때
-			// 아직 없는 정보값들 임의로 지정
-			vo.setUserID("");
-			vo.setInfo("");
-			vo.setInfoR("");
-			vo.setMinimi("");
-			vo.setDotoryNum(0);
-			// 가입 성공시 고객 정보 저장
+		if ( vo.getPlatform().equals("cyworld") ) {
+			// 추가 정보들을 임의로 지정
+			vo.setMinimi(""); // 기본 미니미 지정
+			vo.setDotoryNum(0); // 기본 도토리 갯수 지정
+			// 가입 성공시 유저 정보 저장
 			signUp_dao.insertJoinSuccess(vo);
 			SignUpVO joinVo = signUp_dao.selectOneDoubleCheck(vo.getUserID());
-			return "redirect:main.do?idx=" + joinVo.getIdx();
+			
+			// 회원가입 정보 저장후 로그인 페이지로 이동
+			return "redirect:login.do";
 		}
-		// 가입자일때 (로그인)
-		return "redirect:main.do?idx=" + loginVo.getIdx();
+		
+		// 소셜 회원가입자가 들어올때
+		// 추가 정보들을 임의로 지정
+		vo.setUserID(""); // 소셜로그인이라 ID정보 없음
+		vo.setInfo(""); // 소셜로그인이라 PW정보 없음
+		vo.setMinimi(""); // 기본 미니미 지정
+		vo.setDotoryNum(0); // 기본 도토리 갯수 지정
+		// 가입 성공시 유저 정보 저장
+		signUp_dao.insertJoinSuccess(vo);
+		SignUpVO joinVo = signUp_dao.selectOneDoubleCheck(vo.getUserID());
+		
+		// 회원가입 정보 저장후 로그인 페이지로 이동
+		return "redirect:login.do";
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 메인페이지로 이동
@@ -328,11 +345,12 @@ public class SignUpController {
 		}
 		SignUpVO idxVo = signUp_dao.selectOneIdx(idx);
 		model.addAttribute("vo", idxVo);
+		
 		// 로그인한 사용자의 idx에 해당하는 일촌평만 긁어온다.
 		List<MainVO> list = main_dao.selectList(idx);
 		model.addAttribute("list", list);
-		HttpSession session = request.getSession();
 		
+		HttpSession session = request.getSession();
 		if ( session.getAttribute("login") == null ) {
 			return Common.S_PATH + "login.jsp";
 		}
@@ -411,7 +429,6 @@ public class SignUpController {
 	// 사진첩 조회
 	@RequestMapping("/gallery.do")
 	public String list(Integer idx, Model model) {
-
 		List<GalleryVO> list = gallery_dao.selectList(idx);
 		model.addAttribute("idx", idx);
 		model.addAttribute("list", list);// 바인딩 : jsp까지 정보운반
@@ -472,6 +489,8 @@ public class SignUpController {
 			vo.setGallIdx(idx);
 			// 게시글의 파일 이름 부여
 			vo.setGalleryFileName(galleryFileName);
+			// 게시글에 좋아요 갯수 부여
+			vo.setGalleryLikeNum(0);
 			// 확장자 구하기
 			String extension = vo.getGalleryFileName().substring( vo.getGalleryFileName().lastIndexOf( "." ) + 1 );
 			System.out.println(vo.getGalleryFileExtension());
@@ -486,7 +505,7 @@ public class SignUpController {
 		}
 		
 		// 작성된 글이 있을경우
-		// 해당 idx로 가장 최근에 작성한 일촌평 찾기
+		// 해당 idx로 가장 최근에 작성한 게시글 찾기
 		int maxNum = gallery_dao.selectMaxNum(idx);
 		// 가져온 최근 게시글 번호에 1추가
 		vo.setGalleryContentRef(maxNum + 1);
@@ -494,6 +513,8 @@ public class SignUpController {
 		vo.setGallIdx(idx);
 		// 게시글의 파일 이름 부여
 		vo.setGalleryFileName(galleryFileName);
+		// 게시글에 좋아요 갯수 부여
+		vo.setGalleryLikeNum(0);
 		// 확장자 구하기
 		String extension = vo.getGalleryFileName().substring( vo.getGalleryFileName().lastIndexOf( "." ) + 1 );
 		System.out.println(vo.getGalleryFileExtension());
@@ -510,13 +531,14 @@ public class SignUpController {
 	// 게시글 삭제
 	@RequestMapping("/delete_gallery.do")
 	@ResponseBody // Ajax로 요청된 메서드는 결과를 콜백메서드로 돌려주기 위해 반드시 @ResponseBody가 필요!!
-	public String delete(Integer idx, int galleryContentRef) {
+	public String delete(Integer idx, int galleryContentRef, GalleryLikeVO lvo) {
 		// 해당 idx 사용자의 게시글 번호
 		HashMap<String, Integer> galleryKey = new HashMap<String, Integer>();
 		galleryKey.put("1", idx);
 		galleryKey.put("2", galleryContentRef);
 		
 		int res = gallery_dao.delete(galleryKey);
+		gallery_dao.deleteLikeAll(lvo);
 		
 		String result = "no";
 		if (res == 1) {
@@ -542,7 +564,6 @@ public class SignUpController {
 		}
 		
 		return Common.GP_PATH + "gallery_modify_form.jsp";
-		
 	}
 	
 	// 게시글 수정하기
@@ -603,11 +624,43 @@ public class SignUpController {
 		int res = gallery_dao.update(vo);
 		return "redirect:gallery.do?idx=" + vo.getGallIdx();
 	}
+	
+	/////////////// 갤러리 좋아요 구역 ///////////////
+	@RequestMapping("/gallery_like.do")
+	@ResponseBody
+	public String gallery_like(GalleryVO vo, GalleryLikeVO lvo) {
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			return Common.S_PATH + "login.jsp";
+		}
+		Integer sessionIdx = (Integer)session.getAttribute("login");
+		lvo.setGalleryLikeSession(sessionIdx);
+		lvo.setGalleryLikeIdx(vo.getGallIdx());
+		lvo.setGalleryLikeRef(vo.getGalleryContentRef());
+		GalleryLikeVO likeVo = gallery_dao.selectOneLike(lvo);
+		String result = "no";
+		if ( likeVo != null ) {
+			gallery_dao.deleteLike(lvo);
+			int likeCount = gallery_dao.selectLikeCountNum(lvo);
+			vo.setGalleryLikeNum(likeCount);
+			gallery_dao.updateLikeNum(vo);
+			return result;
+		}
+		gallery_dao.insertLike(lvo);
+		int likeCount = gallery_dao.selectLikeCountNum(lvo);
+		vo.setGalleryLikeNum(likeCount);
+		gallery_dao.updateLikeNum(vo);
+		result = "yes";
+		return result;
+	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//방명록 조회
 	@RequestMapping("/guestbook.do")
 	public String guestbook_list (Integer idx, Model model) {
-		
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") != null ) {
+			model.addAttribute("sessionIdx", session.getAttribute("login"));
+		}
 		List<GuestBookVO> list = guestbook_dao.selectList(idx);
 		model.addAttribute("list", list); //바인딩
 		return Common.GBP_PATH + "guestbook_list.jsp"; //포워딩
@@ -615,33 +668,43 @@ public class SignUpController {
 	
 	// 방명록 작성페이지로 이동
 	@RequestMapping("/guestbook_insert_form.do")
-	public String guestbook_insert_form() {
+	public String guestbook_insert_form(Model model) {
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			return Common.S_PATH + "login.jsp";
+		}
+		SignUpVO sessionUser = signUp_dao.selectOneIdx(session.getAttribute("login"));
+		model.addAttribute("sessionUser", sessionUser);
 		return Common.GBP_PATH + "guestbook_insert_form.jsp";
 	}
 	
 	//새 글 작성
 	@RequestMapping("/guestbook_insert.do")
 	public String guestbook_insert(Integer idx, GuestBookVO vo) {
-		// 해당 idx로 사진첩 조회
+		// 해당 idx로 방명록 조회
 		int countNum = guestbook_dao.selectCountNum(idx);
-		// 사진첩에 글이 한개도 없을경우
+		// 방명록에 글이 한개도 없을경우
 		if ( countNum == 0 ) {
-			// 사진첩에 번호 부여
+			// 방명록에 번호 부여
 			vo.setGuestbookContentRef(1);
-			// 게시글에 해당 사용자의 idx부여
+			// 방명록에 해당 사용자의 idx부여
 			vo.setGuestIdx(idx);
+			// 방명록에 좋아요 숫자 부여
+			vo.setGuestbookLikeNum(0);
 			guestbook_dao.insert(vo);
 			
 			return "redirect:guestbook.do?idx=" + idx;
 		}
 		
-		// 작성된 글이 있을경우
-		// 해당 idx로 가장 최근에 작성한 일촌평 찾기
+		// 작성된 방명록이 있을경우
+		// 해당 idx로 가장 최근에 작성한 방명록 찾기
 		int maxNum = guestbook_dao.selectMaxNum(idx);
-		// 가져온 최근 게시글 번호에 1추가
+		// 가져온 최근 방명록에 번호에 1추가
 		vo.setGuestbookContentRef(maxNum + 1);
-		// 게시글에 해당 사용자의 idx부여
+		// 방명록에 해당 사용자의 idx부여
 		vo.setGuestIdx(idx);
+		// 방명록에 좋아요 숫자 부여
+		vo.setGuestbookLikeNum(0);
 		guestbook_dao.insert(vo);
 		
 		return "redirect:guestbook.do?idx=" + idx;
@@ -689,6 +752,35 @@ public class SignUpController {
 			result = "{'result':'yes'}";
 		}
 		
+		return result;
+	}
+	
+	/////////////// 갤러리 좋아요 구역 ///////////////
+	@RequestMapping("/guestbook_like.do")
+	@ResponseBody
+	public String geustbook_like(GuestBookVO vo, GuestBookLikeVO lvo) {
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			return Common.S_PATH + "login.jsp";
+		}
+		Integer sessionIdx = (Integer)session.getAttribute("login");
+		lvo.setGuestbookLikeSession(sessionIdx);
+		lvo.setGuestbookLikeIdx(vo.getGuestIdx());
+		lvo.setGuestbookLikeRef(vo.getGuestbookContentRef());
+		GuestBookLikeVO likeVo = guestbook_dao.selectOneLike(lvo);
+		String result = "no";
+		if ( likeVo != null ) {
+			guestbook_dao.deleteLike(lvo);
+			int likeCount = guestbook_dao.selectLikeCountNum(lvo);
+			vo.setGuestbookLikeNum(likeCount);
+			guestbook_dao.updateLikeNum(vo);
+			return result;
+		}
+		guestbook_dao.insertLike(lvo);
+		int likeCount = guestbook_dao.selectLikeCountNum(lvo);
+		vo.setGuestbookLikeNum(likeCount);
+		guestbook_dao.updateLikeNum(vo);
+		result = "yes";
 		return result;
 	}
 }
