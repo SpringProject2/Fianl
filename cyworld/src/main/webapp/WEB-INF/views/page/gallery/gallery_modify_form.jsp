@@ -11,12 +11,16 @@
 	<form method="post" enctype="multipart/form-data">
 		<input name="gallIdx" type="text" value="${ vo.gallIdx }">
 		<input name="galleryContentRef" type="text" value="${ vo.galleryContentRef }">
-		<input name="galleryLikeNum" type="text" value="${ vo.galleryLikeNum }">
 		<input name="galleryFileExtension" type="text" value="${ vo.galleryFileExtension }">
 		
 		<table border="1" align="center">
 		
 			<caption>사진첩 수정</caption>
+			
+			<tr>
+				<th>제목</th>
+				<td><input name="galleryTitle" value="${ vo.galleryTitle }"></td>
+			</tr>
 			
 			<tr>
 				<th>내용</th>
@@ -47,7 +51,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input type="button" value="수정" onclick="modify(this.form);">
-					<input type="button" value="취소" onclick="location.href='gallery.do'">
+					<input type="button" value="취소" onclick="location.href='gallery.do?idx=${vo.gallIdx}'">
 				</td>
 			</tr>
 			
@@ -55,8 +59,9 @@
 	</form>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->	
 	<script>
+		// 수정 완료
 		function modify(f) {
-			f.action = "modify_gallery.do";
+			f.action = "gallery_modify.do";
 			f.method = "post";
 			f.submit();
 		}

@@ -12,13 +12,23 @@
 </head>
 <body>
 	Idx : <input id="idx" name="idx" type="text" value="${ vo.idx }">
-	SessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionIdx }">
-	<input type="button" value="사진첩" onclick="location.href = 'gallery.do?idx=${vo.idx}'">
-	<input type="button" value="방명록" onclick="location.href = 'guestbook.do?idx=${vo.idx}'">
-	<h2 class="leftName">${ vo.name }님 안녕하세요!</h2>
-	<input id="btn_cover" class="cy_logout" type="button" value="로그아웃" onclick="location.href='logout.do'">
-	<input id="btn_cover" class="na_logout" type="button" value="네이버 로그아웃" onclick="naverLogout();">
-	<input id="btn_cover" class="ka_logout" type="button" value="카카오 로그아웃" onclick="kakaoLogout();">
+	SessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionUser.idx }">
+	<input type="button" value="사진첩" onclick="location.href='gallery.do?idx=${vo.idx}'">
+	<input type="button" value="방명록" onclick="location.href='guestbook.do?idx=${vo.idx}'">
+	<input type="button" value="프로필" onclick="location.href='profile.do?idx=${vo.idx}'">
+	<h2 class="leftName">${ vo.name }님의 미니홈피입니다!</h2>
+	
+	<!-- 플랫폼에 따른 로그아웃 버튼 생성 -->
+	<c:if test="${ sessionUser.platform eq 'cyworld' }">
+		<input id="btn_cover" class="cy_logout" type="button" value="로그아웃" onclick="location.href='logout.do'">
+	</c:if>
+	<c:if test="${ sessionUser.platform eq 'naver' }">
+		<input id="btn_cover" class="na_logout" type="button" value="네이버 로그아웃" onclick="naverLogout();">
+	</c:if>
+	<c:if test="${ sessionUser.platform eq 'kakao' }">
+		<input id="btn_cover" class="ka_logout" type="button" value="카카오 로그아웃" onclick="kakaoLogout();">
+	</c:if>
+	
 	<div class="container">
 		<section class="left-section">
 			<div class="left-dashed-line">
@@ -80,7 +90,7 @@
 							</div>
 						</form>
 						<c:forEach var="vo" items="${ list }">
-							<div class="Ilchon" >ㆍ ${ vo.ilchonpyeongText }</div>
+							<div class="Ilchon" >ㆍ ${ vo.ilchonpyeongText } ${ vo.ilchonSession }</div>
 						</c:forEach>
 					</aside>
 				</div>
@@ -105,7 +115,7 @@
 	<!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
-		// 회원 검색
+		// 유저 검색
 		function search(f){
 			let idx = f.idx.value;
 			let searchType = f.searchType.value;
@@ -145,9 +155,9 @@
 			let idx = document.getElementById("idx").value;
 			let sessionIdx = document.getElementById("sessionIdx").value;
 			
-			//유효성 체크
-			if ( idx != sessionIdx ){
-				alert("작성권한이 없습니다");
+			// 세션이 0이면 비회원이므로 일촌평을 달지 못하게 만든다.
+			if ( sessionIdx <= 0 ) {
+				alert("로그인후 작성해주세요");
 				return;
 			}
 			
@@ -155,9 +165,11 @@
 				alert("일촌평을 작성해주세요.");
 				return;
 			}
+			
 			// Ajax
-			url = "insert.do";
-			param = "ilchonpyeongText=" + ilchonpyeongText + "&idx=" + idx;
+			url = "ilchon_write.do";
+			param = "ilchonpyeongText=" + ilchonpyeongText +
+					"&idx=" + idx;
 			sendRequest(url, param, resultWrite, "POST");
 		}
 		// 콜백메소드
@@ -181,18 +193,18 @@
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 	<!-- 네이버 로그아웃 -->
 	<script>
-		let logoutPopUp; // 팝업창 만들기
-		function openPopUp() { // 팝업 열기 메소드
+		let naverLogoutPopUp; // 팝업창 만들기
+		function naverOpenPopUp() { // 팝업 열기 메소드
 			// 팝업에 로그아웃 실행 기능 추가 - 네이버 로그아웃이 가능한 주소를 가져다 사용
-			logoutPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+			naverLogoutPopUp = window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
 		}
-		function closePopUp(){ // 팝업 닫기 메소드
-			logoutPopUp.close(); // 열린 팝업창을 다시 닫는 기능
+		function naverClosePopUp(){ // 팝업 닫기 메소드
+			naverLogoutPopUp.close(); // 열린 팝업창을 다시 닫는 기능
 		}
 		function naverLogout() {
-			openPopUp(); // 팝업 열기
+			naverOpenPopUp(); // 팝업 열기
 			setTimeout(function() {
-				closePopUp(); // 팝업 닫기
+				naverClosePopUp(); // 팝업 닫기
 				location.href = "logout.do"; // 첫 페이지로 이동
 			}, 500); // 팝업 여는거부터 순차적으로 0.5초 간격으로 실행
 		}
@@ -202,28 +214,48 @@
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<!-- 카카오 로그아웃 -->
 	<script>
-		// 카카오 로그인 API 검증
-		window.Kakao.init("299930f187d00dde5908962ec35a19c9");
-		//카카오로그아웃
+		let kakaoLogoutPopUp; // 팝업창 만들기
+		function kakaoOpenPopUp() { // 팝업 열기 메소드
+			// 팝업에 로그아웃 실행 기능 추가 - 네이버 로그아웃이 가능한 주소를 가져다 사용
+			kakaoLogoutPopUp = window.open("https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+		}
+		function kakaoClosePopUp(){ // 팝업 닫기 메소드
+			kakaoLogoutPopUp.close(); // 열린 팝업창을 다시 닫는 기능
+		}
 		function kakaoLogout() {
-			if (Kakao.Auth.getAccessToken()) { // AccessToken을 가지고 있는지 확인
-				// 유저정보 받아오기
-				Kakao.API.request({
-				// url을 통해 현제 로그인한 사용자를 unlink한다.
-					url: '/v1/user/unlink',
-					// 위에 코드가 성공하면 실행
-					success: function (response) {
-						// 로그아웃이 성공하면 이동할 페이지
-						location.href = "logout.do";
-					},
-					fail: function (error) {
-						console.log(error)
-					},
-				});
-				// AccessToken을 "undefined"로 변경
-				Kakao.Auth.setAccessToken(undefined)
-			}
+			kakaoOpenPopUp(); // 팝업 열기
+			setTimeout(function() {
+				kakaoClosePopUp(); // 팝업 닫기
+				location.href = "logout.do"; // 첫 페이지로 이동
+			}, 500); // 팝업 여는거부터 순차적으로 0.5초 간격으로 실행
 		}
 	</script>
+	
+	<!-- 카카오 동의항목 해제 -->
+	<script>
+		//// 카카오 로그인 API 검증
+		//window.Kakao.init("299930f187d00dde5908962ec35a19c9");
+		////카카오로그아웃
+		//function kakaoLinkLogout() {
+			//if (Kakao.Auth.getAccessToken()) { // AccessToken을 가지고 있는지 확인
+				//// 유저정보 받아오기
+				//Kakao.API.request({
+				//// url을 통해 현제 로그인한 사용자를 unlink한다.
+					//url: '/v1/user/logout',
+					//// 위에 코드가 성공하면 실행
+					//success: function (response) {
+						//// 로그아웃이 성공하면 이동할 페이지
+						//location.href = "logout.do";
+					//},
+					//fail: function (error) {
+						//console.log(error)
+					//},
+				//});
+				//// AccessToken을 "undefined"로 변경
+				//Kakao.Auth.setAccessToken(undefined)
+			//}
+		//}
+	</script>
+	
 </body>
 </html>

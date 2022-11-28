@@ -52,6 +52,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectIdx" resultType="signup" parameterType="Object">
 		select * from signup where idx=#{idx}
 	</select>
+	
+	<!-- ////////// 프로필 영역 ////////// -->
+	<!-- 프로필 조회 -->
+	<select id="profile_list" resultType="signup" parameterType="int">
+		select * from signup where idx=#{idx}
+	</select>
+	
 </mapper>
 
 

@@ -18,22 +18,24 @@
 					
 						<img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
 						<img class="login-minimi" alt="" src="resources/images/minimi_main.png">
-                          
+						
 						<div class="user-info">
 							<!-- 로그인 -->
 							<form id="ff">
+								<!-- 로그인을 구별할 플랫폼과 아이디와 비밀번호 -->
 								<input name="platform" type="hidden" value="cyworld">
 								<p class="userID">ID :&nbsp;<input name="userID" type="text"></p>
 								<p class="userPW">PW :&nbsp;<input name="info" type="password"> </p>
 								<p class="login"><input id="btn-cover" type="button" value="로그인" onclick="loginCheck(this.form)"></p>
 							</form>
-    
+							
 							<!-- cyworld 회원가입 -->
 							<form action="login_authentication.do" method="POST">
+								<!-- 회원가입을 구별할 플랫폼 -->
 								<input name="platform" type="hidden" value="cyworld">
 								<p class="join"><input id="btn-cover" type="submit" value="회원가입"></p>
 							</form>
-    
+							
 							<!-- 네이버 로그인 버튼 -->
 							<div  class="naver" id="naverIdLogin"></div>
 							
@@ -60,7 +62,7 @@
 	<!-- 비회원 접속 -->
 	<script>
 		function nmain() {
-			location.href = "nmain.do?idx" + -1;
+			location.href = "nmain.do?idx=" + -1;
 		}
 	</script>
 	

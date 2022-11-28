@@ -13,8 +13,7 @@
 		<h1>방명록 목록</h1>
 		
 		<div align="center">
-			<input type="button" value="방명록 작성"
-					onclick="location.href='guestbook_insert_form.do?idx=${param.idx}'">
+			<input type="button" value="방명록 작성" onclick="location.href='guestbook_insert_form.do?idx=${param.idx}'">
 		</div> 		
 	</div>
 	
@@ -37,9 +36,9 @@
 		</div>
 		
 	</c:forEach>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->	
 	
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
-
 	<script>
 		function del(f){
 		
@@ -71,7 +70,7 @@
 		function modify(f){
 		
 			f.action = 'guestbook_modify_form.do';
-			f.method = "post";
+			f.method = "GET";
 			f.submit();
 		
 		}

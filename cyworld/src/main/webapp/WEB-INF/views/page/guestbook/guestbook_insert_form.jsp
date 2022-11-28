@@ -16,22 +16,12 @@
 			
 			<tr>
 				<th>내용</th>
-				<td><textarea rows="5" cols="50" name="guestbookContent"></textarea></td>
+					<td><textarea rows="5" cols="50" name="guestbookContent"></textarea></td>
 			</tr>
 			
 			<tr>
 				<th>작성자</th>
-				<c:if test="${ sessionUser.platform eq 'cyworld' }">
-					<td><input name="guestbookContentName" value="${ sessionUser.userID }" readonly></td>
-				</c:if>
-				
-				<c:if test="${ sessionUser.platform eq 'kakao' }">
-					<td><input name="guestbookContentName" value="${ sessionUser.email } (카카오 사용자)" readonly></td>
-				</c:if>
-				
-				<c:if test="${ sessionUser.platform eq 'naver' }">
-					<td><input name="guestbookContentName" value="${ sessionUser.email } (네이버 사용자)" readonly></td>
-				</c:if>
+					<td><input name="guestbookContentName" value="${ guestbookContentName }" readonly></td>
 			</tr>
 			
 			<tr>

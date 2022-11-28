@@ -17,6 +17,11 @@
 			<caption>새 글 쓰기</caption>
 			
 			<tr>
+				<th>제목</th>
+				<td><input name="galleryTitle"></td>
+			</tr>
+			
+			<tr>
 				<th>내용</th>
 				<td><textarea rows="5" cols="50" name="galleryContent"></textarea></td>
 			</tr>
@@ -43,14 +48,18 @@
 			//존재하는 메서드
 			
 			let galleryContent = f.galleryContent.value;
+			let galleryTitle = f.galleryTitle.value;
 			
 			//유효성 체크
+			if ( galleryTitle =='' ) {
+				alert("제목은 입력은 필수입니다");
+			}
 			if( galleryContent == '' ){
-				alert("내용 입력은 필수입니다.");
+				alert("내용 입력은 필수입니다");
 				return;
 			}
 			
-			f.action = "insert_gallery.do";
+			f.action = "gallery_insert.do";
 			f.method = "post";
 			f.submit();
 		}

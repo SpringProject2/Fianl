@@ -16,12 +16,12 @@
 		
 	</div>
 	
-	
 	<c:forEach var="vo" items="${ list }">
 	
 		<div class="gallery_box">
 		
 			<form>
+				<div>${ vo.galleryTitle }</div>
 		
 				<div class="type_galleryFile">
 					<!-- 첨부된 이미지가 있는 경우에만 img 및 viedo태그를 보여주자! -->
@@ -39,13 +39,13 @@
 				</div>
 			
 				<div class="type_gallerycontent">
-				<pre>${ vo.galleryContent }</pre> <br>
-				작성일자 : ${ vo.galleryRegdate }<br>
-				<span>${ vo.galleryLikeNum }</span>
-				<input type="button" value="좋아요" onclick="like(this.form)">
+					<pre>${ vo.galleryContent }</pre> <br>
+					작성일자 : ${ vo.galleryRegdate }<br>
+					<span id="galleryLikeNum">${ vo.galleryLikeNum }</span>
+					<input type="button" value="좋아요" onclick="like(this.form)">
 				</div>
 			
-				<input type="text" name="gallIdx" value="${ idx }">
+				<input type="text" name="gallIdx" value="${ vo.gallIdx }">
 				<input type="text" name="galleryContentRef" value="${ vo.galleryContentRef }">
 				<input type="button" value="수정" onclick="modify(this.form);">
 				<input type="button" value="삭제" onclick="del(this.form);">
@@ -56,9 +56,10 @@
 	</c:forEach>
 	
 	<div align="right">
-		<input type="button" value="글쓰기" onclick="location.href='insert_form.do?idx=${idx}'">
+		<input type="button" value="글쓰기" onclick="location.href='gallery_insert_form.do?idx=${param.idx}'">
 	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+	
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		function del(f){
@@ -68,8 +69,8 @@
 			}
 			
 			//idx를 Ajax를 통해서 서버로 전달
-			var url = "delete_gallery.do";
-			var param = "idx=" + ${idx} + 
+			var url = "gallery_delete.do";
+			var param = "gallIdx=" + f.gallIdx.value + 
 						"&galleryContentRef=" + f.galleryContentRef.value;
 			//준비된 두 개의 정보를 콜백메서드로 전달
 			sendRequest( url, param, resultDel, "GET" );
@@ -87,17 +88,17 @@
 					return;
 				}
 				alert("삭제성공");
-				location.href="gallery.do?idx=${idx}";
+				location.href = "gallery.do?idx=${param.idx}";
 			}
 		}
-		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//게시글 수정
 		function modify(f){
-			f.action = 'modify_form.do';
-			f.method = "get";
+			f.action = 'gallery_modify_form.do';
+			f.method = "GET";
 			f.submit();
 		}
-		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// 좋아요 구하기
 		function like(f) {
 			let gallIdx = f.gallIdx.value;
@@ -113,7 +114,10 @@
 			if( xhr.readyState == 4 && xhr.status == 200 ){
 				//xhr.responseText : 컨트롤러에서 return으로 보내준 결과값
 				let data = xhr.responseText;
-				location.href = "gallery.do?idx=${idx}"
+				let galleryLikeNum = document.getElementById("galleryLikeNum");
+				// 콜백으로 받아서 페이지를 갱신하지 않고 바로 바꿀수 있는 방법 구상중
+				// 현제는 별다른 방법이 없어서 갱신하는 방법 이용중
+				location.href = "gallery.do?idx=${param.idx}";
 			}
 		}
 	</script>

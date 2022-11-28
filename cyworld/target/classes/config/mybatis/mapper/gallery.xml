@@ -20,7 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SYSDATE,
 			#{gallIdx},
 			#{galleryFileExtension},
-			#{galleryLikeNum}
+			#{galleryLikeNum},
+			#{galleryTitle}
         )
 	</insert>
 	
@@ -29,19 +30,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from gallery where gallIdx=#{idx}
 	</select>
 	
-	<!-- idx에 해당하는 최신 게시글 가져오기 -->
-	<select id="maxNum" resultType="int" parameterType="int">
-		select max(galleryContentRef) from gallery where gallIdx=#{idx}
-	</select>
-	
-	<!-- 글 삭제 -->
-	<delete id="gallery_delete" parameterType="java.util.HashMap">
-		delete from gallery where gallIdx=#{1} and galleryContentRef=#{2}
+	<!-- 게시글 삭제 -->
+	<delete id="gallery_delete" parameterType="gallery">
+		delete from gallery where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
 	</delete>
 	
+	<!-- 삭제한 게시물 번호보다 큰 번호들을 조회 -->
+	<select id="gallery_list_delete" resultType="gallery" parameterType="java.util.HashMap">
+		select * from gallery where gallIdx=#{1} and galleryContentRef > #{2}
+	</select>
+	
+	<!-- 삭제한 게시물 번호보다 큰 번호들을 1씩 감소시켜서 갱신 -->
+	<update id="gallery_update_ref_minus" parameterType="gallery">
+		update gallery set
+			galleryContentRef=#{galleryContentRef}
+			where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef} + 1
+	</update>
+	
 	<!-- 수정을 위한 게시글 한 건 조회 -->
-	<select id="gallery_one" resultType="gallery" parameterType="java.util.HashMap">
-		select * from gallery where gallIdx=#{1} and galleryContentRef=#{2}
+	<select id="gallery_one" resultType="gallery" parameterType="gallery">
+		select * from gallery where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
 	</select>
 	
 	<!-- 글 수정 -->
@@ -51,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			galleryFileName=#{galleryFileName},
 			galleryRegdate=sysdate,
 			galleryFileExtension=#{galleryFileExtension},
-			galleryLikeNum=#{galleryLikeNum}
+			galleryTitle=#{galleryTitle}
 			where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
 	</update>
 </mapper>

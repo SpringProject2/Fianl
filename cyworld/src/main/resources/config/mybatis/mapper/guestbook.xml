@@ -15,12 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from guestbook where guestIdx=#{idx}
 	</select>
 	
-	<!-- idx에 해당하는 최신 방명록 가져오기 -->
-	<select id="maxNum" resultType="int" parameterType="int">
-		select max(guestbookContentRef) from guestbook where guestIdx=#{idx}
-	</select>
-	
-	<!-- 새 글 추가 -->
+	<!-- 새 방명록 추가 -->
 	<insert id="guestbook_insert" parameterType="guestbook">
 		insert into GuestBook values(
 			#{guestbookContentRef},
@@ -32,10 +27,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<!-- 글 삭제 -->
+	<!-- 방명록 삭제 -->
 	<delete id="guestbook_delete" parameterType="guestbook">
 		delete from guestbook where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
 	</delete>
+	
+	<!-- 삭제한 방명록 번호보다 큰 번호들을 조회 -->
+	<select id="guestbook_list_delete" resultType="guestbook" parameterType="java.util.HashMap">
+		select * from guestbook where guestIdx=#{1} and guestbookContentRef > #{2}
+	</select>
+	
+	<!-- 삭제한 게시물 번호보다 큰 번호들을 1씩 감소시켜서 갱신 -->
+	<update id="guestbook_update_ref_minus" parameterType="guestbook">
+		update guestbook set
+			guestbookContentRef=#{guestbookContentRef}
+			where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef} + 1
+	</update>
 	
 	<!-- 수정을 위한 게시글 한 건 조회 -->
     <select id="guestbook_one" resultType="guestbook" parameterType="guestbook">

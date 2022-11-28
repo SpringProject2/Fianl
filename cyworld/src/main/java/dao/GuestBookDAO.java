@@ -1,9 +1,11 @@
 package dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import vo.GalleryVO;
 import vo.GuestBookLikeVO;
 import vo.GuestBookVO;
 
@@ -27,22 +29,28 @@ public class GuestBookDAO {
 		int res = sqlSession.selectOne("gb.countNum", idx);
 		return res;
 	}
-		
-	// 가장 최근에 작성한 일촌평 구하기
-	public int selectMaxNum(int idx) {
-		int res = sqlSession.selectOne("gb.maxNum", idx);
-		return res;
-	}
 	
-	//새 글 추가
+	// 방명록 추가
 	public int insert(GuestBookVO vo) {
 		int res = sqlSession.insert("gb.guestbook_insert", vo);
 		return res;
 	}
-
-	//글 삭제
+	
+	// 방명록 삭제
 	public int delete(GuestBookVO vo) {
 		int res = sqlSession.delete("gb.guestbook_delete", vo);
+		return res;
+	}
+	
+	// 방명록 삭제 후 삭제한 방명록 번호보다 큰 번호들을 조회
+	public List<GuestBookVO> selectListDelete(HashMap<String, Integer> map) {
+		List<GuestBookVO> list = sqlSession.selectList("gb.guestbook_list_delete", map);
+		return list;
+	}
+	
+	// 방명록 삭제 후 삭제한 방명록 번호보다 큰 번호들을 1씩 감소시켜서 갱신
+	public int updateRefMinus(GuestBookVO vo) {
+		int res = sqlSession.update("gb.guestbook_update_ref_minus", vo);
 		return res;
 	}
 

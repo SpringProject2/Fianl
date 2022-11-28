@@ -10,6 +10,7 @@
             background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
             overflow: hidden;
             color: skyblue; font-weight: bold;
+            font-family: 'Jua', sans-serif;
         }
    /* position */
    .container { 
@@ -43,10 +44,9 @@
    .logo-main {  position: absolute; width: 280px; height: 80px;
     left: 80px; top:30px;
 }
-
 .userID { position: absolute; width: 360px; height: 30px; top:130px; left:105px; }
 .userID > input { width: 230px; height: 25px;}
-.checkButton { position: absolute; top:160px; left:360px; }
+.checkButton { position: absolute; top:154px; left:360px;  width: 70px; letter-spacing: .15em;}
 .userPW { position: absolute; width: 340px; height: 30px; top:195px; left:105px;}    
 .userPW > input { position: absolute; width: 230px; height: 25px; top:30px; }    
 .pwText { color:red; font-size:10px; position:absolute; top:260px; left:105px; }
@@ -61,23 +61,20 @@
 .gender > input {width: 15px; height: 18px;  }
 .email {position: absolute; width: 360px; height: 30px; top:555px; left:105px;}
 .email > input {width: 230px; height: 25px; }
-.sendANum {position: absolute; width: 90px; height: 30px; top:585px; left:348px; font-size: 12px;}
+.sendANum1 {position: absolute; width: 90px; height: 30px; top:579px; left:348px; font-size: 12px; letter-spacing: .15em; }
+.sendANum2 {position: absolute; width: 90px; height: 30px; top:645px; left:348px; font-size: 12px; letter-spacing: .15em;}
 .ANum {position: absolute; width: 360px; height: 30px; top:620px; left:105px;}
 .ANum > input {width: 230px; height: 25px;}
 .phone {position: absolute; width: 360px; height: 30px; top:685px; left:105px;}
 .phone > input {width: 230px; height: 25px;}
 .address{position: absolute; width: 360px; height: 30px; top:750px; left:105px;}
 .address > input { width: 230px; height: 25px;}
-.address2 { position: absolute; top:780px; left:360px;}
+.address2 { position: absolute; top:775px; left:360px; letter-spacing: .15em; width: 70px;}
 .rAddress {position: absolute; width: 360px; height: 30px; top:815px; left:105px;}
 .rAddress > input {width: 230px; height: 25px;}
-.mJoin{position: absolute; width: 80px; height: 40px; top:920px; left:185px;}
-.join {position: absolute; top:492px; left: 320px;}
-.naver { position: absolute; top:535px; left:130px;}
-.kakao {position: absolute; top:580px; left:130px;}
-.findID {position: absolute; top:675px; left:145px; }
-.findPW {position: absolute; top:675px; left:230px; }
-.none-join {position: absolute; top:675px; left:330px;}
+.mJoin{position: absolute; width: 80px; height: 40px; top:920px; left:185px; letter-spacing: .15em;}
+
+
 
 #btn-cover {  border: 1px solid skyblue;
             background-color: rgba(0,0,0,0);
@@ -90,3 +87,32 @@
             
 
         } 
+
+
+#btn-cover {  border: 1px solid skyblue;
+            background-color: rgba(0,0,0,0);
+            color: skyblue;
+            padding: 5px;
+            border-radius: 5px; font-weight: bold; 
+            font-family: 'Jua', sans-serif;
+        }
+#btn-cover:hover{
+            color:white;
+            background-color: skyblue;
+            
+        } 
+                /* scroll-bar */
+#scrollBar::-webkit-scrollbar {
+    width: 8px;  /* 스크롤바의 너비 */
+}
+
+#scrollBar::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #79aaee; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+#scrollBar::-webkit-scrollbar-track {
+    background: rgba(141, 184, 244, 0.481);  /*스크롤바 뒷 배경 색상*/
+}

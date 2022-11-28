@@ -34,22 +34,28 @@ public class GalleryDAO {
 		return res;
 	}
 	
-	// 가장 최근에 작성한 일촌평 구하기
-	public int selectMaxNum(int idx) {
-		int res = sqlSession.selectOne("g.maxNum", idx);
+	// 글 삭제
+	public int delete(GalleryVO vo) {
+		int res = sqlSession.delete("g.gallery_delete", vo);
 		return res;
 	}
 	
-	// 글 삭제
-	public int delete( HashMap<String, Integer> galleryKey ) {
-		int res = sqlSession.delete("g.gallery_delete", galleryKey);
+	// 글 삭제 후 삭제한 게시물 번호보다 큰 번호들을 조회
+	public List<GalleryVO> selectListDelete(HashMap<String, Integer> map) {
+		List<GalleryVO> list = sqlSession.selectList("g.gallery_list_delete", map);
+		return list;
+	}
+	
+	// 글 삭제 후 삭제한 게시물 번호보다 큰 번호들을 1씩 감소시켜서 갱신
+	public int updateRefMinus(GalleryVO vo) {
+		int res = sqlSession.update("g.gallery_update_ref_minus", vo);
 		return res;
 	}
 	
 	// 수정을 위한 게시글 한 건 조회
-	public GalleryVO selectOne( HashMap<String, Integer> galleryKey ) {
-		GalleryVO vo = sqlSession.selectOne("g.gallery_one", galleryKey);
-		return vo;
+	public GalleryVO selectOneRef( GalleryVO vo ) {
+		GalleryVO refVo = sqlSession.selectOne("g.gallery_one", vo);
+		return refVo;
 	}
 	
 	// 게시글 수정

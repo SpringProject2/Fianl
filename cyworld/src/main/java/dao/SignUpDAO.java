@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -21,7 +22,7 @@ public class SignUpDAO {
 	}
 	
 	// ID 중복 확인
-	public SignUpVO selectOneDoubleCheck(String userID) {
+	public SignUpVO selectOneIdCheck(String userID) {
 		SignUpVO vo = sqlSession.selectOne("s.doubleCheck", userID);
 		return vo;
 	}
@@ -54,5 +55,11 @@ public class SignUpDAO {
 	public SignUpVO selectOneIdx(Object idx) {
 		SignUpVO vo = sqlSession.selectOne("s.selectIdx", idx);
 		return vo;
+	}
+	
+	/////////////// 프로필 영역 ///////////////
+	public List<SignUpVO> selectListIdx(int idx) {
+		List<SignUpVO> list = sqlSession.selectList("s.profile_list", idx);
+		return list;
 	}
 }
