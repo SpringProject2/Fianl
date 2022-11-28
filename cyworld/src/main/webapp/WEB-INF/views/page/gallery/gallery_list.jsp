@@ -53,6 +53,22 @@
 			
 		</div>
 		
+		<!-- 댓글 구역 -->
+		<form method="post">
+         <div class="Galleryreyply">
+            댓글 : <input type="text" class="GalleryCommentContent">
+            <input class="GC-reply" type="button" value="댓글등록" onclick="reply();">
+         </div>
+         
+      </form>
+      
+      <div class="Gallerycomment">
+         작성자 ${ galleryCommentIdx } <br>
+         작성일자${ galleryCommentRegdate } <br>
+         <pre>: ${ galleryCommentContent }</pre>
+         <input class="GC-delete" type="button" value="댓글삭제" onclick="redel();">
+      </div>
+		
 	</c:forEach>
 	
 	<div align="right">
