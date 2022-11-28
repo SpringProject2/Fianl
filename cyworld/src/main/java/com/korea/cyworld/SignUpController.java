@@ -624,6 +624,25 @@ public class SignUpController {
 			}
 		}
 		
+		/* 확장자 구하기
+		 * 파일 원본 이름에서 마지막 .이 들어간 위치에서 한칸 더한 위치부터 끝까지 잘라내기
+		 * ex) 19292930388시바견.img --> .img --> img
+		 */
+		String extension = galleryFileName.substring( galleryFileName.lastIndexOf( "." ) + 1 );
+		if ( extension.equals("mp4") ) {
+			// 확장자가 비디오일 경우
+			vo.setGalleryFileExtension("video");
+		} else if ( extension.equals("jpg") || extension.equals("png") ) {
+			// 확장자가 이미지일 경우
+			vo.setGalleryFileExtension("image");
+		} else if ( galleryFileName.equals("no_file") ) {
+			// 파일이 없을 경우
+			vo.setGalleryFileExtension("no_file");
+		} else {
+			// 파일의 확장자가 사용할 수 없는 경우
+			vo.setGalleryFileExtension("no_file");
+		}
+		
 		// 해당 idx의 사진첩에 작성된 글 갯수 조회
 		int countNum = gallery_dao.selectCountNum(idx);
 		// 작성된 게시글이 한개도 없을 경우
@@ -636,21 +655,6 @@ public class SignUpController {
 			vo.setGalleryFileName(galleryFileName);
 			// 게시글에 좋아요 시작갯수 0개 지정
 			vo.setGalleryLikeNum(0);
-			/* 확장자 구하기
-			 * 파일 원본 이름에서 마지막 .이 들어간 위치에서 한칸 더한 위치부터 끝까지 잘라내기
-			 * ex) 19292930388시바견.img --> .img --> img
-			 */
-			String extension = vo.getGalleryFileName().substring( vo.getGalleryFileName().lastIndexOf( "." ) + 1 );
-			if ( extension.equals("mp4") ) {
-				// 확장자가 비디오일 경우
-				vo.setGalleryFileExtension("video");
-			} else if ( extension.equals("jpg") || extension.equals("png") ) {
-				// 확장자가 이미지일 경우
-				vo.setGalleryFileExtension("image");
-			} else {
-				// 파일의 확장자가 사용할 수 없는 경우
-				vo.setGalleryFileExtension("no_file");
-			}
 			// 작성한 게시글을 DB에 저장
 			gallery_dao.insert(vo);
 			// 저장 성공시 idx를 들고 사진첩 첫페이지로 이동
@@ -665,8 +669,6 @@ public class SignUpController {
 		vo.setGalleryFileName(galleryFileName);
 		// 게시글에 좋아요 시작갯수 0개 지정
 		vo.setGalleryLikeNum(0);
-		// 확장자 지정
-		vo.setGalleryFileExtension("no_file");
 		// 작성한 게시글을 DB에 저장
 		gallery_dao.insert(vo);
 		// 저장 성공시 idx를 들고 사진첩 첫페이지로 이동

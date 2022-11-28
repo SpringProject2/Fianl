@@ -34,7 +34,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input type="button" value="글쓰기" onclick="insert(this.form);">
-					<input type="button" value="취소" onclick="location.href='gallery.do?idx={vo.gallIdx}'">
+					<input type="button" value="취소" onclick="location.href='gallery.do?idx=${ param.idx }'">
 				</td>
 			</tr>
 		</table>
