@@ -70,6 +70,7 @@
     </div>
     
 	<script>
+		// 미니미 변경
 		function changeMinimi(f) {
 			let minimi = f.minimi;
 			

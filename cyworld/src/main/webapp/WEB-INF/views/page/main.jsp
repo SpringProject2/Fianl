@@ -11,12 +11,12 @@
 <link rel="stylesheet" href="/cyworld/resources/css/main.css">
 </head>
 <body>
-	Idx : <input id="idx" name="idx" type="text" value="${ sighVo.idx }">
+	Idx : <input id="idx" name="idx" type="text" value="${ signVo.idx }">
 	SessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionUser.idx }">
-	<input type="button" value="사진첩" onclick="location.href='gallery.do?idx=${ sighVo.idx }'">
-	<input type="button" value="방명록" onclick="location.href='guestbook.do?idx=${ sighVo.idx }'">
-	<input type="button" value="프로필" onclick="location.href='profile.do?idx=${ sighVo.idx }'">
-	<h2 class="leftName">${ sighVo.name }님의 미니홈피입니다!</h2>
+	<input type="button" value="사진첩" onclick="location.href='gallery.do?idx=${ signVo.idx }'">
+	<input type="button" value="방명록" onclick="location.href='guestbook.do?idx=${ signVo.idx }'">
+	<input type="button" value="프로필" onclick="location.href='profile.do?idx=${ signVo.idx }'">
+	<h2 class="leftName">${ signVo.name }님의 미니홈피입니다!</h2>
 	
 	<!-- 플랫폼에 따른 로그아웃 버튼 생성 -->
 	<c:if test="${ sessionUser.platform eq 'cyworld' }">
@@ -42,8 +42,8 @@
 						<div class="todayIcon">
 							<span class="todayIconText">Today is..</span><img class="box animate__animated animate__headShake animate__infinite " src="resources/images/emoticon1.png" alt="">
 						</div>
-						<div class="left-image"><img class="leftImg" src="resources/images/left_profile.png" alt=""></div>
-						<textarea class="left-textarea">어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구</textarea>
+						<div class="left-image"><img class="leftImg" src="/cyworld/resources/mainphoto/${ signVo.mainPhoto }" alt=""></div>
+						<textarea class="left-textarea" readonly>${ signVo.mainText }</textarea>
 						<div class="history"><img src="resources/images/arrow.png" alt=""><h3>History</h3></div>
 						<select class="myFriend">
 							<option value="">::: 파도타기 :::</option>
@@ -61,14 +61,14 @@
 		<section class="right-section">
 			<div class="right-dashed-line">
 				<div class="right-gray-background">
-					<p class="title"><a href="#">Test 싸이월드 Title입니다. 누르면 무슨 기능이였더라?</a></p>
+					<p class="title"><a href="main.do?idx=${ signVo.idx }">${ signVo.mainTitle }</a></p>
 					<!-- a태그 = 새로고침  -->
 					<!-- <p class="titleLink"><a href="#">http://www.zenghyun.com</a></p> -->
 					<!-- 회원 검색 -->
 					<!-- 아이디, 이메일 검색 -->
 					<form name="sf" method="GET">
 						<input class="search" type="button" value="검색" onclick="searchPopUp();"></input>
-						<input type="hidden" name="idx" value="${ sighVo.idx }">	
+						<input type="hidden" name="idx" value="${ signVo.idx }">	
 					</form>
 					<aside class="right-aside">
 						<div class="miniRoomBox"><p>Mini Room</p>
@@ -156,7 +156,7 @@
 				}
 				
 				alert("작성 완료");
-				location.href = "main.do?idx=${vo.idx}";
+				location.href = "main.do?idx=${param.idx}";
 			}
 		}
 	</script>

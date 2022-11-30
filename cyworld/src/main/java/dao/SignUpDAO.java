@@ -65,9 +65,21 @@ public class SignUpDAO {
 		return list;
 	}
 	
-	// 프로필 미니미 갱신
+	// 프로필 미니미 변경
 	public int updateMinimi(SignUpVO vo) {
 		int res = sqlSession.update("s.profile_minimi", vo);
+		return res;
+	}
+	
+	// 메인 타이틀 및 비밀번호 수정
+	public int updateUserData(SignUpVO vo) {
+		int res = sqlSession.update("s.profile_modify_userdata", vo);
+		return res;
+	}
+	
+	// 메인 사진 및 메인 소개글 수정
+	public int updateMain(SignUpVO vo) {
+		int res = sqlSession.update("s.profile_modify_main", vo);
 		return res;
 	}
 }

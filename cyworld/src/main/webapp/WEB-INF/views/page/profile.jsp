@@ -25,8 +25,14 @@
                                     <div class="todayIcon">
                                         <span class="todayIconText">Today is..</span><img class="box animate__animated animate__headShake animate__infinite " src="resources/images/emoticon1.png" alt="">
                                     </div>
-                                    <div class="left-image"><img class="leftImg" src="resources/images/left_profile.png" alt=""></div>
-                                    <textarea class="left-textarea">어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구</textarea>
+                                    <form method="POST" enctype="multipart/form-data"> <!-- form태그와 button -->
+                                    	<input name="idx" type="hidden" value="${ vo.idx }">
+                                    	<div class="left-image"><img class="leftImg" src="/cyworld/resources/mainphoto/${ vo.mainPhoto }" alt=""></div>
+                                    							<input name="mainPhoto" type="hidden" value="${ vo.mainPhoto }">
+                                    							<input name="mainPhotoFile" type="file"> <!-- 사진 바꾸는곳 -->
+                                    	<textarea name="mainText" class="left-textarea">${ vo.mainText }</textarea>
+                                    	<input type="button" value="메인 수정" onclick="modify_main(this.form)">
+                                    </form>
                                     <div class="history"><img src="resources/images/arrow.png" alt=""><h3>History</h3></div>
                                     <select class="myFriend">
                                         <option value="">::: 파도타기 :::</option>
@@ -44,7 +50,7 @@
                 <section class="right-section">
                         <div class="right-dashed-line">
                             <div class="right-gray-background">
-                                <p class="title"><a href="#">Test 싸이월드 Title입니다. 누르면 무슨 기능이였더라?</a></p>
+								<p class="title"><input style="width: 500px; height: 20px;" id="mainTitle" type="text" value="${ vo.mainTitle }"></p>
                                 <!-- a태그 = 새로고침  -->
                                 <!-- <p class="titleLink"><a href="#">http://www.zenghyun.com</a></p> -->
                                 <aside id="right-aside"
@@ -63,7 +69,7 @@
                                 </div>
                                 <!-- 미니미 수정 form -->
                                 <form action="">
-                                <input class="check_btn" id="btn-cover" type="button" value="미니미수정" onclick=toggle()></input>
+                                <input class="check_btn" id="btn-cover" type="button" value="미니미수정" onclick="toggle();"></input>
                                 
                                 
                                 <div id="minimi_correction"
@@ -83,11 +89,14 @@
                                 <div class="modify-user-profile">
                                     <h2>::개인정보 수정::</h2>
                                     <p id="my-minimi">My minimi</p>
-                                  <input class="minimi-main" type="button" src="/cyworld/resources/minimi/${ vo.minimi }" onclick= minimiPopUp()>
-
+                                  <input class="minimi-main" type="button" src="/cyworld/resources/minimi/${ vo.minimi }" onclick="minimiPopUp();">
+									<input name="idx" type="hidden" value="${ vo.idx }">
                                     <p>ID : <input type="text" value="${ vo.userID }" readonly></p>
-                                    <p>PW : <input type="text" value="${ vo.info }"></p>
-                                    <p>PW 확인 : <input type="text"></p>
+                                    <p>현제 PW : <input name="info" type="text" value="${ vo.info }" readonly></p>
+                                    <p>새로운 PW : <input id="pw" name="info" type="password" oninput="pwCheck();"></p>
+                                    <div class="pwText" id="pT1"></div>
+                                    <p>PW 확인 : <input id="pw2" type="password" oninput="pw2Check();"></p>
+                                    <div class="pwText pT2"></div>
                                     <p>이름 : <input type="text" value="${ vo.name }" readonly></p>
                                     <p>주민번호 : <input type="text" value="${ vo.identityNum }" readonly></p>
                                     <c:if test="${ vo.gender eq 'M' || vo.gender eq 'male' }">
@@ -96,9 +105,9 @@
                                     <c:if test="${ vo.gender eq 'W' || vo.gender eq 'female' }">
                                     	<p>성별:&nbsp; <input  class="myRadio" type="radio" name="gender" value="${ vo.gender }" checked readonly>&nbsp;여</p>
                                     </c:if>
-                                    <p>이메일 : <input type="text" value="${ vo.email }"></p> <!-- 인증 추가? -->
+                                    <p>이메일 : <input type="text" value="${ vo.email }" readonly></p>
                                     <p>전화번호 : <input type="tel" value="${ vo.phoneNumber }" readonly></p>
-                                    <input class="final-button" id="btn-cover" type="button" value="수정">
+                                    <input class="final-button" id="btn-cover" type="button" value="수정" onclick="modifyUserData(this.form);">
                                 </div>
                             </form> 
 
@@ -122,28 +131,154 @@
                         </div>
                 </section>
     </div>
-    <script>
-      
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+    <!-- Ajax 사용을 위한 js를 로드 -->
+	<script src="/cyworld/resources/js/httpRequest.js"></script>
+	<script>
+		// 메인 타이틀 및 비밀번호 수정
+		function modifyUserData(f) {
+			// idx
+			let idx = f.idx.value;
+			// 메인 타이틀
+			let mainTitle = document.getElementById("mainTitle").value;
+			// 비밀번호 패턴 체크
+			let info = f.info;
+			let pattern1 = /[0-9]/; // 숫자 입력
+			let pattern2 = /[a-zA-Z]/; // 영어 소문자, 대문자 입력
+			let pattern3 = /[~!@#$%^&*()_+]/; // 특수기호 입력
+			let infoR = document.getElementById("pw2").value;
+			
+			// 유효성 검사
+			
+			// 메인 타이틀이 공백일시
+			if ( mainTitle =='' ) {
+				alert("메인 타이틀을 작성해주세요");
+				return;
+			}
+			
+			// 새로운 비밀번호에 하나라도 입력시
+			if ( info[1].value != '' ) {
+				// 비밀번호 패턴 체크
+				if ( !pattern1.test(info[1].value) || !pattern2.test(info[1].value) || !pattern3.test(info[1].value) || info[1].value.length < 8 ) {
+					alert("비밀번호는 영문 + 숫자 + 특수기호 8자리 이상으로 입력하세요");
+					return;
+				}
+				// 비밀번호와 비밀번호 확인 일치 체크
+				if ( info[1].value != infoR ) {
+					alert("비밀번호 확인이 비밀번호와 일치하지 않습니다");
+					return;
+				}
+				
+				url = "profile_modify_userdata.do"
+				param = "idx=" + idx +
+						"&info=" + info[1].value +
+						"&mainTitle=" + mainTitle;
+				sendRequest(url, param, resultModify, "GET");
+				
+			// 비밀번호를 변경하지 않고 그대로 가져갈시
+			} else {
+				
+				url = "profile_modify_userdata.do"
+				param = "idx=" + idx +
+						"&info=" + info[0].value +
+						"&mainTitle=" + mainTitle;
+				sendRequest(url, param, resultModify, "GET");
+			}
+		}
+		// 콜백메소드
+		function resultModify() {
+			if ( xhr.readyState == 4 && xhr.status == 200 ) {
+				// "{'result':'no'}"
+				let data = xhr.responseText;
+				
+				if ( data == "no" ) {
+					alert("작성 실패");
+					return;
+				}
+				
+				alert("수정 완료");
+				location.href = "profile.do?idx=${param.idx}";
+			}
+		}
+	</script>
+	
+	<script>
+		// 메인 사진 소개글 수정
+		function modify_main(f) {
+			let mainText = f.mainText.value;
+			
+			// 유효성 검사
+			
+			// 메인 소개글이 공백일시
+			if ( mainText =='' ) {
+				alert("메인 소개글을 작성하세요");
+				return;
+			}
+			
+			f.action = "profile_modify_main.do";
+			f.submit();
+		}
+	</script>
+	
+	<script>
         //window.open (미니미 수정창)
         function minimiPopUp() {
             let popUrl = "profile_minimi_popup.do?idx=${param.idx}";
             let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
-    window.open(popUrl, "minimi", popOption);
+    	window.open(popUrl, "minimi", popOption);
         }
-    </script>
-
-    <script>
-        // toggle
-        function toggle(){
-            const minimi_correction = document.getElementById('minimi_correction');
-
-            if(minimi_correction.style.display !== 'none'){
-                minimi_correction.style.display ='none';
-            }
-            else {
-                minimi_correction.style.display ='block';
-            }
-        }
-    </script>
+	</script>
+	
+	<script>
+		// 비밀번호가 패턴에 맞는지 확인용
+		function pwCheck() {
+			let pwText = document.getElementsByClassName("pwText"); // 비밀번호 아래에 글이 작성될 <div>
+			let pw = document.getElementById("pw").value; // 비밀번호 값
+			
+			let pattern1 = /[0-9]/; // 숫자 입력
+			let pattern2 = /[a-zA-Z]/; // 영어 소문자, 대문자 입력
+			let pattern3 = /[~!@#$%^&*()_+]/; // 특수기호 입력
+			
+			// 비밀번호가 패턴에 하나라도 맞지 않을때
+			//		숫자 입력 안할시	 or	   영어 입력 안할시	    or   특수기호 입력 안할시	   or  8자리 보다 작을시
+			if ( !pattern1.test(pw) || !pattern2.test(pw) || !pattern3.test(pw) || pw.length < 8 ) {
+				// 비밀번호 입력창에 입력하자마자 바로 아래에 글 작성
+				pwText[0].innerHTML = "영문 + 숫자 + 특수기호 8자리 이상으로 구성하여야 합니다";
+			} else {
+				// 비밀번호 입력창에 입력하자마자 바로 아래에 글 작성
+				pwText[0].innerHTML = "";
+			}
+		}
+		
+		// 비밀번호와 비밀번호 확인이 일지한지 확인용
+		function pw2Check() {
+			let pwText = document.getElementsByClassName("pwText"); // 비밀번호 아래에 글이 작성될 <div>
+			let pw = document.getElementById("pw").value; // 비밀번호 값
+			let pw2 = document.getElementById("pw2").value; // 비밀번호 확인 값
+			
+			// 비밀번호와 비밀번호 확인이 서로 맞지 않을때
+			if ( pw != pw2 ) {
+				// 비밀번호 확인창에 입력하자마자 바로 아래에 글 작성
+				pwText[1].innerHTML = "비밀번호가 일치하지 않습니다";
+			} else {
+				// 비밀번호 확인창에 입력하자마자 바로 아래에 글 작성
+				pwText[1].innerHTML = "";
+			}
+		}
+	</script>
+	
+	<script>
+		// toggle
+		function toggle(){
+			const minimi_correction = document.getElementById('minimi_correction');
+			
+			if(minimi_correction.style.display !== 'none'){
+				minimi_correction.style.display ='none';
+			}
+			else {
+				minimi_correction.style.display ='block';
+			}
+		}
+	</script>
 </body>
 </html>

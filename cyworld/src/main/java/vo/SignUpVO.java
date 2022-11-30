@@ -1,8 +1,14 @@
 package vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class SignUpVO {
 	private int idx, dotoryNum;
 	private String name, userID, info, infoR, identityNum, gender, email, phoneNumber, address, addressDetail, platform, minimi;
+	// 메인화면에 작성되는 요소들
+	private String mainTitle, mainPhoto, mainText;
+	// 파일을 받기위한 클래스
+	private MultipartFile mainPhotoFile; // 물리적 파일
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// getter / setter
 	public int getIdx() { // IDX
@@ -88,5 +94,29 @@ public class SignUpVO {
 	}
 	public void setDotoryNum(int dotoryNum) { // 도토리 갯수
 		this.dotoryNum = dotoryNum;
-	}	
+	}
+	public String getMainTitle() {
+		return mainTitle;
+	}
+	public void setMainTitle(String mainTitle) {
+		this.mainTitle = mainTitle;
+	}
+	public String getMainPhoto() {
+		return mainPhoto;
+	}
+	public void setMainPhoto(String mainPhoto) {
+		this.mainPhoto = mainPhoto;
+	}
+	public String getMainText() {
+		return mainText;
+	}
+	public void setMainText(String mainText) {
+		this.mainText = mainText;
+	}
+	public MultipartFile getMainPhotoFile() {
+		return mainPhotoFile;
+	}
+	public void setMainPhotoFile(MultipartFile mainPhotoFile) {
+		this.mainPhotoFile = mainPhotoFile;
+	}
 }

@@ -22,7 +22,6 @@
  		<div class="guestbook_box">
  			<form>
  				<img src="/cyworld/resources/minimi/${ vo.guestbookMinimi }" width="100"/>
- 				<%-- <img src="/cyworld/resources/minimi/${ vo.guestbookMinimi }" width="200"/> --%>
  				<c:if test="${ vo.guestbookSecretCheck eq 1 }">
  					<div>비밀글 입니다.</div>
  					<c:if test="${ sessionIdx eq vo.guestbookSession || sessionIdx eq vo.guestIdx }">

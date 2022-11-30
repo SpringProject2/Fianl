@@ -26,7 +26,7 @@
                                 <input class="checkButton" id="btn-cover" type="button" value="중복확인" onclick="doubleCheck();"> 
                                 <p class="userPW"> PW<br> <input id="pw" name="info" type="password" oninput="pwCheck();"></p>
                                 <div class="pwText" id="pT1"></div>
-                                <p class="userPW2">PW 확인<br> <input name="infoR" id="pw2" type="password" oninput="pw2Check();"> </p>
+                                <p class="userPW2">PW 확인<br> <input id="pw2" type="password" oninput="pw2Check();"> </p>
                                 <div class="pwText pT2"></div>
                                 <p class="name">이름<br> <input name="name" type="text"></p>
                                 <p class="rNumber">주민번호<br> <input name="identityNum" id="identityNum" type="text" placeholder="주민번호 13자리를 입력해주세요" maxlength="14"></p> 
@@ -262,7 +262,7 @@
 			let pattern1 = /[0-9]/; // 숫자 입력
 			let pattern2 = /[a-zA-Z]/; // 영어 소문자, 대문자 입력
 			let pattern3 = /[~!@#$%^&*()_+]/; // 특수기호 입력
-			let infoR = f.infoR.value;
+			let infoR = document.getElementById("pw2").value;
 			
 			let name = f.name.value;
 			let identityNum = f.identityNum.value;
