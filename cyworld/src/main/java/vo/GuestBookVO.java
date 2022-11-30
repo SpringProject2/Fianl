@@ -7,6 +7,8 @@ public class GuestBookVO {
 	private int guestbookLikeNum;
 	// 비밀글
 	private int guestbookSecretCheck;
+	// 미니미
+	private String guestbookMinimi;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public int getGuestbookContentRef() {
 		return guestbookContentRef;
@@ -55,5 +57,11 @@ public class GuestBookVO {
 	}
 	public void setGuestbookSession(int guestbookSession) {
 		this.guestbookSession = guestbookSession;
+	}
+	public String getGuestbookMinimi() {
+		return guestbookMinimi;
+	}
+	public void setGuestbookMinimi(String guestbookMinimi) {
+		this.guestbookMinimi = guestbookMinimi;
 	}
 }

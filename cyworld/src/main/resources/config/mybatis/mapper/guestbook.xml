@@ -25,7 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{guestIdx},
 			#{guestbookLikeNum},
 			#{guestbookSecretCheck},
-			#{guestbookSession}
+			#{guestbookSession},
+			#{guestbookMinimi}
 		)
 	</insert>
 	
@@ -57,7 +58,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	guestbookContent=#{ guestbookContent },
         	guestbookContentName=#{ guestbookContentName },
         	guestbookRegdate=SYSDATE,
-        	guestbookSecretCheck=#{guestbookSecretCheck}
+        	guestbookSecretCheck=#{guestbookSecretCheck},
+        	guestbookMinimi=#{guestbookMinimi}
         	where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef} and guestbookSession=#{guestbookSession}
     </update>
     

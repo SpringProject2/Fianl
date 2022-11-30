@@ -18,6 +18,14 @@
 			<caption>:::방명록 수정:::</caption>
 			
 			<tr>
+				<th>미니미</th>
+					<td>
+						<img src="/cyworld/resources/minimi/${ minimi }" width="100"/>
+						<input name="guestbookMinimi" type="hidden" value="${ minimi }">
+					</td>
+			</tr>
+			
+			<tr>
 				<th>내용</th>
 				<td><pre><textarea rows="5" cols="50" name="guestbookContent">${vo.guestbookContent}</textarea></pre></td>
 			</tr>
@@ -58,8 +66,9 @@
 						"&guestbookContent=" + encodeURIComponent(f.guestbookContent.value) +
 						"&guestbookContentName=" + encodeURIComponent(f.guestbookContentName.value) +
 						"&guestbookSecretCheck=" + f.guestbookSecretCheck.value +
-						"&guestbookSession=" + f.guestbookSession.value;
-			sendRequest( url, param, sendCallback, "POST");
+						"&guestbookSession=" + f.guestbookSession.value +
+						"&guestbookMinimi=" + f.guestbookMinimi.value;
+			sendRequest( url, param, sendCallback, "get");
 		}
 		
 		function sendCallback(){

@@ -9,14 +9,17 @@
 
 </head>
 <body>
-	<form method="post" enctype="multipart/form-data">
+	<form method="GET">
 		<input name="idx" type="text" value="${ param.idx }">
 		<table border="1" align="center">
 			<caption>:::방명록 새로 쓰기:::</caption>
 			
 			<tr>
 				<th>미니미</th>
-					<td><img src="/cyworld/resources/minimi/${ minimi }" width="100"/></td>
+					<td>
+						<img src="/cyworld/resources/minimi/${ minimi }" width="100"/>
+						<input name="guestbookMinimi" type="hidden" value="${ minimi }">
+					</td>
 			</tr>
 			
 			<tr>
