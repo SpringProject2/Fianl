@@ -13,8 +13,9 @@
 		<typeAlias type="vo.SignUpVO" alias="signup"/>
 		<typeAlias type="vo.MainVO" alias="main"/>
 		<typeAlias type="vo.GalleryVO" alias="gallery"/>
-		<typeAlias type="vo.GuestBookVO" alias="guestbook"/>
 		<typeAlias type="vo.GalleryLikeVO" alias="glike"/>
+		<typeAlias type="vo.GalleryCommentVO" alias="gcomment"/>
+		<typeAlias type="vo.GuestBookVO" alias="guestbook"/>
 		<typeAlias type="vo.GuestBookLikeVO" alias="gblike"/>
 	</typeAliases>
 	
@@ -22,8 +23,9 @@
 		<mapper resource="config/mybatis/mapper/signup.xml" />
 		<mapper resource="config/mybatis/mapper/main.xml" />
 		<mapper resource="config/mybatis/mapper/gallery.xml" />
-		<mapper resource="config/mybatis/mapper/guestbook.xml" />
 		<mapper resource="config/mybatis/mapper/gallerylike.xml" />
+		<mapper resource="config/mybatis/mapper/gallerycomment.xml" />
+		<mapper resource="config/mybatis/mapper/guestbook.xml" />
 		<mapper resource="config/mybatis/mapper/guestbooklike.xml" />
 	</mappers>
 </configuration>

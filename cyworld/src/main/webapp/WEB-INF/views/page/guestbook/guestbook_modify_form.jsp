@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 	<form method="post" enctype="multipart/form-data">
 		<input type="text" name="guestIdx" value="${ vo.guestIdx }">
 		<input type="text" name="guestbookContentRef" value="${ vo.guestbookContentRef }">
+		<input name="guestbookSession" type="text" value="${ vo.guestbookSession }">
 		
 		<table border="1" align="center">
 		
@@ -29,6 +31,16 @@
 				<td colspan="2" align="center">
 					<input type="button" value="수정" onclick="send(this.form);">
 					<input type="button" value="취소" onclick="location.href='guestbook.do?idx=${vo.guestIdx}'">
+					<select id="guestscret" name="guestbookSecretCheck" onchange="selectbox">
+						<c:if test="${ vo.guestbookSecretCheck eq 0 }">
+							<option value="0" selected>전체 공개</option>
+							<option value="1">비밀글</option> 
+						</c:if>
+						<c:if test="${ vo.guestbookSecretCheck eq 1 }">
+							<option value="0">전체 공개</option>
+							<option value="1" selected>비밀글</option>
+						</c:if>
+                    </select>
 				</td>
 			</tr>
 			
@@ -44,7 +56,9 @@
 			var param = "guestIdx=" + f.guestIdx.value +
 						"&guestbookContentRef=" + f.guestbookContentRef.value +
 						"&guestbookContent=" + encodeURIComponent(f.guestbookContent.value) +
-						"&guestbookContentName=" + encodeURIComponent(f.guestbookContentName.value);
+						"&guestbookContentName=" + encodeURIComponent(f.guestbookContentName.value) +
+						"&guestbookSecretCheck=" + f.guestbookSecretCheck.value +
+						"&guestbookSession=" + f.guestbookSession.value;
 			sendRequest( url, param, sendCallback, "POST");
 		}
 		

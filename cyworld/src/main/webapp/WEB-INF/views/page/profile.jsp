@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,16 +83,21 @@
                                 <div class="modify-user-profile">
                                     <h2>::개인정보 수정::</h2>
                                     <p id="my-minimi">My minimi</p>
-                                  <input class="minimi-main" type="button" onclick= popUp()>
+                                  <input class="minimi-main" type="button" src="/cyworld/resources/minimi/${ vo.minimi }" onclick= minimiPopUp()>
 
-                                    <p>ID : <input type="text" value="${ vo.userID }"></p>
+                                    <p>ID : <input type="text" value="${ vo.userID }" readonly></p>
                                     <p>PW : <input type="text" value="${ vo.info }"></p>
                                     <p>PW 확인 : <input type="text"></p>
-                                    <p>이름 : <input type="text" value="${ vo.name }"></p>
-                                    <p>주민번호 : <input type="text" value="${ vo.identityNum }"></p>
-                                    <p>성별:&nbsp; <input class="myRadio" type="radio" name="gender" value="${ vo.gender }">&nbsp;남 <input  class="myRadio" type="radio" name="gender" value="${ vo.gender }">&nbsp;여 </p>
-                                    <p>이메일 : <input type="text" value="${ vo.email }"></p>
-                                    <p>전화번호 : <input type="tel" value="${ vo.phoneNumber }"></p>
+                                    <p>이름 : <input type="text" value="${ vo.name }" readonly></p>
+                                    <p>주민번호 : <input type="text" value="${ vo.identityNum }" readonly></p>
+                                    <c:if test="${ vo.gender eq 'M' || vo.gender eq 'male' }">
+                                    	<p>성별:&nbsp; <input class="myRadio" type="radio" name="gender" value="${ vo.gender }" checked readonly>&nbsp;남</p>
+                                    </c:if>
+                                    <c:if test="${ vo.gender eq 'W' || vo.gender eq 'female' }">
+                                    	<p>성별:&nbsp; <input  class="myRadio" type="radio" name="gender" value="${ vo.gender }" checked readonly>&nbsp;여</p>
+                                    </c:if>
+                                    <p>이메일 : <input type="text" value="${ vo.email }"></p> <!-- 인증 추가? -->
+                                    <p>전화번호 : <input type="tel" value="${ vo.phoneNumber }" readonly></p>
                                     <input class="final-button" id="btn-cover" type="button" value="수정">
                                 </div>
                             </form> 
@@ -119,8 +125,8 @@
     <script>
       
         //window.open (미니미 수정창)
-        function popUp() {
-            let popUrl = "profile_minimi_popup.do";
+        function minimiPopUp() {
+            let popUrl = "profile_minimi_popup.do?idx=${param.idx}";
             let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
     window.open(popUrl, "minimi", popOption);
         }

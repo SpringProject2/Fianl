@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import vo.GalleryVO;
+import vo.GalleryCommentVO;
 import vo.GalleryLikeVO;
 
 public class GalleryDAO {
@@ -63,7 +64,41 @@ public class GalleryDAO {
 		int res = sqlSession.update("g.gallery_update", vo);
 		return res;
 	}
+	
+	///////////////////댓글 구역/////////////////////
+	
+	// 댓글 조회
+	public List<GalleryCommentVO> selectCommentList(int idx){
+		List<GalleryCommentVO> list = sqlSession.selectList("gc.comment_list", idx);
+			return list;
+		}
+
+	// 새 댓글 추가
+	public int insertComment(GalleryCommentVO vo) {
+		int res = sqlSession.insert("gc.comment_insert", vo);
+		return res; 
+	}
+
+	// 댓글 갯수 구하기
+	public int selectCommentNum(GalleryCommentVO vo) {
+		int res = sqlSession.selectOne("gc.commentNum", vo);
+		return res;
+	}
+	
+	// 게시글 삭제시 해당 댓글 내역도 모두 삭제
+	public int deleteCommentAll(GalleryCommentVO vo) {
+		int res = sqlSession.delete("gc.deleteCommentAll", vo);
+		return res;
+	}
+	
+	// 댓글 삭제
+	public int deleteGComment(GalleryCommentVO vo) {
+		int res = sqlSession.update("gc.deleteComment", vo);
+		return res;
+	}
+	
 	///////////////////좋아요 구역/////////////////////
+	
 	// 좋아요를 이미 눌렀는지 확인하기 위한 작업
 	public GalleryLikeVO selectOneLike(GalleryLikeVO vo) {
 		GalleryLikeVO likeVo = sqlSession.selectOne("gl.selectLike", vo);

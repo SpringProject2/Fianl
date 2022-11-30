@@ -15,6 +15,11 @@
 			<caption>:::방명록 새로 쓰기:::</caption>
 			
 			<tr>
+				<th>미니미</th>
+					<td><img src="/cyworld/resources/minimi/${ minimi }" width="100"/></td>
+			</tr>
+			
+			<tr>
 				<th>내용</th>
 					<td><textarea rows="5" cols="50" name="guestbookContent"></textarea></td>
 			</tr>
@@ -28,6 +33,10 @@
 				<td colspan="2" align="center">
 					<input type="button" value="글쓰기" onclick="send(this.form);">
 					<input type="button" value="취소" onclick="location.href='guestbook.do?idx=${param.idx}'">
+					<select id="guestscret" name="guestbookSecretCheck" onchange="selectbox">
+						<option value="0">전체 공개</option>
+						<option value="1">비밀글</option> 
+                    </select>
 				</td>
 			</tr>
 		</table>

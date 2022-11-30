@@ -17,20 +17,35 @@
 		</div> 		
 	</div>
 	
- 	<c:forEach var="vo" items="${ list }"> 
-	
+ 	<c:forEach var="vo" items="${ list }">
+ 	
  		<div class="guestbook_box">
  			<form>
-				<div class="type_guestbookContent"> ${ vo.guestbookContent }</div>
+ 				<%-- <img src="/cyworld/resources/minimi/${ vo.guestbookMinimi }" width="200"/> --%>
+ 				<c:if test="${ vo.guestbookSecretCheck eq 1 }">
+ 					<div>비밀글 입니다.</div>
+ 					<c:if test="${ sessionIdx eq vo.guestbookSession || sessionIdx eq vo.guestIdx }">
+ 						<div class="type_guestbookContent"> ${ vo.guestbookContent }</div>
+ 					</c:if>
+ 					<input name="guestbookSecretCheck" type="hidden" value="${ vo.guestbookSecretCheck }">
+ 				</c:if>
+ 				<c:if test="${ vo.guestbookSecretCheck eq 0 }">
+					<div class="type_guestbookContent"> ${ vo.guestbookContent }</div>
+				</c:if>
+				<input name="guestbookSecretCheck" type="hidden" value="${ vo.guestbookSecretCheck }">
 				<div class="type_guestbookContentName">${ vo.guestbookContentName }</div>
 				<div class="type_guestbookRegdate">작성일: ${ vo.guestbookRegdate }</div>
 				<span>${ vo.guestbookLikeNum }</span>
 				<input type="button" value="좋아요" onclick="like(this.form)">
 				
+				<input name="guestbookSession" type="text" value="${ vo.guestbookSession }">
 				<input type="text" name="guestIdx" value="${ vo.guestIdx }">
 				<input type="text" name="guestbookContentRef" value="${ vo.guestbookContentRef }">
-				<input type="button" value="수정" onclick="modify(this.form);">
-				<input type="button" value="삭제" onclick="del(this.form);">
+				<!-- 로그인한 사람이 작성자 이거나 방명록 주인일 경우에만 보인다. -->
+				<c:if test="${ sessionIdx eq vo.guestbookSession || sessionIdx eq vo.guestIdx }">
+					<input type="button" value="수정" onclick="modify(this.form);">
+					<input type="button" value="삭제" onclick="del(this.form);">
+				</c:if>
 			</form>
 			
 		</div>
@@ -90,7 +105,8 @@
 			if( xhr.readyState == 4 && xhr.status == 200 ){
 				//xhr.responseText : 컨트롤러에서 return으로 보내준 결과값
 				let data = xhr.responseText;
-				location.href = "guestbook.do?idx=${param.idx}"
+				alert(data[1]);
+				//location.href = "guestbook.do?idx=${param.idx}"
 			}
 		}
 	</script>

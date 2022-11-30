@@ -23,7 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{guestbookContentName},
 			SYSDATE,
 			#{guestIdx},
-			#{guestbookLikeNum}
+			#{guestbookLikeNum},
+			#{guestbookSecretCheck},
+			#{guestbookSession}
 		)
 	</insert>
 	
@@ -52,11 +54,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 글 수정 -->
     <update id="guestbook_update" parameterType="guestbook">
         update guestbook set
-        	guestbookContent = #{ guestbookContent },
-        	guestbookContentName = #{ guestbookContentName },
-        	guestbookRegdate = SYSDATE,
-        	guestbookLikeNum=#{guestbookLikeNum}
-        	where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
+        	guestbookContent=#{ guestbookContent },
+        	guestbookContentName=#{ guestbookContentName },
+        	guestbookRegdate=SYSDATE,
+        	guestbookSecretCheck=#{guestbookSecretCheck}
+        	where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef} and guestbookSession=#{guestbookSession}
     </update>
     
 </mapper>

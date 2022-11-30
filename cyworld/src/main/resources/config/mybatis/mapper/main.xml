@@ -32,17 +32,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 이름으로 친구 검색 -->
 	<select id="main_search_name" resultType="signup" parameterType="String">
-		select * from signup where name=#{searchType}
+		select * from signup where name like '%'||#{searchValue}||'%'
 	</select>
-	<!-- ID로 친구 검색 -->
+	<!-- cyworld 가입자 - ID로 친구 검색 -->
 	<select id="main_search_id" resultType="signup" parameterType="String">
-		select * from signup where userID=#{searchType}
+		select * from signup where
+			(platform='cyworld' and userID like '%'||#{searchValue}||'%') or
+			(platform='naver' or platform='kakao' and email like '%'||#{searchValue}||'%')
 	</select>
-	<!-- Email로 친구 검색 -->
-	<select id="main_search_email" resultType="signup" parameterType="String">
-		select * from signup where email=#{searchType}
-	</select>
-	
 	<!-- ////////// 검색 구역 끝 ////////// -->
 	
 </mapper>

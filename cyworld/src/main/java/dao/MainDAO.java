@@ -43,15 +43,9 @@ public class MainDAO {
 		List<SignUpVO> list = sqlSession.selectList("m.main_search_name", searchValue);
 		return list;
 	}
-	// 이름으로 검색한 사용자 조회
+	// ID로 검색한 사용자 조회
 	public List<SignUpVO> selectSearchId(String searchValue) {
 		List<SignUpVO> list = sqlSession.selectList("m.main_search_id", searchValue);
 		return list;
-	}
-	// 이름으로 검색한 사용자 조회
-	public List<SignUpVO> selectSearchEmail(String searchValue) {
-		List<SignUpVO> list = sqlSession.selectList("m.main_search_email", searchValue);
-		return list;
-	}
-	
+	} 
 }

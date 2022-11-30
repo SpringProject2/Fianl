@@ -11,12 +11,12 @@
 <link rel="stylesheet" href="/cyworld/resources/css/main.css">
 </head>
 <body>
-	Idx : <input id="idx" name="idx" type="text" value="${ vo.idx }">
+	Idx : <input id="idx" name="idx" type="text" value="${ sighVo.idx }">
 	SessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionUser.idx }">
-	<input type="button" value="사진첩" onclick="location.href='gallery.do?idx=${vo.idx}'">
-	<input type="button" value="방명록" onclick="location.href='guestbook.do?idx=${vo.idx}'">
-	<input type="button" value="프로필" onclick="location.href='profile.do?idx=${vo.idx}'">
-	<h2 class="leftName">${ vo.name }님의 미니홈피입니다!</h2>
+	<input type="button" value="사진첩" onclick="location.href='gallery.do?idx=${ sighVo.idx }'">
+	<input type="button" value="방명록" onclick="location.href='guestbook.do?idx=${ sighVo.idx }'">
+	<input type="button" value="프로필" onclick="location.href='profile.do?idx=${ sighVo.idx }'">
+	<h2 class="leftName">${ sighVo.name }님의 미니홈피입니다!</h2>
 	
 	<!-- 플랫폼에 따른 로그아웃 버튼 생성 -->
 	<c:if test="${ sessionUser.platform eq 'cyworld' }">
@@ -66,15 +66,9 @@
 					<!-- <p class="titleLink"><a href="#">http://www.zenghyun.com</a></p> -->
 					<!-- 회원 검색 -->
 					<!-- 아이디, 이메일 검색 -->
-					<form method="post">
-						<select class="searchList" name="searchType">
-							<option value="name">이름</option>
-							<option value="id">아이디</option>
-							<option value="email">이메일</option>
-						</select>
-						<input  class="searchtext" type="text" name="searchValue"></input>
-						<input class="search" type="submit" value="검색" onclick="search(this.form);"></input>
-						<input type="hidden" name="idx" value="${vo.idx }">	
+					<form name="sf" method="GET">
+						<input class="search" type="button" value="검색" onclick="searchPopUp();"></input>
+						<input type="hidden" name="idx" value="${ sighVo.idx }">	
 					</form>
 					<aside class="right-aside">
 						<div class="miniRoomBox"><p>Mini Room</p>
@@ -112,45 +106,23 @@
 		</section>
 	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+	<script>
+		//window.open (검색 결과창)
+		function searchPopUp() {
+			let popUrl = "main_search_popup.do";
+			let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
+			window.open(popUrl, "search", popOption);
+			document.sf.action = "main_search_popup.do";
+		    document.sf.target="search";s
+		    document.sf.submit();
+		}
+	</script>
 	<!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
-		// 유저 검색
-		function search(f){
-			let idx = f.idx.value;
-			let searchType = f.searchType.value;
-			let searchValue = f.searchValue.value;
-			
-			url = "main_search.do";
-			param = "idx=" + idx +
-					"&searchType=" + searchType +
-					"&searchValue=" + searchValue;
-			alert(searchValue);
-			sendRequest(url, param, resultSearch, "POST");
-		}
-		// 콜백메소드
-		function resultSearch() {
-			if ( xhr.readyState == 4 && xhr.status == 200 ) {
-				alert("성공");
-				let data = xhr.responseText;
-				
-				let searchVal = data.searchList;
-				let result = data.code;
-				alert(result);
-         		
-				if ( data == "no" ) {
-					alert("검색 실패");
-					return;
-				}
-         
-				alert("검색 완료");
-				location.href = "search.do?idx=${vo.idx}";
-			} 
-		}
-		
 		// 일촌평 작성
 		function registration(f){
-		
+			
 			let ilchonpyeongText = f.ilchonpyeongText.value;
 			let idx = document.getElementById("idx").value;
 			let sessionIdx = document.getElementById("sessionIdx").value;

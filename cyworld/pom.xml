@@ -170,13 +170,20 @@
     		<groupId>commons-io</groupId>
     		<artifactId>commons-io</artifactId>
     		<version>2.4</version>
-		</dependency>  
+		</dependency>    
 		
 		<!-- 네이버 이메일 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>
 			<version>1.2</version>
+		</dependency>
+		
+		<!-- Jackson -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
 		</dependency>
 		        
 	</dependencies>

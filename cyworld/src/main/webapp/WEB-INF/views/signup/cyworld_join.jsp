@@ -34,13 +34,14 @@
                                     성별<br> <input name="gender" type="radio" value="male">&nbsp; 남자
                                                          <input name="gender" type="radio" value="female">&nbsp; 여자
                                 </p>
-                                <p class="email">이메일<br> <input name="email" type="text"></p>
+                                <p class="email">이메일<br> <input id="email" name="email" type="text"></p>
                                 <input class="sendANum1" id="btn-cover" type="button" value="인증번호 전송" onclick="emailCheckSend();"> 
-                                <p class="ANum">인증번호<br> <input type="text"></p> 
+                                <p class="ANum">인증번호<br> <input id="i_email" type="text"></p>
+                                							<input id="h_email" type="hidden">
                                 <input class="sendANum2" ID="btn-cover" type="button" value="인증번호 확인" onclick="emailCheck();" >
                                 <p class="phone">휴대전화<br> <input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"></p> 
                                 <p class="address">주소<br> <input class="address_kakao" name="address" type="text"></p>
-                                <input class="address2" id="btn-cover" type="button" value="주소찾기"> <br>
+                                <input class="address2 address_kakao" id="btn-cover" type="button" value="주소찾기"> <br>
                                 <p class="rAddress">상세 주소<br> <input class="address_kakao" name="addressDetail" type="text"></p>
                                 <input class="mJoin" id="btn-cover" type="button" value="가입" onclick="cyworldJoin(this.form);">
                             </form>

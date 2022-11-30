@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gc">
+   <!-- 갤러리 댓글 조회 -->
+   <select id="comment_list" resultType="gcomment"
+      parameterType="int">
+      select * from gallerycomment where
+      galleryCommentIdx=#{idx}
+      order by galleryNum DESC
+   </select>
+
+   <!-- 게시물 댓글 추가 -->
+   <insert id="comment_insert" parameterType="gcomment">
+      insert into
+      gallerycomment values(
+      #{galleryCommentIdx},
+      #{galleryCommentRef},
+      #{galleryCommentContent},
+      sysdate,
+      #{galleryNum},
+      #{galleryCommentDeleteCheck},
+      #{galleryCommentSession},
+      #{galleryCommentName}
+      )
+   </insert>
+
+   <!-- 댓글 갯수 구하기 -->
+   <select id="commentNum" resultType="int" parameterType="gcomment">
+      select
+      count(*) from gallerycomment where galleryCommentIdx=#{galleryCommentIdx} and galleryCommentRef=#{galleryCommentRef}
+   </select>
+
+   <!-- 게시글 삭제시 해당 좋아요 내역도 모두 삭제 -->
+   <delete id="deleteCommentAll" parameterType="gcomment">
+      delete from
+      gallerycomment where galleryCommentIdx=#{galleryCommentIdx} and
+      galleryCommentRef=#{galleryCommentRef}
+   </delete>
+   
+   <!-- 댓글삭제 -->
+   <update id="deleteComment" parameterType="gcomment">
+      update gallerycomment set galleryCommentDeleteCheck=#{galleryCommentDeleteCheck}
+         where galleryCommentIdx=#{galleryCommentIdx} and galleryCommentRef=#{galleryCommentRef} and galleryNum=#{galleryNum}
+   </update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

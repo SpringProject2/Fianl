@@ -65,7 +65,9 @@ public class GuestBookDAO {
 		int res = sqlSession.update("gb.guestbook_update", vo);
 		return res;
 	}
+	
 	///////////////////좋아요 구역/////////////////////
+	
 	// 좋아요를 이미 눌렀는지 확인하기 위한 작업
 	public GuestBookLikeVO selectOneLike(GuestBookLikeVO vo) {
 		GuestBookLikeVO likeVo = sqlSession.selectOne("gbl.selectLike", vo);

@@ -193,19 +193,20 @@
 			f.submit();
 		}
 	</script>
+	<!-- 카카오 로그아웃 -->
 	<script>
-		let logoutKakaoPopUp; // 팝업창 만들기
-		function openKakaoPopUp() { // 팝업 열기 메소드
+		let kakaoLogoutPopUp; // 팝업창 만들기
+		function kakaoOpenPopUp() { // 팝업 열기 메소드
 			// 팝업에 로그아웃 실행 기능 추가 - 네이버 로그아웃이 가능한 주소를 가져다 사용
-			logoutKakaoPopUp= window.open("https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+			kakaoLogoutPopUp = window.open("https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
 		}
-		function closeKakaoPopUp(){ // 팝업 닫기 메소드
-			logoutKakaoPopUp.close(); // 열린 팝업창을 다시 닫는 기능
+		function kakaoClosePopUp(){ // 팝업 닫기 메소드
+			kakaoLogoutPopUp.close(); // 열린 팝업창을 다시 닫는 기능
 		}
 		function kakaoLogout() {
-			openKakaoPopUp(); // 팝업 열기
+			kakaoOpenPopUp(); // 팝업 열기
 			setTimeout(function() {
-				closeKakaoPopUp(); // 팝업 닫기
+				kakaoClosePopUp(); // 팝업 닫기
 				location.href = "logout.do"; // 첫 페이지로 이동
 			}, 500); // 팝업 여는거부터 순차적으로 0.5초 간격으로 실행
 		}

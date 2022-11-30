@@ -190,18 +190,18 @@
 	</script>
 	<!-- 네이버 로그아웃 -->
 	<script>
-		let logoutPopUp; // 팝업창 만들기
-		function openPopUp() { // 팝업 열기 메소드
+		let naverLogoutPopUp; // 팝업창 만들기
+		function naverOpenPopUp() { // 팝업 열기 메소드
 			// 팝업에 로그아웃 실행 기능 추가 - 네이버 로그아웃이 가능한 주소를 가져다 사용
-			logoutPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+			naverLogoutPopUp = window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
 		}
-		function closePopUp(){ // 팝업 닫기 메소드
-			logoutPopUp.close(); // 열린 팝업창을 다시 닫는 기능
+		function naverClosePopUp(){ // 팝업 닫기 메소드
+			naverLogoutPopUp.close(); // 열린 팝업창을 다시 닫는 기능
 		}
 		function naverLogout() {
-			openPopUp(); // 팝업 열기
+			naverOpenPopUp(); // 팝업 열기
 			setTimeout(function() {
-				closePopUp(); // 팝업 닫기
+				naverClosePopUp(); // 팝업 닫기
 				location.href = "logout.do"; // 첫 페이지로 이동
 			}, 500); // 팝업 여는거부터 순차적으로 0.5초 간격으로 실행
 		}

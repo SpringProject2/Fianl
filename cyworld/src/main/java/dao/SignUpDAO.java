@@ -57,9 +57,17 @@ public class SignUpDAO {
 		return vo;
 	}
 	
-	/////////////// 프로필 영역 ///////////////
+	/////////////// 프로필 구역 ///////////////
+	
+	// 프로필 조회
 	public List<SignUpVO> selectListIdx(int idx) {
 		List<SignUpVO> list = sqlSession.selectList("s.profile_list", idx);
 		return list;
+	}
+	
+	// 프로필 미니미 갱신
+	public int updateMinimi(SignUpVO vo) {
+		int res = sqlSession.update("s.profile_minimi", vo);
+		return res;
 	}
 }
