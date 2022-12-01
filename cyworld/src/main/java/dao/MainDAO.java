@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import vo.IlchonVO;
 import vo.MainVO;
 import vo.SignUpVO;
 
@@ -47,5 +48,21 @@ public class MainDAO {
 	public List<SignUpVO> selectSearchId(String searchValue) {
 		List<SignUpVO> list = sqlSession.selectList("m.main_search_id", searchValue);
 		return list;
-	} 
+	}
+	
+	/////////////// 일촌 구역 ///////////////
+	
+	// 일촌 조회
+	public int selectFollowSearch(IlchonVO vo) {
+		int res = sqlSession.selectOne("m.selectFollowSearch", vo);
+		return res;
+	}
+	
+	// 일촌 등록
+	public int insertFollow(IlchonVO vo) {
+		int res = sqlSession.selectOne("m.selectFollowSearch", vo);
+		return res;
+	}
+	
+	// 일촌 해제
 }

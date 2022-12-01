@@ -3,6 +3,13 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m">
+
+	<!-- ////////// 일촌 구역 시작 ////////// -->
+	
+	<!-- 일촌 조회 -->
+	<select id=""></select>
+	
+	<!-- ////////// 일촌 구역 끝 ////////// -->
 	
 	<!-- ////////// 일촌평 구역 시작 ////////// -->
 	

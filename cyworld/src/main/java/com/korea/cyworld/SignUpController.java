@@ -2,7 +2,6 @@ package com.korea.cyworld;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import dao.DiaryDAO;
 import dao.GalleryDAO;
 import dao.GuestBookDAO;
 import dao.MainDAO;
@@ -28,6 +28,8 @@ import util.Common;
 import vo.GalleryVO;
 import vo.GuestBookLikeVO;
 import vo.GuestBookVO;
+import vo.DiaryVO;
+import vo.IlchonVO;
 import vo.GalleryCommentVO;
 import vo.GalleryLikeVO;
 import vo.MainVO;
@@ -47,6 +49,7 @@ public class SignUpController {
 	MainDAO main_dao; // 메인페이지 DAO
 	GalleryDAO gallery_dao; // 사진첩 DAO
 	GuestBookDAO guestbook_dao; // 방명록 DAO
+	DiaryDAO diary_dao; // 다이어리 DAO
 	
 	// SI / CI 방식
 	public void setSignUp_dao(SignUpDAO signUp_dao) {
@@ -60,6 +63,9 @@ public class SignUpController {
 	}
 	public void setGuestbook_dao(GuestBookDAO guestbook_dao) {
 		this.guestbook_dao = guestbook_dao;
+	}
+	public void setDiary_dao(DiaryDAO diary_dao) {
+	 	this.diary_dao = diary_dao;
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 기본 및 로그인
@@ -170,14 +176,15 @@ public class SignUpController {
 		// Mail Server 설정
 		String charSet = "UTF-8"; // 사용할 언어셋
 		String hostSMTP = "smtp.naver.com"; // 사용할 SMTP
-		String hostSMTPid = "sksh0000@naver.com"; // 사용할 SMTP에 해당하는 ID
-		String hostSMTPpwd = "qpwoeiruty10%"; // 사용할 ID에 해당하는 PWD
+		String hostSMTPid = ""; // 사용할 SMTP에 해당하는 ID
+		String hostSMTPpwd = ""; // 사용할 ID에 해당하는 PWD
+		
 		Properties props = System.getProperties();
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 		
 		// 보내는 사람 E-Mail, 제목, 내용 
-		String fromEmail = "sksh0000@naver.com"; // 보내는 사람 email
+		String fromEmail = ""; // 보내는 사람 email
 		String fromName = "관리자"; // 보내는 사람 이름
 		String subject = "이메일 인증번호 발송"; // 제목
 		
@@ -248,14 +255,14 @@ public class SignUpController {
 		// Mail Server 설정
 		String charSet = "UTF-8"; // 사용할 언어셋
 		String hostSMTP = "smtp.naver.com"; // 사용할 SMTP
-		String hostSMTPid = "id"; // 사용할 SMTP에 해당하는 ID
-		String hostSMTPpwd = "pwd"; // 사용할 ID에 해당하는 PWD
+		String hostSMTPid = ""; // 사용할 SMTP에 해당하는 ID
+		String hostSMTPpwd = ""; // 사용할 ID에 해당하는 PWD
 		Properties props = System.getProperties();
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 		
 		// 보내는 사람 E-Mail, 제목, 내용 
-		String fromEmail = "id"; // 보내는 사람 email
+		String fromEmail = ""; // 보내는 사람 email
 		String fromName = "관리자"; // 보내는 사람 이름
 		String subject = "이메일 인증번호 발송"; // 제목
 		
@@ -328,12 +335,12 @@ public class SignUpController {
 		}
 		
 		// 모두 일치 - 로그인 가능
-		// 로그인 유지를 위한 세션 부여
+		// 로그인 유지를 위한 세션 지정
 		HttpSession session = request.getSession();
 		if ( session.getAttribute("login") == null ) {
 			// ID값으로 회원정보 조회
 			SignUpVO sessionIdx = signUp_dao.selectOneIdCheck(id);
-			// 로그인 세션 부여
+			// 로그인 세션으로 idx 지정
 			session.setAttribute("login", sessionIdx.getIdx());
 		}
 		return "{'result':'clear'}";
@@ -419,6 +426,7 @@ public class SignUpController {
 		if ( session.getAttribute("login") == null ) {
 			session.setAttribute("login", idx);
 		}
+		
 		// 비회원 세션값 들고 메인페이지 이동
 		return "redirect:main.do?idx=" + session.getAttribute("login");
 	}
@@ -475,7 +483,6 @@ public class SignUpController {
 		
 		// 해당 idx의 메인에 작성된 일촌평 갯수 조회
 		int countNum = main_dao.selectCountNum(svo.getIdx());
-		System.out.println(vo.getIlchonpyeongText());
 		
 		// 작성된 일촌평이 한개도 없을 경우
 		if ( countNum == 0 ) {
@@ -539,7 +546,6 @@ public class SignUpController {
 			 */
 			vo.setIlchonSession("( " + sessionUser.getName() + " / " + sessionUser.getEmail().substring( 0, sessionUser.getEmail().indexOf("@") ) + " )");
 		}
-		System.out.println(vo.getIlchonpyeongText());
 		// 작성한 일촌평을 DB에 저장
 		int res = main_dao.ilchonWrite(vo);
 		// 저장 실패할 경우
@@ -551,6 +557,37 @@ public class SignUpController {
 		// 콜백메소드에 전달
 		return result;
 	}
+	
+//	/////////////// 팔로우 구역 ///////////////
+//	@RequestMapping("/main_follow")
+//	@ResponseBody
+//	public String main_follow(Integer idx, Integer sessionIdx, IlchonVO fvo) {
+//		// 세션값 존재여부 확인
+//		HttpSession session = request.getSession();
+//		if ( session.getAttribute("login") == null ) {
+//			// 세션값이 없다면 다시 로그인
+//			return "redirect:login.do";
+//		}
+//		
+//		// 팔로우를 하기위해 세션값에 해당하는 유저정보를 조회
+//		SignUpVO sessionUser = signUp_dao.selectOneIdx(session.getAttribute("login"));
+//		
+//		fvo.setFolloIdx(idx);
+//		fvo.setFollowSession(sessionIdx);
+//		
+//		int followNum = main_dao.selectFollowSearch(fvo);
+//		
+//		if ( followNum == 0 ) {
+//			signUp_dao.insertIlchon(fvo);
+//		}
+//		if ( followNum == 1 ) {
+//			
+//		}
+//		if ( followNum == 2 ) {
+//			
+//		}
+//		return "no";
+//	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 프로필 조회
 	@RequestMapping("/profile.do")
@@ -560,7 +597,11 @@ public class SignUpController {
 		if ( session.getAttribute("login") == null ) {
 			// 세션값이 없다면 로그인페이지로 이동
 			return "redirect:login.do";
-		}
+		} 
+//		Integer sessionIdx = (Integer)session.getAttribute("login");
+//		if ( sessionIdx != idx ) {
+//			return "redirect:main.do?idx=" + idx;
+//		}
 		
 		// 그 다음 idx에 해당하는 프로필 조회
 		SignUpVO idxVo = signUp_dao.selectOneIdx(idx);
@@ -722,6 +763,11 @@ public class SignUpController {
 		List<GalleryCommentVO> commentList = gallery_dao.selectCommentList(idx);
 		// 조회된 모든 댓글을 리스트 형태로 바인딩
 		model.addAttribute("commentList", commentList);
+		// 그 다음 idx에 해당하는 유저정보를 조회
+		SignUpVO svo = signUp_dao.selectOneIdx(idx);
+		// 조회된 유저정보를 바인딩
+		model.addAttribute("signVo", svo);
+		
 		// 추가로 세션값도 바인딩
 		model.addAttribute("sessionIdx", session.getAttribute("login"));
 		// 추가로 댓글 작성을 위해 위에서 세션값으로 조회해서 만든 작성자를 바인딩
@@ -1362,5 +1408,120 @@ public class SignUpController {
 		GuestBookVO gvo = guestbook_dao.selectOne(vo);
 		// 콜백메소드에 전달
 		return gvo;
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 다이어리 조회
+	@RequestMapping("/diary.do")
+	public String list(Integer idx,Model model) {
+		// 방명록에 들어오면 가장 먼저 세션값이 있는지 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 로그인페이지로 이동
+			return "redirect:login.do";
+		}
+		
+		List<DiaryVO> list = diary_dao.selectList(idx);
+		model.addAttribute("list", list);
+		model.addAttribute("sessionIdx", session.getAttribute("login"));
+		return Common.DP_PATH + "diary_list.jsp";
+	}
+	
+	// 다이어리 글 삽입 창 이동
+	@RequestMapping("/diary_insert_form.do")
+	public String insert_form() {
+		return Common.DP_PATH + "diary_insert_form.jsp";
+	}
+
+	// 새 글쓰기
+	@RequestMapping("/diary_insert.do")
+	public String insert(DiaryVO vo) {
+		// 세션값이 있는지 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 로그인페이지로 이동
+			return "redirect:login.do";
+		}
+		
+		// 해당 idx의 다이어리에 작성된 글 갯수 조회
+		int countNum = diary_dao.selectCountNum(vo.getDiaryIdx());
+		// 다이어리에 글이 한개도 없을경우
+		if ( countNum == 0 ) {
+			// 다이어리 글에 시작번호 1 부여
+			vo.setDiaryContentRef(1);
+			// 작성한 다이어리 글을 DB에 저장
+			diary_dao.insert(vo);
+			// 저장 성공시 idx를 들고 다이어리 첫페이지로 이동
+			return "redirect:guestbook.do?idx=" + vo.getDiaryIdx();
+		}
+		// 작성된 다이어리 글이 있을경우
+		// 가장 최근에 작성한 다이어리 글의 번호에 1 더하기
+		vo.setDiaryContentRef(countNum + 1);
+		// 작성한 다이어리 글을 DB에 저장
+		diary_dao.insert(vo);
+		// 저장 성공시 idx를 들고 다이어리 첫페이지로 이동
+		return "redirect:diary.do?idx=" + vo.getDiaryIdx();
+	}
+	
+	// 다이어리 글 삭제
+	@RequestMapping("/diary_delete.do")
+	@ResponseBody
+	public String delete(DiaryVO vo) {
+		// 삭제할 다이어리의 글에 idx와 ref를 VO에서 따로 분리
+		int idx = vo.getDiaryIdx(); // 삭제할 다이어리의 idx
+		int ref = vo.getDiaryContentRef(); // 삭제할 다이어리 글 번호
+		
+		// idx와 ref를 사용하기 위해 Map으로 둘다 저정한다.
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("1", idx); // 삭제할 다이어리의 idx 저장
+		map.put("2", ref); // 삭제할 다이어리 글 번호 저장
+		
+		// DB에 저장된 다이어리 글중 가져온 정보에 해당하는 다이어리 글 삭제
+		int res = diary_dao.delete(vo);
+		
+		// 삭제 실패할 경우
+		String result = "no";
+		if (res == 1) {
+			// 삭제 성공할 경우
+			result = "yes";
+			// 다이어리 글 삭제 후 삭제한 다이어리 글 번호보다 큰 번호의 다이어리 글들 조회
+			List<DiaryVO> list = diary_dao.selectListDelete(map);
+			// forEach문
+			for ( DiaryVO uref : list ) {
+				// 조회된 다이어리 글 번호들을 1씩 감소
+				uref.setDiaryContentRef(uref.getDiaryContentRef() - 1);
+				// 1씩 감소된 번호들을 다시 갱신
+				diary_dao.updateRefMinus(uref);
+			}
+		}
+		// 콜백메소드에 전달
+		return result;
+	}
+	
+	// 다이어리글 수정 폼으로 전환
+	@RequestMapping("/diary_modify_form.do")
+	public String modify_form(Model model, DiaryVO vo) {
+		DiaryVO updateVo = diary_dao.selectOne(vo);
+		
+		if (updateVo != null) {
+			model.addAttribute("vo", updateVo);
+		}
+		
+		return Common.DP_PATH + "diary_modify_form.jsp";
+		
+	}
+	
+	// 게시글 수정하기
+	@RequestMapping("/diary_modify.do")
+	@ResponseBody
+	public String modify(DiaryVO vo) {
+		
+		int res = diary_dao.update(vo);
+		
+		String result = "{'result':'no'}";
+		if (res != 0) {
+			result = "{'result':'yes'}";
+		}
+		
+		return result;
 	}
 }

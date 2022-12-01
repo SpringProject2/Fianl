@@ -44,6 +44,7 @@
                                 <input class="address2 address_kakao" id="btn-cover" type="button" value="주소찾기"> <br>
                                 <p class="rAddress">상세 주소<br> <input class="address_kakao" name="addressDetail" type="text"></p>
                                 <input class="mJoin" id="btn-cover" type="button" value="가입" onclick="cyworldJoin(this.form);">
+                                <input type="button" value="취소" onclick="location.href='logout.do'">
                             </form>
 
 </div>

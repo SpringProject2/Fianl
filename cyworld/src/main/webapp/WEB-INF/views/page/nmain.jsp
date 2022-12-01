@@ -42,17 +42,10 @@
                 <section class="right-section">
                         <div class="right-dashed-line">
                             <div class="right-gray-background">
-                                <form method="post">
-                                    <select id="btn-cover" class="searchList" name="searchType">
-                                    <option value="name">이름</option>
-                                    <option value="id">아이디</option>
-                                    <option value="email">이메일</option>
-                                    </select>
-                                    <input  class="searchText" type="text" name="searchValue"></input>
-                                    <input  id="btn-cover" class="search" type="submit" value="검색" onclick="search(this.form);"></input>
-                                    <input type="hidden" name="idx" value="${vo.idx }">
-                                    
-                                    </form>
+                                <form name="sf" method="GET">
+									<input class="search" type="button" value="검색" onclick="searchPopUp();"></input>
+									<input type="hidden" name="idx" value="${ signVo.idx }">	
+								</form>
                                 <aside class="right-aside">
                                <pre>
                                <h2>Cyworld의 회원으로 이용해보세요!</h2>
@@ -84,11 +77,18 @@
     <div class="item item1"></div>
     <div class="item item2"></div>
     <div class="item item2"></div>
-    <!-- script -->
-    <script>
-        function search(){
-        }
-    </script>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+	<script>
+		//window.open (검색 결과창)
+		function searchPopUp() {
+			let popUrl = "main_search_popup.do";
+			let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
+			window.open(popUrl, "search", popOption);
+			document.sf.action = "main_search_popup.do";
+		    document.sf.target="search";s
+		    document.sf.submit();
+		}
+	</script>
     <script>
         function goLogin(){
         	location.href = "logout.do"

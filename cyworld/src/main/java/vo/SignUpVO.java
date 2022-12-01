@@ -3,7 +3,7 @@ package vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class SignUpVO {
-	private int idx, dotoryNum;
+	private int idx, dotoryNum, ilchon;
 	private String name, userID, info, infoR, identityNum, gender, email, phoneNumber, address, addressDetail, platform, minimi;
 	// 메인화면에 작성되는 요소들
 	private String mainTitle, mainPhoto, mainText;
@@ -118,5 +118,11 @@ public class SignUpVO {
 	}
 	public void setMainPhotoFile(MultipartFile mainPhotoFile) {
 		this.mainPhotoFile = mainPhotoFile;
+	}
+	public int getIlchon() {
+		return ilchon;
+	}
+	public void setIlchon(int ilchon) {
+		this.ilchon = ilchon;
 	}
 }

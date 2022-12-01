@@ -11,12 +11,9 @@
 <link rel="stylesheet" href="/cyworld/resources/css/main.css">
 </head>
 <body>
-	Idx : <input id="idx" name="idx" type="text" value="${ signVo.idx }">
-	SessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionUser.idx }">
-	<input type="button" value="사진첩" onclick="location.href='gallery.do?idx=${ signVo.idx }'">
-	<input type="button" value="방명록" onclick="location.href='guestbook.do?idx=${ signVo.idx }'">
-	<input type="button" value="프로필" onclick="location.href='profile.do?idx=${ signVo.idx }'">
 	<h2 class="leftName">${ signVo.name }님의 미니홈피입니다!</h2>
+	<label>일촌</label><div id="ilchon"></div>
+	<input type="button" value="팔로우" >
 	
 	<!-- 플랫폼에 따른 로그아웃 버튼 생성 -->
 	<c:if test="${ sessionUser.platform eq 'cyworld' }">
@@ -27,6 +24,9 @@
 	</c:if>
 	<c:if test="${ sessionUser.platform eq 'kakao' }">
 		<input id="btn_cover" class="ka_logout" type="button" value="카카오 로그아웃" onclick="kakaoLogout();">
+	</c:if>
+	<c:if test="${ sessionUser eq null }">
+		<input id="btn_cover" class="ka_logout" type="button" value="로그인" onclick="location.href='logout.do'">
 	</c:if>
 	
 	<div class="container">
@@ -90,22 +90,50 @@
 				</div>
 			</div>
 			<div class="tabs">
-				<input type="checkbox" id="tab1" checked ></input>
-				<input type="checkbox" id="tab2"></input>
-				<input type="checkbox" id="tab3"></input>
-				<input type="checkbox" id="tab4"></input>
-				<input type="checkbox" id="tab5"></input>
-				<div class="tab-btns">
-					<label for="tab1" id="btn1">홈</label>
-					<label for="tab2" id="btn2">프로필</label>
-					<label for="tab3" id="btn3">다이어리</label>
-					<label for="tab4" id="btn4">사진첩</label>
-					<label for="tab5" id="btn5">방명록</label>
-				</div>
+				<input id="tab1" type="checkbox" checked ></input>
+				<input type="checkbox"></input>
+				<input type="checkbox"></input>
+				<input type="checkbox"></input>
+				<input type="checkbox"></input>
+				<form>
+					<div class="tab-btns">
+						Idx : <input id="idx" name="idx" type="text" value="${ signVo.idx }" readonly>
+						SessionIdx : <input id="sessionIdx" name="sessionIdx" type="text" value="${ sessionUser.idx }" readonly>
+						<label for="tab1" id="btn1">홈</label>
+						<input id="tab1" type="button" value="다이어리" onclick="location.href='main.do?idx=${ signVo.idx }'">
+						<label for="tab2" id="btn2">프로필</label>
+						<input id="tab2" type="button" value="프로필" onclick="profile(this.form);">
+						<label for="tab3" id="btn3">다이어리</label>
+						<input id="tab3" type="button" value="다이어리" onclick="location.href='diary.do?idx=${ signVo.idx }'">
+						<label for="tab4" id="btn4">사진첩</label>
+						<input id="tab4" type="button" value="사진첩" onclick="location.href='gallery.do?idx=${ signVo.idx }'">
+						<label for="tab5" id="btn5">방명록</label>
+						<input id="tab5" type="button" value="방명록" onclick="location.href='guestbook.do?idx=${ signVo.idx }'">
+					</div>
+				</form>
 			</div>
 		</section>
 	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+	<script>
+		function profile(f) {
+			let sessionIdx = document.getElementById("sessionIdx").value;
+			let idx = document.getElementById("idx").value;
+			if ( sessionIdx != idx ) {
+				alert("프로필은 본인만 들어갈 수 있습니다");
+				return;
+			}
+			f.action = "profile.do";
+			f.method = "POST";
+			f.submit();
+		}
+	</script>
+	<script>
+		let idx = document.getElementById("idx").value;
+		let sessionIdx = document.getElementById("sessionIdx").value;
+		let sessionIdx = document.getElementById("sessionIdx").value;
+	</script>
+	
 	<script>
 		//window.open (검색 결과창)
 		function searchPopUp() {

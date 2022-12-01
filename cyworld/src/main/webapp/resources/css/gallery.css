@@ -1,4 +1,4 @@
- *{font-family: 'Jua', sans-serif;}
+  *{font-family: 'Jua', sans-serif;}
    /* https://projects.verou.me/css3patterns/#blueprint-grid
            배경 격자무늬 생성  */
         body { height: 100vh;
@@ -9,8 +9,8 @@
                 linear-gradient(90deg, rgba(255, 255, 255, .3) 3px, transparent 3px);
             background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
             background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
-     overflow:hidden;
-     top:30px;  
+  	overflow:hidden;
+  	top:30px;  
         }
    /* position */
    .container { 
@@ -135,7 +135,7 @@ border-top: none; position: relative;}
 .like {   text-align: right;  }
 .changeBtn {text-align: right;}
 .myButton { width:360px; height: 100px; margin-left: 530px; 
-   font-size:20px; 
+	font-size:20px; 
 position:absolute; top:200px; left:-10px; }
 
 #heart { width:30px; height:30px;
@@ -145,13 +145,50 @@ position:absolute; top:200px; left:-10px; }
  background-color:white;
 }
 /* gallery comment */
-.commentArea{position: relative;}
-.Galleryreyply{width:900px; height: 200px; background-color: #79aaee; position:absolute; border: 3px solid black;
+.commentArea{position: relative; font-size:20px;}
+#GalleryReply{ 
 border-top: none;
 }
-.Galleryreyply > .commentWriter { position: absolute; left:10px; }
-.Gallerycomment { position: absolute; top:40px; left:10px;  }
-.delComment {color: rgb(251, 68, 68);}
+#GalleryReply > .commentWriter {  width:900px;  background-color: #c9d6f587; border: 3px solid black;  margin-bottom:10px; border-top:none;}
+.Gallerycomment {  height:100%; background-color: #c9d6f587; border: 3px solid black; margin-top:25px;  margin-bottom:10px;  }
+/* del  ani */
+.flip-box {
+    width: 900px;
+    height: 70px;
+    perspective: 1000px;
+}
+.flip-box:hover .flip {
+    transform: rotateY(-180deg);
+}
+.flip {
+    width: 900px;
+    height: 70px;
+    color: rgb(251, 68, 68);
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: .5s;
+    font-size:48px;
+   text-align:center;
+}
+.frontdelComment, .backdelComment {
+	 position: absolute;
+    width: 900px;
+    height: 70px;
+    backface-visibility: hidden;
+}
+.frontdelComment {
+    background: #6ee8fbb5;
+}
+.frontdelComment > img { width:80px; height: 70px;
+margin-left:-10px; margin-bottom:-20px;
+}
+.backdelComment {
+    background: #c9d6f587;
+    transform: rotateY(180deg);
+}
+
+.textPosition {margin-left:10px;}
 
 /* tabs */
 .tabs > input {display: none;}
@@ -170,7 +207,7 @@ border:  1px solid black; display: flex;
 
 /* button */
 
-        #btn-cover {  border: 1px solid skyblue;
+        #btn-cover {  border: 1px solid #486ae3;
             background-color: rgba(0,0,0,0);
             color: skyblue;
             padding: 5px;
@@ -181,6 +218,21 @@ border:  1px solid black; display: flex;
     #btn-cover:hover{
             color:white;
             background-color: skyblue;
+            
+        }
+          #btn_cover {  
+          margin-left:10px;
+          border: 1px solid #486ae3;
+            background-color: rgba(0,0,0,0);
+            color: #486ae3;
+            padding: 5px;
+            border-radius: 5px; font-weight: bold; 
+            font-family: 'Jua', sans-serif;
+            letter-spacing: 0.15em;
+        }
+    #btn_cover:hover{
+            color:#486ae3;
+            background-color: white;
             
         }
                 /* scroll-bar */

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="d">
+
+	<!-- 갤러리 조회  -->
+	<select id="diary_list" resultType="diary" parameterType="int" >
+		select * from Diary where diaryIdx=#{idx} order by diaryContentRef DESC
+		<!-- idx 내림차순 -->
+	</select>
+	
+	<!-- idx에 해당하는 다이어리글 갯수 구하기 -->
+	<select id="countNum" resultType="int" parameterType="int">
+		select count(*) from diary where diaryIdx=#{idx}
+	</select>
+
+	<!-- select를 제외한 insert, update, delete태그는 resultType을 기입하지 않는다 -->
+	<!-- 새 글 추가 -->
+	<insert id="diary_insert" parameterType="diary">
+		insert into Diary values(
+			#{diaryContentRef},
+			#{diaryContent},
+			SYSDATE,
+			#{diaryIdx}
+        )
+	</insert>
+	
+	<!-- 글 삭제 -->
+	<delete id="diary_delete" parameterType="diary">
+		delete from Diary where diaryIdx=#{diaryIdx} and diaryContentRef=#{diaryContentRef}
+	</delete>
+	
+		<!-- 삭제한 방명록 번호보다 큰 번호들을 조회 -->
+	<select id="diary_list_delete" resultType="diary" parameterType="java.util.HashMap">
+		select * from diary where diaryIdx=#{1} and diaryContentRef > #{2}
+	</select>
+	
+	<!-- 삭제한 게시물 번호보다 큰 번호들을 1씩 감소시켜서 갱신 -->
+	<update id="diary_update_ref_minus" parameterType="diary">
+		update diary set
+			diaryContentRef=#{diaryContentRef}
+			where diaryIdx=#{diaryIdx} and diaryContentRef=#{diaryContentRef} + 1
+	</update>
+	
+	<!-- 수정을 위한 게시글 한 건 조회 -->
+	<select id="diary_one" resultType="diary" parameterType="diary">
+		select * from Diary where diaryIdx=#{diaryIdx} and diaryContentRef =#{diaryContentRef }
+	</select>
+	
+	<!-- 글 수정 -->
+	<update id="diary_update" parameterType="diary">
+		update Diary set
+			DiaryContent = #{ diaryContent},
+			diaryRegdate = diaryRegdate
+			where DiaryContentRef=#{diaryContentRef}
+	</update>
+
+
+
+</mapper>

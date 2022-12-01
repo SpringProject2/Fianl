@@ -1,3 +1,4 @@
+ *{font-family: 'Jua', sans-serif;}
    /* https://projects.verou.me/css3patterns/#blueprint-grid
            배경 격자무늬 생성  */
         body { height: 100vh;
@@ -52,7 +53,7 @@
             padding: 5px;
             border-radius: 5px; font-weight: bold; 
             position: absolute;
-            top:385px; left:180px; 
+            top:385px; left:183px; 
         }
     #btn-cover:hover{
             color:white;

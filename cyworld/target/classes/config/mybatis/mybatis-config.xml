@@ -12,11 +12,13 @@
 	<typeAliases>
 		<typeAlias type="vo.SignUpVO" alias="signup"/>
 		<typeAlias type="vo.MainVO" alias="main"/>
+		<typeAlias type="vo.IlchonVO" alias="ilchon"/>
 		<typeAlias type="vo.GalleryVO" alias="gallery"/>
 		<typeAlias type="vo.GalleryLikeVO" alias="glike"/>
 		<typeAlias type="vo.GalleryCommentVO" alias="gcomment"/>
 		<typeAlias type="vo.GuestBookVO" alias="guestbook"/>
 		<typeAlias type="vo.GuestBookLikeVO" alias="gblike"/>
+		<typeAlias type="vo.DiaryVO" alias="diary"/>
 	</typeAliases>
 	
 	<mappers>
@@ -27,5 +29,6 @@
 		<mapper resource="config/mybatis/mapper/gallerycomment.xml" />
 		<mapper resource="config/mybatis/mapper/guestbook.xml" />
 		<mapper resource="config/mybatis/mapper/guestbooklike.xml" />
+		<mapper resource="config/mybatis/mapper/diary.xml" />
 	</mappers>
 </configuration>

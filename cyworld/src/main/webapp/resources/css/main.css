@@ -1,3 +1,4 @@
+  *{font-family: 'Jua', sans-serif;}
  /* https://projects.verou.me/css3patterns/#blueprint-grid
            배경 격자무늬 생성  */
         body { height: 100vh;
@@ -83,7 +84,7 @@ font-size: 18px;
 .history > h3 {position: absolute; width:258px; left: 50px; border-bottom: 1px solid black;}
 
 /* right content */
-.cy_logout { position:absolute; left:1570px; top:10px;}
+.cy_logout { position:absolute; left:1570px; top:10px; left:1800px; width:100px; height:50px; font-size:25px;}
 .na_logout { position:absolute; left:1660px; top:10px;}
 .ka_logout { position:absolute; left:1790px; top:10px;}
 .title { position: relative; left: 80px; top:27px; 
@@ -94,7 +95,7 @@ font-size: 18px;
  margin-bottom: 10px;}
 .miniRoomBox > p {font-size: 24px; color: skyblue; font-weight: bold; position: relative; top:7px; text-align: center; }
 .miniRoom > img{position: absolute; width: 930px; height: 330px; top: 51px; border-top: 1px solid black;}
-.Crayon { position: absolute; top:210px; left: 425px;}
+.Crayon { position: absolute; top:250px; left: 225px;}
 .Ilchonpyeong { position:absolute; width:932px; height: 40px; background-color: lightgray; left: 80px; top: 410px;}
 .Ilchonpyeong > span { font-size: 20px; color: rgb(89, 192, 233); font-weight: bold; position: absolute; left: 25px; top: 5px;}
 .Ilchonpyeong > input {width: 740px; height: 25px; font-size: 18px; 
@@ -114,7 +115,42 @@ input::placeholder {
 }
 .searchList { position:absolute; left:780px;}
 .searchtext {position:absolute; left: 850px;}
-.search {position:absolute; left:1080px;}
+.search {position:absolute; left:1050px; width:100px; top:15px; font-size:20px;}
+/* music */
+.mp3 { position:absolute; left:700px; top: 34px; height:25px;}
+.mp3_title { position:absolute; left:790px; top:0px;} 
+.musicLogo{width:25px; height:25px; position:absolute; left:715px; top:3px;}
+/* mp3 title circle  */
+     .circle-container {
+            width:200px;
+            position: relative;
+            border: 2px solid black;
+            height: 20px;
+            margin: auto;
+            text-align: center;
+            color: black;
+            background-color: rgb(235, 232, 232);
+            overflow: hidden;
+            left:-40px;
+            top:6px;
+            border-radius: 10px;
+        }
+        .circle {
+            width: 200px; left: 100%; position: absolute;
+            animation: circleScale 5s linear infinite;
+        }
+        .circle1 {background-color: rgb(235, 232, 232);
+            animation-delay: 0s;
+            animation-direction: normal;
+        }
+      
+        @keyframes circleScale {
+            0% {left:100%;}
+             100% {left:-100%;}
+        }
+/* dotory*/
+.dotory { position:absolute; left:720px; top:10px;}
+.dotoryBtn {position:absolute; width:70px; top:-3px; left:150px; }
 /* tabs */
 .tabs input {display: none;}
 .tab-btns>label { width: 100px; height: 55px; position: relative; margin-bottom: 5px; background-color:rgb(40, 125, 175); left:1190px; top:-720px;  font-size: 20px; padding-left:15px; text-align: center; padding-top: 25px; border-radius: 0 20px 20px 0;  color: white;
@@ -128,7 +164,7 @@ border:  1px solid black; display: flex;
 .tabs> #tab5:checked ~.tab-btns > #btn5 { background-color: white; color: black;}
 
 #btn_cover {  border: 1px solid skyblue;
-            background-color: #7c7c7c;
+            background-color: white;
             color: #77d7ff;
             padding: 5px;
             border-radius: 5px; font-weight: bold;

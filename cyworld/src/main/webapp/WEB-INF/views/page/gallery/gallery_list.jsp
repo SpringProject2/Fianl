@@ -8,11 +8,12 @@
 <title>사진첩</title>
 <link rel="stylesheet" href="/cyworld/resources/css/gallery.css">
 <link rel="stylesheet" href="/cyworld/resources/css/reset.css">
- <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/cyworld/resources/css/animate.css">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body >
 
-     <div class="container">
+	  <div class="container">
         <section class="left-section">
                 <div class="left-dashed-line">
                     <div class="left-gray-background">
@@ -44,7 +45,7 @@
                                 <div class="show">
                                      <img src="resources/images/sorryForShow.gif" alt="">
                                 <p class="sorryText">
-                                       카테고리 기능은 개발중에 있습니다. <br> <span>※개발진 일동</span>
+                                 	   카테고리 기능은 개발중에 있습니다. <br> <span>※개발진 일동</span>
                                 </p>
                                 </div>
                         </aside>
@@ -57,27 +58,27 @@
                     <div class="right-gray-background">
                         <p class="title"><a href="#">Test 싸이월드 Title입니다. 누르면 무슨 기능이였더라?</a></p>
                   <!-- main 페이지에 재생 플레이어와 노래 제목 표시  -->
-                  <img class="musicLogo" src="resources/images/noneMain15.gif" alt="">
-                  <a class="mp3_title" href="#" ><div class="circle-container">
-        <div class="circle circle1"> 오르트 구름 - 윤하 </div>
+  				 	<img class="musicLogo" src="resources/images/noneMain15.gif" alt="">
+  				 	<a class="mp3_title" href="#" ><div class="circle-container">
+        <div class="circle circle1"> ♫ 오르트 구름 - 윤하 </div>
     </div></a>
-                  <audio class="mp3" controls>
-               <source src="/cyworld/resources/sound/main.mp3" type="audio/mp3">
-                  </audio>
-             
+   					<audio class="mp3" controls>
+ 				  <source src="/cyworld/resources/sound/main.mp3" type="audio/mp3">
+ 					  </audio>
+ 				
                         <aside class="right-aside" id="scrollBar">
                             <div class="fake"></div>
                             <div class="galleryContainer">
                              
-                            <c:forEach var="vo" items="${ galleryList }">
-                                
                             <div id="writing">
                                 <h1>사진첩 목록</h1>
-                        <!-- 로그인한 사람이 사진첩 주인일 경우에만 보인다. -->
-                        <c:if test="${ sessionIdx eq vo.gallIdx }">
-                           <input id="btn-cover" type="button" value="글쓰기" onclick="location.href='gallery_insert_form.do?idx=${param.idx}'">
-                        </c:if>
+								<!-- 로그인한 사람이 사진첩 주인일 경우에만 보인다. -->
+								<c:if test="${ sessionIdx eq param.idx }">
+									<input id="btn-cover" type="button" value="글쓰기" onclick="location.href='gallery_insert_form.do?idx=${param.idx}'">
+								</c:if>
                             </div>
+                            <c:forEach var="vo" items="${ galleryList }">
+                                
                                 <div class="gallery_box">
                                     
                                    
@@ -98,7 +99,9 @@
                                                 </c:if>
                                                 <!-- 확장자가 video일때 -->
                                                 <c:if test="${ vo.galleryFileExtension eq 'video' }">
-                                                  <div class="VideoPosition"> <video  class="myVideo" autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }" /></div> 
+                                                  <div class="VideoPosition"> 
+                                                     <video  class="myVideo" autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }" /> 
+                                                </div> 
                                                     <!-- video태그 autoplay : 자동 재생 / controls loop : 반복 재생 / muted : 음소거 -->
                                                 </c:if>
                                             </c:if>
@@ -113,11 +116,11 @@
                                                       <input  id="heart" type="button" onclick="like(this.form)" >
                                                     </p>
                                                     <!-- 로그인한 사람이 사진첩 주인일 경우에만 보인다. -->
-                                       <c:if test="${ sessionIdx eq vo.gallIdx }">
+													<c:if test="${ sessionIdx eq vo.gallIdx }">
                                                     <p class="changeBtn">
                      
                                                     <input id="btn-cover" type="button" value="수정" onclick="modify(this.form);">
-                                                    <input  id="btn-cover" class="del"  type="button" value="삭제" onclick="del(this.form);">
+                                                    <input id="btn-cover" class="del"  type="button" value="삭제" onclick="del(this.form);">
                                                 </p>
                                                 </c:if>
                                             </div>
@@ -126,52 +129,60 @@
                                     </form>
                                     
                                 </div>
-                                
+                                <div class="commentArea">
                               <!-- 댓글 구역 -->
-                        <form method="post">
-                           <div class="Galleryreyply">
-                              <!-- 사진첩 주인 idx -->
-                              <input type="hidden" name="galleryCommentIdx" value="${ vo.gallIdx }">
-                              <!-- 사진첩 댓글 번호 -->
-                              <input type="hidden" name="galleryCommentRef" value="${ vo.galleryContentRef }">
-                              <!-- 작성자 이름 -->
-                              <label>작성자 : </label><input type="text" name="galleryCommentName" value="${ sessionName }" readonly>
-                              <!-- 댓글 작성 -->
-                              <label>댓글 : </label><input type="text" name="galleryCommentContent">
-                              <!-- 댓글 작성 버튼 -->
-                              <input class="GC-reply" type="button" value="댓글등록" onclick="reply(this.form);">
-                           </div>
-                        </form>
-                              
-                              
-                                      <!-- 게시글마다 댓글 보이는 구역 -->
-                           <c:forEach var="cvo" items="${ commentList }">
-                              <form>
-                                 <c:if test="${ cvo.galleryCommentIdx eq vo.gallIdx && cvo.galleryCommentRef eq vo.galleryContentRef }">
-                                    <div class="Gallerycomment">
-                                       <input type="hidden" name="galleryCommentIdx" value="${ cvo.galleryCommentIdx }">
-                                       <input type="hidden" name="galleryCommentRef" value="${ cvo.galleryCommentRef }">
-                                       <input type="hidden" name="galleryNum" value="${ cvo.galleryNum }">
-                                       <div>ㆍ 작성자 : ${ cvo.galleryCommentName } / 작성일자 : ${ cvo.galleryCommentRegdate }</div>
-                                       <c:if test="${cvo.galleryCommentDeleteCheck eq -1}">
-                                          <div>삭제된 댓글입니다.</div>
-                                       </c:if>
-                                       <c:if test="${cvo.galleryCommentDeleteCheck eq 0}">
-                                          <div><pre>: ${ cvo.galleryCommentContent }</pre></div>
-                                       </c:if>
-                                       <!-- 1. 댓글을 삭제하기 전에만 보인다. -->
-                                       <c:if test="${ cvo.galleryCommentDeleteCheck eq 0 }">
-                                          <!-- 2. 로그인한 사람이 사진첩 주인 이거나 작성자일 경우에만 보인다. -->
-                                          <c:if test="${ sessionIdx eq cvo.galleryCommentIdx || sessionIdx eq cvo.galleryCommentSession }">
-                                             <input type="button" value="댓글삭제" onclick="gcdel(this.form);">
-                                          </c:if>
-                                       </c:if>
+								<form method="post">
+									<div id="GalleryReply">
+										<!-- 사진첩 주인 idx -->
+										<input type="hidden" name="galleryCommentIdx" value="${ vo.gallIdx }">
+										<!-- 사진첩 댓글 번호 -->
+										<input type="hidden" name="galleryCommentRef" value="${ vo.galleryContentRef }">
+										<!-- 작성자 이름 -->
+										<div class="commentWriter"><label>&nbsp;&nbsp;작성자 : </label><input type="text" name="galleryCommentName" value="${ sessionName }" readonly>
+										<!-- 댓글 작성 -->
+										<label>&nbsp;&nbsp;댓글 : </label><input type="text" name="galleryCommentContent">
+										<!-- 댓글 작성 버튼 -->
+										<input id="btn_cover" class="GC-reply" type="button" value="댓글등록" onclick="reply(this.form);">
                                     </div>
-                                 </c:if>
-                              </form>
-                           </c:forEach>
+                                    </div>
+								</form>
+                              
+                              
+		                                <!-- 게시글마다 댓글 보이는 구역 -->
+									<c:forEach var="cvo" items="${ commentList }">
+										<form>
+											<c:if test="${ cvo.galleryCommentIdx eq vo.gallIdx && cvo.galleryCommentRef eq vo.galleryContentRef }">
+												<div class="Gallerycomment">
+													<input type="hidden" name="galleryCommentIdx" value="${ cvo.galleryCommentIdx }">
+													<input type="hidden" name="galleryCommentRef" value="${ cvo.galleryCommentRef }">
+													<input type="hidden" name="galleryNum" value="${ cvo.galleryNum }">
+													<div class="textPosition"> 작성자 : ${ cvo.galleryCommentName } / 작성일자 : ${ cvo.galleryCommentRegdate }</div>
+													<c:if test="${cvo.galleryCommentDeleteCheck eq -1}">
+														
+														<div class="flip-box">
+															    <div class="flip">
+																	<div class="frontdelComment"><img src="resources/images/cry.png" alt="">&nbsp;&nbsp; 댓글을 볼 수 없어요 ㅠ</div>
+															        <div class="backdelComment" id="backColor">삭제된 댓글입니다.</div>
+															    </div>
+															</div>
+													</c:if>
+													<c:if test="${cvo.galleryCommentDeleteCheck eq 0}">
+														<div class="textPosition"><pre>댓글 : ${ cvo.galleryCommentContent }</pre></div>
+													</c:if>
+													<!-- 1. 댓글을 삭제하기 전에만 보인다. -->
+													<c:if test="${ cvo.galleryCommentDeleteCheck eq 0 }">
+														<!-- 2. 로그인한 사람이 사진첩 주인 이거나 작성자일 경우에만 보인다. -->
+														<c:if test="${ sessionIdx eq cvo.galleryCommentIdx || sessionIdx eq cvo.galleryCommentSession }">
+															<input  id="btn_cover"type="button" value="댓글삭제" onclick="gcdel(this.form);">
+														</c:if>
+													</c:if>
+												</div>
+											</c:if>
+										</form>
+									</c:forEach>
+                                </div>
                             </c:forEach>
-                       
+						     
                             
                         </div>
                         </aside>
@@ -195,8 +206,8 @@
         </section>
 </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
-   <!-- 음악 재생  -->
-   <script type="text/javascript">
+	<!-- 음악 재생  -->
+	<script type="text/javascript">
    //Audio 사용을 위한 객체 생성
    var audio = new Audio();
    //오디오가 참조하는 노래 주소 지정
@@ -206,7 +217,7 @@
     audio.volume = 3;
     </script>
      
-   <script src="/cyworld/resources/js/httpRequest.js"></script>
+	<script src="/cyworld/resources/js/httpRequest.js"></script>
    <script>
       function del(f){
          
@@ -253,8 +264,6 @@
          let url = "gallery_like.do";
          let param = "gallIdx=" + gallIdx +
                   "&galleryContentRef=" + galleryContentRef;
-         alert(gallIdx);
-         alert(galleryContentRef);
          sendRequest(url, param, resultLike, "GET");
       }
       // 좋아요 콜백메소드 생성
@@ -339,7 +348,7 @@
    }
    </script>
 
-   <script>
+	<script>
     // 사진첩 목록 배경색 랜덤
     const colors = ['#83BEF4', '#42D3FB', '#00E6E9',  '#5BF3C3', '#AAFA94', '#F9F871', '#EFA2C2', '#FFAFC8','#B495FF','#E4F7D2','#FDD785','#DFF980','#F9AA80'];
 
@@ -358,8 +367,13 @@
         document.getElementById('writing').style.background  = "linear-gradient(45deg,"+colors[num1]+"," + colors[num2]+"," + colors[num3] + ","+ colors[num4] + "," + colors[num5] + ")";
     }
 
-   randomColor();
-   //맨 처음부터 배경색 지정
-   </script>
+	randomColor();
+	//맨 처음부터 배경색 지정
+	</script>
+
+
+
+    
+
 </body>
 </html>

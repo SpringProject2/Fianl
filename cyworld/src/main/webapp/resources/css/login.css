@@ -1,3 +1,4 @@
+           *{font-family: 'Jua', sans-serif;}
      /* https://projects.verou.me/css3patterns/#blueprint-grid
            배경 격자무늬 생성  */
         body { height: 100vh;
@@ -48,13 +49,12 @@
 .login {position: absolute; top:485px; left: 130px; }
 .login > input { width: 185px; height: 45px; font-size: 25px;}
    
-.join {position: absolute; top:657px; left: 130px;}
+.join {position: absolute; top:663px; left: 130px; width:70px;}
 .naver { position: absolute; top:535px; left:130px;}
 .kakao {position: absolute; top:580px; left:130px;}
-.findID {position: absolute; top:628px; left:130px; }
+.findID {position: absolute; top:628px; left:130px; width:80px; }
 .findPW {position: absolute; top:628px; left:217px; width:98px;}
-.none-join {position: absolute; width:115px; top:663px; left:200px;}
-
+.none-join {position: absolute; width:123px; top:667px; left:193px; height:30px; margin-bottom:5px;}
 #btn-cover {  border: 1px solid skyblue;
             background-color: rgba(0,0,0,0);
             color: skyblue;

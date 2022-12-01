@@ -22,5 +22,10 @@
 	<bean id="guestbook_daoBean" class="dao.GuestBookDAO">
 		<property name="sqlSession" ref="sqlSessionBean"/>
 	</bean>
+	
+	<!-- DiaryDAO	 -->
+	<bean id="diary_daoBean" class="dao.DiaryDAO">
+		<property name="sqlSession" ref="sqlSessionBean"/>
+	</bean>
 		
 </beans>
