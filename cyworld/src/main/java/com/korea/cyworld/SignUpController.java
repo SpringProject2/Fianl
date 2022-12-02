@@ -665,10 +665,13 @@ public class SignUpController {
 		if ( session.getAttribute("login") == null ) {
 			// 세션값이 없다면 로그인페이지로 이동
 			return "redirect:login.do";
-		} 
+		}
 //		Integer sessionIdx = (Integer)session.getAttribute("login");
-//		if ( sessionIdx != idx ) {
-//			return "redirect:main.do?idx=" + idx;
+//		System.out.println(idx);
+//		System.out.println(sessionIdx);
+//		if (session.getAttribute("login") != idx ) {
+//			System.out.println("같다");
+//			return "redirect:main.do?idx=" + sessionIdx;
 //		}
 		
 		// 그 다음 idx에 해당하는 프로필 조회

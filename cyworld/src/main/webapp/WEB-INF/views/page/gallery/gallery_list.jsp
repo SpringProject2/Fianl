@@ -56,7 +56,7 @@
         <section class="right-section">
                 <div class="right-dashed-line">
                     <div class="right-gray-background">
-                        <p class="title"><a href="#">Test 싸이월드 Title입니다. 누르면 무슨 기능이였더라?</a></p>
+                        <p class="title"><a href="main.do?idx=${ signVo.idx }">${ signVo.mainTitle }</a></p>
                   <!-- main 페이지에 재생 플레이어와 노래 제목 표시  -->
   				 	<img class="musicLogo" src="resources/images/noneMain15.gif" alt="">
   				 	<a class="mp3_title" href="#" ><div class="circle-container">

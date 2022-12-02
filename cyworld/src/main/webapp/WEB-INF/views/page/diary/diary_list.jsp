@@ -52,7 +52,7 @@
         <section class="right-section">
                 <div class="right-dashed-line">
                     <div class="right-gray-background">
-                        <p class="title"><a href="#">Test 싸이월드 Title입니다. 누르면 무슨 기능이였더라?</a></p>
+                        <p class="title"><a href="main.do?idx=${ signVo.idx }">${ signVo.mainTitle }</a></p>
                             <img class="musicLogo" src="resources/images/noneMain15.gif" alt="">
                                 <a class="mp3_title" href="#" ><div class="circle-container">
                     <div class="circle circle1"> ♫ 오르트 구름 - 윤하 </div>
