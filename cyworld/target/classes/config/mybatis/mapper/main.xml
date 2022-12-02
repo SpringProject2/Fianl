@@ -7,7 +7,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- ////////// 일촌 구역 시작 ////////// -->
 	
 	<!-- 일촌 조회 -->
-	<select id=""></select>
+	<select id="selectIlchonSearch" resultType="int" parameterType="java.util.HashMap">
+		<!-- Map에 VO를 통째로 담았을때 사용방법 -->
+		<!-- 키값에 .을 붙인뒤 뒤에 가져올 VO의 변수 이름을 작성하면 된다. -->
+		select count(*) from ilchon where
+			(ilchonIdx=#{1.ilchonIdx} and ilchonSession=#{2.ilchonSession})
+			or
+			(ilchonIdx=#{3.ilchonSession} and ilchonSession=#{4.ilchonIdx})
+	</select>
+	
+	<!-- 0 : 일촌 등록 -->
+	<insert id="insertIlchon" parameterType="ilchon">
+		insert into ilchon values(
+			#{ilchonIdx},
+			#{ilchonSession},
+			#{ilchonUp}
+		)
+	</insert>
+	
+	<!-- 1 : 일촌 2차 조회 -->
+	<select id="selectIlchon" resultType="ilchon" parameterType="ilchon">
+		select * from ilchon where ilchonIdx=#{ilchonIdx} and ilchonSession=#{ilchonSession}
+	</select>
+	
+	<!-- 일촌 갱신 -->
+	<update id="updateIlchon" parameterType="ilchon">
+		update ilchon set ilchonUp=#{ilchonUp} where ilchonIdx=#{ilchonSession} and ilchonSession=#{ilchonIdx}
+	</update>
+	
+	<!-- 2 : 일촌 해제 -->
+	<delete id="deleteIlchon" parameterType="ilchon">
+		delete from ilchon where ilchonIdx=#{ilchonIdx} and ilchonSession=#{ilchonSession}
+	</delete>
+	
+	<select id="selectIlchonNum" resultType="int" parameterType="ilchon">
+		select count(*) from ilchon where ilchonUp=#{ilchonUp} and ilchonIdx=#{ilchonIdx}
+	</select>
+	
+	<update id="updateIlchonNum" parameterType="signup">
+		update signup set ilchon=#{ilchon} where idx=#{idx}
+	</update>
+	
+	<!-- <select id="selectIlchonList" resultType="ilchon" parameterType="signup">
+		select * from ilchon where ilchonUp=#{ilchonUp} and ilchonIdx{ilchonIdx}
+	</select> -->
 	
 	<!-- ////////// 일촌 구역 끝 ////////// -->
 	

@@ -14,6 +14,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from signup where userID=#{userID}
 	</select>
 	
+	<!-- 가입전 이름과 주민번호로 가입자 판단 -->
+	<select id="selectJoinCheck" resultType="signup" parameterType="signup">
+		select * from signup where name=#{name} and phoneNumber=#{phoneNumber}
+	</select>
+	
 	<!-- 가입 성공시 고객 정보 저장 -->
 	<insert id="joinSuccess" parameterType="signup">
 		insert into signup values(
@@ -32,7 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{dotoryNum},
 			#{mainTitle},
 			#{mainPhoto},
-			#{mainText}
+			#{mainText},
+			#{ilchon}
 		)
 	</insert>
 	
@@ -55,6 +61,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectIdx" resultType="signup" parameterType="Object">
 		select * from signup where idx=#{idx}
 	</select>
+	
+	<!-- ////////// 도토리 구역 시작 ////////// -->
+	
+	<!-- 도토리 구매 -->
+	<update id="dotory_buy" parameterType="signup">
+		update signup set dotoryNum=#{dotoryNum} where idx=#{idx}
+	</update>
+	
+	<!-- ////////// 도토리 구역 끝 ////////// -->
 	
 	<!-- ////////// 프로필 영역 ////////// -->
 	

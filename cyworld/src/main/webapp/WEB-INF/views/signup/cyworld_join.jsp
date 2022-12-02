@@ -277,6 +277,7 @@
 			let phoneNumber = f.phoneNumber.value;
 			let address = f.address.value;
 			let addressDetail = f.addressDetail.value;
+			let platform = f.platform.value;
 			
 			// 유효성 검사
 			
@@ -348,12 +349,35 @@
 				return;
 			}
 			
-			// 가입 성공
-			alert("가입이 완료되었습니다");
-			alert("로그인 페이지로 이동합니다");
-			f.action = "welcome.do";
-			f.method = "POST";
-			f.submit();
+			url = "welcome.do";
+			param = "name=" + name +
+					"&userID=" + userID +
+					"&info=" + info +
+					"&identityNum=" + identityNum +
+					"&gender=" + gender +
+					"&email=" + email +
+					"&phoneNumber=" + phoneNumber +
+					"&address=" + address +
+					"&addressDetail=" + addressDetail +
+					"&platform=" + platform;
+			sendRequest(url, param, resultJoin, "POST");
+		}
+		// 콜백메소드
+		function resultJoin() {
+			if ( xhr.readyState == 4 && xhr.status == 200 ) {
+				
+				let data = xhr.responseText;
+				
+				if ( data == "no" ) {
+					alert("가입된 회원정보가 있습니다");
+					alert("로그인 혹은 아이디/비밀번호 찾기를 이용해주세요");
+					location.href = "login.do";
+				} else {
+					alert("가입이 완료되었습니다");
+					alert("로그인 페이지로 이동합니다");
+					location.href = "login.do";
+				}
+			}
 		}
 	</script>
 </body>

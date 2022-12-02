@@ -186,7 +186,7 @@ public class SignUpController {
 		// 보내는 사람 E-Mail, 제목, 내용 
 		String fromEmail = ""; // 보내는 사람 email
 		String fromName = "관리자"; // 보내는 사람 이름
-		String subject = "이메일 인증번호 발송"; // 제목
+		String subject = "[Cyworld] 이메일 인증번호 발송 안내입니다."; // 제목
 		
 		// 받는 사람 E-Mail 주소
 		String mail = vo.getEmail(); // 받는 사람 email
@@ -204,7 +204,11 @@ public class SignUpController {
 			email.addTo(mail); // 받는 사람
 			email.setFrom(fromEmail, fromName, charSet); // 보내는 사람
 			email.setSubject(subject); // 제목
-			email.setHtmlMsg("<p>"+ mail_key + "</p>"); // 본문 내용
+			email.setHtmlMsg(
+					"<p>" + "[메일인증 안내입니다.]" + "</p>" +
+					"<p>" + "Cyworld를 사용해주셔서 감사드립니다." + "</p>" +
+					"<p>" + "아래 인증코드를 '인증번호'란에 입력해주세요." + "</p>" +
+					"<p>" + mail_key + "</p>"); // 본문 내용
 			email.send(); // 메일 보내기
 			// 메일 보내기가 성공하면 메일로 보낸 랜덤키를 콜백메소드에도 전달
 			return mail_key;
@@ -264,7 +268,7 @@ public class SignUpController {
 		// 보내는 사람 E-Mail, 제목, 내용 
 		String fromEmail = ""; // 보내는 사람 email
 		String fromName = "관리자"; // 보내는 사람 이름
-		String subject = "이메일 인증번호 발송"; // 제목
+		String subject = "[Cyworld] 임시비밀번호 발급 안내입니다."; // 제목
 		
 		// 받는 사람 E-Mail 주소
 		String mail = vo.getEmail(); // 받는 사람 email
@@ -282,7 +286,11 @@ public class SignUpController {
 			email.addTo(mail); // 받는 사람
 			email.setFrom(fromEmail, fromName, charSet); // 보내는 사람
 			email.setSubject(subject); // 제목
-			email.setHtmlMsg("<p>"+ mail_key + "</p>"); // 본문 내용
+			email.setHtmlMsg(
+					"<p>" + "[임시비밀번호 안내입니다.]" + "</p>" +
+					"<p>" + "Cyworld를 이용해주셔서 감사합니다." + "</p>" +
+					"<p>" + "아래 임시비밀번호를 이용해 로그인 후 프로필 변경에서 비밀번호를 재설정해 주세요." + "</p>" +
+					"<p>" + mail_key + "</p>"); // 본문 내용
 			email.send(); // 메일 보내기
 			
 			/* HashMap - java.util.HashMap
@@ -348,7 +356,16 @@ public class SignUpController {
 	
 	// 회원가입시 추가적으로 더 필요한 정보를 넣기위한 장소
 	@RequestMapping("/welcome.do")
+	@ResponseBody
 	public String welcome(SignUpVO vo, Model model) {
+		System.out.println(vo.getName());
+		// 가입전 가입자인지 체크
+		SignUpVO svo = signUp_dao.selectJoinCheck(vo);
+		String result = "no";
+		if ( svo != null ) {
+			return result;
+		}
+		System.out.println(vo.getName());
 		// cyworld로 회원가입자가 들어올때
 		if ( vo.getPlatform().equals("cyworld") ) {
 			// 추가 정보들을 임의로 지정
@@ -357,10 +374,12 @@ public class SignUpController {
 			vo.setMainTitle("안녕하세요~ " + vo.getName() + "님의 미니홈피입니다!"); // 메인화면 제목
 			vo.setMainPhoto("no_photo"); // 메인화면 사진 지정
 			vo.setMainText(vo.getName() + "님의 미니홈피에 오신걸 환영합니다!"); // 메인화면 소개글
+			vo.setIlchon(0);
 			// 가입 성공시 유저 정보 저장
 			signUp_dao.insertJoinSuccess(vo);
 			// 회원가입 정보 저장후 로그인 페이지로 이동
-			return "redirect:login.do";
+			result = "yes";
+			return result;
 		}
 		
 		// 소셜 회원가입자가 들어올때
@@ -372,10 +391,12 @@ public class SignUpController {
 		vo.setMainTitle("안녕하세요~ " + vo.getName() + "님의 미니홈피입니다!"); // 메인화면 제목
 		vo.setMainPhoto("no_photo"); // 메인화면 사진 지정
 		vo.setMainText(vo.getName() + "님의 미니홈피에 오신걸 환영합니다!"); // 메인화면 소개글
+		vo.setIlchon(0);
 		// 가입 성공시 유저 정보 저장
 		signUp_dao.insertJoinSuccess(vo);
 		// 회원가입 정보 저장후 로그인 페이지로 이동
-		return "redirect:login.do";
+		result = "yes";
+		return result;
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 메인페이지로 이동
@@ -558,36 +579,83 @@ public class SignUpController {
 		return result;
 	}
 	
-//	/////////////// 팔로우 구역 ///////////////
-//	@RequestMapping("/main_follow")
-//	@ResponseBody
-//	public String main_follow(Integer idx, Integer sessionIdx, IlchonVO fvo) {
-//		// 세션값 존재여부 확인
-//		HttpSession session = request.getSession();
-//		if ( session.getAttribute("login") == null ) {
-//			// 세션값이 없다면 다시 로그인
-//			return "redirect:login.do";
-//		}
-//		
-//		// 팔로우를 하기위해 세션값에 해당하는 유저정보를 조회
-//		SignUpVO sessionUser = signUp_dao.selectOneIdx(session.getAttribute("login"));
-//		
-//		fvo.setFolloIdx(idx);
-//		fvo.setFollowSession(sessionIdx);
-//		
-//		int followNum = main_dao.selectFollowSearch(fvo);
-//		
-//		if ( followNum == 0 ) {
-//			signUp_dao.insertIlchon(fvo);
-//		}
-//		if ( followNum == 1 ) {
-//			
-//		}
-//		if ( followNum == 2 ) {
-//			
-//		}
-//		return "no";
-//	}
+	/////////////// 도토리 구매 구역 ///////////////
+	//도토리구매 팝업
+    @RequestMapping("/dotory.do")
+    public String dotory(Integer idx) {
+       return Common.P_PATH + "dotory.jsp";
+    }
+    
+    //도토리 구매(갯수 업데이트)
+    @RequestMapping("/dotoryBuy.do")
+    public String dotoryBuy(SignUpVO vo, Integer nowDotory) {
+       vo.setDotoryNum(vo.getDotoryNum()+nowDotory);
+       signUp_dao.buyDotory(vo);
+       return "redirect:dotory.do?idx=" + vo.getIdx() + "&dotoryNum=" + vo.getDotoryNum();
+    }
+	
+	/////////////// 일촌 구역 ///////////////
+	@RequestMapping("/main_ilchon")
+	@ResponseBody
+	public String main_follow(Integer idx, Integer sessionIdx, IlchonVO ivo) {
+		// 세션값 존재여부 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 다시 로그인
+			return "redirect:login.do";
+		}
+		
+		ivo.setIlchonIdx(idx);
+		ivo.setIlchonSession(sessionIdx);
+		
+		// Map에 VO를 통째로 담을 경우 사용방법 - main.xml 참고
+		HashMap<String, Object> ilchonMap = new HashMap<String, Object>();
+		ilchonMap.put("1", ivo); // 1번키에 
+		ilchonMap.put("2", ivo);
+		ilchonMap.put("3", ivo);
+		ilchonMap.put("4", ivo);
+		
+		int followNum = main_dao.selectIlchonSearch(ilchonMap);
+		
+		// 일촌 신청이 해제됬을 경우
+		String result = "no";
+		
+		if ( followNum == 0 ) {
+			ivo.setIlchonUp(1);
+			main_dao.insertIlchon(ivo);
+			result = "yes";
+		}
+		if ( followNum == 1 ) {
+			IlchonVO vo = main_dao.selectIlchon(ivo);
+			if ( vo == null ) {
+				ivo.setIlchonUp(2);
+				main_dao.insertIlchon(ivo);
+				main_dao.updateIlchon(ivo);
+				result = "yes";
+			} else {
+				main_dao.deleteIlchon(ivo);
+				result = "no";
+			}
+		}
+		if ( followNum == 2 ) {
+			main_dao.deleteIlchon(ivo);
+			ivo.setIlchonUp(1);
+			main_dao.updateIlchon(ivo);
+			result = "no";
+		}
+		ivo.setIlchonUp(2);
+		int ilchonNum = main_dao.selectIlchonNum(ivo);
+		SignUpVO vo = new SignUpVO();
+		vo.setIdx(idx);
+		vo.setIlchon(ilchonNum);
+		main_dao.updateIlchonNum(vo);
+		ivo.setIlchonIdx(sessionIdx);
+		int ilchonReverseNum = main_dao.selectIlchonNum(ivo);
+		vo.setIdx(sessionIdx);
+		vo.setIlchon(ilchonReverseNum);
+		main_dao.updateIlchonNum(vo);
+		return result;
+	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 프로필 조회
 	@RequestMapping("/profile.do")
@@ -606,7 +674,7 @@ public class SignUpController {
 		// 그 다음 idx에 해당하는 프로필 조회
 		SignUpVO idxVo = signUp_dao.selectOneIdx(idx);
 		// 조회된 프로필 정보를 바인딩
-		model.addAttribute("vo", idxVo);
+		model.addAttribute("signVo", idxVo);
 		// 추가로 세션값도 바인딩
 		model.addAttribute("sessionIdx", session.getAttribute("login"));
 		// 프로필페이지로 이동
@@ -1172,6 +1240,10 @@ public class SignUpController {
 		model.addAttribute("list", list); //바인딩
 		// 추가로 세션값도 바인딩
 		model.addAttribute("sessionIdx", session.getAttribute("login"));
+		// 그 다음 idx에 해당하는 유저정보를 조회
+		SignUpVO svo = signUp_dao.selectOneIdx(idx);
+		// 조회된 유저정보를 바인딩
+		model.addAttribute("signVo", svo);
 		// 방명록페이지로 이동
 		return Common.GBP_PATH + "guestbook_list.jsp";
 	}
@@ -1423,6 +1495,10 @@ public class SignUpController {
 		List<DiaryVO> list = diary_dao.selectList(idx);
 		model.addAttribute("list", list);
 		model.addAttribute("sessionIdx", session.getAttribute("login"));
+		// 그 다음 idx에 해당하는 유저정보를 조회
+		SignUpVO svo = signUp_dao.selectOneIdx(idx);
+		// 조회된 유저정보를 바인딩
+		model.addAttribute("signVo", svo);
 		return Common.DP_PATH + "diary_list.jsp";
 	}
 	
@@ -1451,7 +1527,7 @@ public class SignUpController {
 			// 작성한 다이어리 글을 DB에 저장
 			diary_dao.insert(vo);
 			// 저장 성공시 idx를 들고 다이어리 첫페이지로 이동
-			return "redirect:guestbook.do?idx=" + vo.getDiaryIdx();
+			return "redirect:diary.do?idx=" + vo.getDiaryIdx();
 		}
 		// 작성된 다이어리 글이 있을경우
 		// 가장 최근에 작성한 다이어리 글의 번호에 1 더하기

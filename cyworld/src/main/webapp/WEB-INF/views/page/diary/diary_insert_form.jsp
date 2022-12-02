@@ -5,25 +5,40 @@
 <head>
 <meta charset="UTF-8">
 <title>다이어리 새로 작성</title>
+<link rel="stylesheet" href="/cyworld/resources/css/diary_insert.css">
+<link rel="stylesheet" href="/cyworld/resources/css/reset.css">
+<link rel="stylesheet" href="/cyworld/resources/css/animate.css">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body>
-	<form method="post" enctype="multipart/form-data">
-		<input name="diaryIdx" type="hidden" value="${ param.idx }">
-		<table border="1" align="center">
-			<caption>새 글 쓰기</caption>
-			<tr>
-				<th>내용</th>
-				<td><textarea rows="5" cols="50" name="diaryContent"></textarea></td>
-			</tr>
-			
-			<tr>
-				<td colspan="2" align="center">
-					<input type="button" value="글쓰기" onclick="send(this.form);">
-					<input type="button" value="취소" onclick="location.href='diary.do?idx=${param.idx}'">
-				</td>
-			</tr>
-		</table>
-	</form>
+	 <div class="container ">
+        <section class="section">
+                <div class="dashed-line">
+                    <div class="gray-background">
+                        <div class="main">
+                            <form method="post" enctype="multipart/form-data">
+                                <input name="diaryIdx" type="hidden" value="${ param.idx }">
+                                <table>
+                                    <caption>새 글 쓰기</caption>
+                                    <tr>
+                                        <th>내용</th>
+                                        <td><textarea rows="5" cols="50" name="diaryContent"></textarea></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <input id="btn-cover" class="write" type="button" value="글쓰기" onclick="send(this.form);">
+                                            <input id="btn-cover" class="cancel" type="button" value="취소" onclick="location.href='diary.do?idx=${param.idx}'">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+</div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>	
 	<script>

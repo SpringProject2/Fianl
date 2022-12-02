@@ -25,9 +25,9 @@
                             <div class="todayIcon">
                                 <span class="todayIconText">Today is..</span><img class="box animate__animated animate__headShake animate__infinite" src="resources/images/emoticon1.png" alt="">
                             </div>
-                            <div class="left-image"><img class="leftImg" src="resources/images/left_profile.png" alt=""></div>
-                            <textarea  cols="50" rows="8" class="left-textarea">어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구</textarea>
-                            <div class="history"><img src="./images/arrow.png" alt=""><h3>History</h3></div>
+                            <div class="left-image"><img class="leftImg" src="/cyworld/resources/mainphoto/${ signVo.mainPhoto }" alt=""></div>
+						<textarea class="left-textarea" readonly>${ signVo.mainText }</textarea>
+                           <div class="history"><img src="resources/images/arrow.png" alt=""><h3>History</h3></div>
                             <select class="myFriend">
                                 <option value="">::: 파도타기 :::</option>
                                     <option><a href="#">이정현 ｜  친구</a></option>
@@ -44,7 +44,7 @@
         <section class="right-section">
                 <div class="right-dashed-line">
                     <div class="right-gray-background">
-                        <p class="title"><a href="#">Test 싸이월드 Title입니다. 누르면 무슨 기능이였더라?</a></p>
+                        <p class="title"><a href="main.do?idx=${ signVo.idx }">${ signVo.mainTitle }</a></p>
                   <!-- main 페이지에 재생 플레이어와 노래 제목 표시  -->
   				 	<img class="musicLogo" src="resources/images/noneMain15.gif" alt="">
   				 	<a class="mp3_title" href="#" >
@@ -60,7 +60,7 @@
                             <div id="main_box">
                                 <h1>방명록 </h1>
                                     <input class="textWrite"
-                                    id="btn_cover" type="button" value="방명록 작성" onclick="location.href='guestbook_insert_form.do?idx=${param.idx}'">
+                                    id="btn_cover" type="button" value="방명록 작성" onclick="location.href='guestbook_insert_form.do?idx=${signVo.idx}'">
                             </div>
                             
                              <c:forEach var="vo" items="${ list }">
@@ -127,23 +127,39 @@
                 </div>
             
                 <div class="tabs">
-                        <input type="checkbox" id="tab1"></input>
-                        <input type="checkbox" id="tab2"></input>
-                        <input type="checkbox" id="tab3"></input>
-                        <input type="checkbox" id="tab4"checked></input>
-                        <input type="checkbox" id="tab5"></input>
-                        <div class="tab-btns">
-                            <label for="tab1" id="btn1">홈</label>
-                            <label for="tab2" id="btn2">프로필</label>
-                            <label for="tab3" id="btn3">다이어리</label>
-                            <label for="tab4" id="btn4">사진첩</label>
-                            <label for="tab5" id="btn5">방명록</label>
-                        </div>
+					<form>
+						<div class="tab-btns">
+							<input id="idx" name="idx" type="hidden" value="${ signVo.idx }" readonly>
+							<input id="sessionIdx" name="sessionIdx" type="hidden" value="${ sessionIdx }" readonly>
+							<label for="tab1" id="btn1">홈</label>
+							<input id="tab1" type="button" value="홈" style="display: none;" onclick="location.href='main.do?idx=${ signVo.idx }'">
+							<label for="tab2" id="btn2">프로필</label>
+							<input id="tab2" type="button" value="프로필" style="display: none;" onclick="profile(this.form);">
+							<label for="tab3" id="btn3">다이어리</label>
+							<input id="tab3" type="button" value="다이어리" style="display: none;" onclick="location.href='diary.do?idx=${ signVo.idx }'">
+							<label for="tab4" id="btn4">사진첩</label>
+							<input id="tab4" type="button" value="사진첩" style="display: none;" onclick="location.href='gallery.do?idx=${ signVo.idx }'">
+							<label for="tab5" id="btn5">방명록</label>
+							<input id="tab5" type="button" value="방명록" style="display: none;" onclick="location.href='guestbook.do?idx=${ signVo.idx }'">
+						</div>
+					</form>
                 </div>
         </section>
 </div>
-<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->	
-	
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->		
+	<script>
+		function profile(f) {
+			let sessionIdx = document.getElementById("sessionIdx").value;
+			let idx = document.getElementById("idx").value;
+			if ( sessionIdx != idx ) {
+				alert("프로필은 본인만 들어갈 수 있습니다");
+				return;
+			}
+			f.action = "profile.do";
+			f.method = "POST";
+			f.submit();
+		}
+	</script>
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		function del(f){

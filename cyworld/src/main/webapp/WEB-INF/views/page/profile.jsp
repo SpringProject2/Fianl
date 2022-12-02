@@ -26,11 +26,11 @@
                                         <span class="todayIconText">Today is..</span><img class="box animate__animated animate__headShake animate__infinite " src="resources/images/emoticon1.png" alt="">
                                     </div>
                                     <form method="POST" enctype="multipart/form-data"> <!-- form태그와 button -->
-                                    	<input name="idx" type="hidden" value="${ vo.idx }">
-                                    	<div class="left-image"><img class="leftImg" src="/cyworld/resources/mainphoto/${ vo.mainPhoto }" alt=""></div>
-                                    							<input name="mainPhoto" type="hidden" value="${ vo.mainPhoto }">
+                                    	<input name="idx" type="hidden" value="${ signVo.idx }">
+                                    	<div class="left-image"><img class="leftImg" src="/cyworld/resources/mainphoto/${ signVo.mainPhoto }" alt=""></div>
+                                    							<input name="mainPhoto" type="hidden" value="${ signVo.mainPhoto }">
                                     							<input name="mainPhotoFile" type="file"> <!-- 사진 바꾸는곳 -->
-                                    	<textarea name="mainText" class="left-textarea">${ vo.mainText }</textarea>
+                                    	<textarea name="mainText" class="left-textarea">${ signVo.mainText }</textarea>
                                     	<input type="button" value="메인 수정" onclick="modify_main(this.form)">
                                     </form>
                                     <div class="history"><img src="resources/images/arrow.png" alt=""><h3>History</h3></div>
@@ -50,7 +50,7 @@
                 <section class="right-section">
                         <div class="right-dashed-line">
                             <div class="right-gray-background">
-								<p class="title"><input style="width: 500px; height: 20px;" id="mainTitle" type="text" value="${ vo.mainTitle }"></p>
+								<p class="title"><input style="width: 500px; height: 20px;" id="mainTitle" type="text" value="${ signVo.mainTitle }"></p>
                                 <!-- a태그 = 새로고침  -->
                                 <!-- <p class="titleLink"><a href="#">http://www.zenghyun.com</a></p> -->
                                 <aside id="right-aside"
@@ -89,24 +89,28 @@
                                 <div class="modify-user-profile">
                                     <h2>::개인정보 수정::</h2>
                                     <p id="my-minimi">My minimi</p>
-                                  <input class="minimi-main" type="button" src="/cyworld/resources/minimi/${ vo.minimi }" onclick="minimiPopUp();">
-									<input name="idx" type="hidden" value="${ vo.idx }">
-                                    <p>ID : <input type="text" value="${ vo.userID }" readonly></p>
-                                    <p>현제 PW : <input name="info" type="text" value="${ vo.info }" readonly></p>
-                                    <p>새로운 PW : <input id="pw" name="info" type="password" oninput="pwCheck();"></p>
-                                    <div class="pwText" id="pT1"></div>
-                                    <p>PW 확인 : <input id="pw2" type="password" oninput="pw2Check();"></p>
-                                    <div class="pwText pT2"></div>
-                                    <p>이름 : <input type="text" value="${ vo.name }" readonly></p>
-                                    <p>주민번호 : <input type="text" value="${ vo.identityNum }" readonly></p>
-                                    <c:if test="${ vo.gender eq 'M' || vo.gender eq 'male' }">
-                                    	<p>성별:&nbsp; <input class="myRadio" type="radio" name="gender" value="${ vo.gender }" checked readonly>&nbsp;남</p>
+                                  <input class="minimi-main" type="button" src="/cyworld/resources/minimi/${ signVo.minimi }" onclick="minimiPopUp();">
+									<input name="idx" type="hidden" value="${ signVo.idx }">
+									<!-- 싸이월드 가입자만 보이는 추가 항목들 -->
+									<c:if test="${ signVo.platform eq 'cyworld' }">
+                                    	<p>ID : <input type="text" value="${ signVo.userID }" readonly></p>
+                                    	<p>현재 PW : <input name="info" type="text" value="${ signVo.info }" readonly></p>
+                                    	<p>새로운 PW : <input id="pw" name="info" type="password" oninput="pwCheck();"></p>
+                                    	<div class="pwText" id="pT1"></div>
+                                    	<p>PW 확인 : <input id="pw2" type="password" oninput="pw2Check();"></p>
+                                    	<div class="pwText pT2"></div>
                                     </c:if>
-                                    <c:if test="${ vo.gender eq 'W' || vo.gender eq 'female' }">
-                                    	<p>성별:&nbsp; <input  class="myRadio" type="radio" name="gender" value="${ vo.gender }" checked readonly>&nbsp;여</p>
+                                    <!-- 소셜가입자가 보이는 항목들 -->
+                                    <p>이름 : <input type="text" value="${ signVo.name }" readonly></p>
+                                    <p>주민번호 : <input type="text" value="${ signVo.identityNum }" readonly></p>
+                                    <c:if test="${ signVo.gender eq 'M' || signVo.gender eq 'male' }">
+                                    	<p>성별:&nbsp; <input class="myRadio" type="radio" name="gender" value="${ signVo.gender }" checked readonly>&nbsp;남</p>
                                     </c:if>
-                                    <p>이메일 : <input type="text" value="${ vo.email }" readonly></p>
-                                    <p>전화번호 : <input type="tel" value="${ vo.phoneNumber }" readonly></p>
+                                    <c:if test="${ signVo.gender eq 'W' || signVo.gender eq 'female' }">
+                                    	<p>성별:&nbsp; <input  class="myRadio" type="radio" name="gender" value="${ signVo.gender }" checked readonly>&nbsp;여</p>
+                                    </c:if>
+                                    <p>이메일 : <input type="text" value="${ signVo.email }" readonly></p>
+                                    <p>전화번호 : <input type="tel" value="${ signVo.phoneNumber }" readonly></p>
                                     <input class="final-button" id="btn-cover" type="button" value="수정" onclick="modifyUserData(this.form);">
                                 </div>
                             </form> 
@@ -116,22 +120,39 @@
                             </div>
 
                         <div class="tabs">
-                                <input type="checkbox" id="tab1" ></input>
-                                <input type="checkbox" id="tab2"checked ></input>
-                                <input type="checkbox" id="tab3"></input>
-                                <input type="checkbox" id="tab4"></input>
-                                <input type="checkbox" id="tab5"></input>
-                                <div class="tab-btns">
-                                    <label for="tab1" id="btn1">홈</label>
-                                    <label for="tab2" id="btn2">프로필</label>
-                                    <label for="tab3" id="btn3">다이어리</label>
-                                    <label for="tab4" id="btn4">사진첩</label>
-                                    <label for="tab5" id="btn5">방명록</label>
-                                </div>
+							<form>
+								<div class="tab-btns">
+									<input id="idx" name="idx" type="hidden" value="${ signVo.idx }" readonly>
+									<input id="sessionIdx" name="sessionIdx" type="hidden" value="${ sessionIdx }" readonly>
+									<label for="tab1" id="btn1">홈</label>
+									<input id="tab1" type="button" value="홈" style="display: none;" onclick="location.href='main.do?idx=${ signVo.idx }'">
+									<label for="tab2" id="btn2">프로필</label>
+									<input id="tab2" type="button" value="프로필" style="display: none;" onclick="profile(this.form);">
+									<label for="tab3" id="btn3">다이어리</label>
+									<input id="tab3" type="button" value="다이어리" style="display: none;" onclick="location.href='diary.do?idx=${ signVo.idx }'">
+									<label for="tab4" id="btn4">사진첩</label>
+									<input id="tab4" type="button" value="사진첩" style="display: none;" onclick="location.href='gallery.do?idx=${ signVo.idx }'">
+									<label for="tab5" id="btn5">방명록</label>
+									<input id="tab5" type="button" value="방명록" style="display: none;" onclick="location.href='guestbook.do?idx=${ signVo.idx }'">
+								</div>
+							</form>
                         </div>
                 </section>
     </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+	<script>
+		function profile(f) {
+			let sessionIdx = document.getElementById("sessionIdx").value;
+			let idx = document.getElementById("idx").value;
+			if ( sessionIdx != idx ) {
+				alert("프로필은 본인만 들어갈 수 있습니다");
+				return;
+			}
+			f.action = "profile.do";
+			f.method = "POST";
+			f.submit();
+		}
+	</script>
     <!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
@@ -197,7 +218,7 @@
 				}
 				
 				alert("수정 완료");
-				location.href = "profile.do?idx=${param.idx}";
+				location.href = "profile.do?idx=${signVo.idx}";
 			}
 		}
 	</script>
@@ -223,7 +244,7 @@
 	<script>
         //window.open (미니미 수정창)
         function minimiPopUp() {
-            let popUrl = "profile_minimi_popup.do?idx=${param.idx}";
+            let popUrl = "profile_minimi_popup.do?idx=${signVo.idx}";
             let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
     	window.open(popUrl, "minimi", popOption);
         }

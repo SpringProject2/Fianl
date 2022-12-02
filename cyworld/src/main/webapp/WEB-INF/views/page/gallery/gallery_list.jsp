@@ -148,7 +148,7 @@
 								</form>
                               
                               
-		                                <!-- 게시글마다 댓글 보이는 구역 -->
+									<!-- 게시글마다 댓글 보이는 구역 -->
 									<c:forEach var="cvo" items="${ commentList }">
 										<form>
 											<c:if test="${ cvo.galleryCommentIdx eq vo.gallIdx && cvo.galleryCommentRef eq vo.galleryContentRef }">
@@ -190,22 +190,39 @@
                 </div>
             
                 <div class="tabs">
-                        <input type="checkbox" id="tab1"></input>
-                        <input type="checkbox" id="tab2"></input>
-                        <input type="checkbox" id="tab3"></input>
-                        <input type="checkbox" id="tab4"checked></input>
-                        <input type="checkbox" id="tab5"></input>
-                        <div class="tab-btns">
-                            <label for="tab1" id="btn1">홈</label>
-                            <label for="tab2" id="btn2">프로필</label>
-                            <label for="tab3" id="btn3">다이어리</label>
-                            <label for="tab4" id="btn4">사진첩</label>
-                            <label for="tab5" id="btn5">방명록</label>
-                        </div>
+ 				<form>
+					<div class="tab-btns">
+						<input id="idx" name="idx" type="hidden" value="${ signVo.idx }" readonly>
+						<input id="sessionIdx" name="sessionIdx" type="hidden" value="${ sessionIdx }" readonly>
+						<label for="tab1" id="btn1">홈</label>
+						<input id="tab1" type="button" value="홈" style="display: none;" onclick="location.href='main.do?idx=${ signVo.idx }'">
+						<label for="tab2" id="btn2">프로필</label>
+						<input id="tab2" type="button" value="프로필" style="display: none;" onclick="profile(this.form);">
+						<label for="tab3" id="btn3">다이어리</label>
+						<input id="tab3" type="button" value="다이어리" style="display: none;" onclick="location.href='diary.do?idx=${ signVo.idx }'">
+						<label for="tab4" id="btn4">사진첩</label>
+						<input id="tab4" type="button" value="사진첩" style="display: none;" onclick="location.href='gallery.do?idx=${ signVo.idx }'">
+						<label for="tab5" id="btn5">방명록</label>
+						<input id="tab5" type="button" value="방명록" style="display: none;" onclick="location.href='guestbook.do?idx=${ signVo.idx }'">
+					</div>
+				</form>
                 </div>
         </section>
 </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+	<script>
+		function profile(f) {
+			let sessionIdx = document.getElementById("sessionIdx").value;
+			let idx = document.getElementById("idx").value;
+			if ( sessionIdx != idx ) {
+				alert("프로필은 본인만 들어갈 수 있습니다");
+				return;
+			}
+			f.action = "profile.do";
+			f.method = "POST";
+			f.submit();
+		}
+	</script>
 	<!-- 음악 재생  -->
 	<script type="text/javascript">
    //Audio 사용을 위한 객체 생성
@@ -218,7 +235,7 @@
     </script>
      
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
-   <script>
+	<script>
       function del(f){
          
          if( !confirm('정말 삭제하시겠습니까?') ){

@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -53,16 +54,50 @@ public class MainDAO {
 	/////////////// 일촌 구역 ///////////////
 	
 	// 일촌 조회
-	public int selectFollowSearch(IlchonVO vo) {
-		int res = sqlSession.selectOne("m.selectFollowSearch", vo);
+	public int selectIlchonSearch(HashMap<String, Object> ilchonMap) {
+		int res = sqlSession.selectOne("m.selectIlchonSearch", ilchonMap);
 		return res;
 	}
 	
 	// 일촌 등록
-	public int insertFollow(IlchonVO vo) {
-		int res = sqlSession.selectOne("m.selectFollowSearch", vo);
+	public int insertIlchon(IlchonVO vo) {
+		int res = sqlSession.insert("m.insertIlchon", vo);
+		return res;
+	}
+	
+	// 일촌 2차 조회
+	public IlchonVO selectIlchon(IlchonVO vo) {
+		IlchonVO ivo = sqlSession.selectOne("m.selectIlchon", vo);
+		return ivo;
+	}
+	
+	// 일촌 갱신
+	public int updateIlchon(IlchonVO vo) {
+		int res = sqlSession.update("m.updateIlchon", vo);
 		return res;
 	}
 	
 	// 일촌 해제
+	public int deleteIlchon(IlchonVO vo) {
+		int res = sqlSession.delete("m.deleteIlchon", vo);
+		return res;
+	}
+	
+	// 일촌수 조회
+	public int selectIlchonNum(IlchonVO vo) {
+		int res = sqlSession.selectOne("m.selectIlchonNum", vo);
+		return res;
+	}
+	
+	// 조회된 일촌수 갱신
+	public int updateIlchonNum(SignUpVO vo) {
+		int res = sqlSession.update("m.updateIlchonNum", vo);
+		return res;
+	}
+	
+	// 일촌 리스트 조회
+	public List<IlchonVO> selectIlchonList() {
+		List<IlchonVO> list = sqlSession.selectList("m.selectIlchonList");
+		return list;
+	}
 }

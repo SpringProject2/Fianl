@@ -40,6 +40,7 @@
 		</section>
 	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+	<script src="/cyworld/resources/js/httpRequest.js"></script>	
 	<!-- 다음 주소 api -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
@@ -157,18 +158,18 @@
 		
 		// DB저장하러 이동
 		function join(f) {
+			// 회원가입 정보
 			let name = f.name.value;
 			let identityNum = f.identityNum.value;
+			let gender = f.gender.value;
+			let email = f.email.value;
 			let phoneNumber = f.phoneNumber.value;
 			let address = f.address.value;
 			let addressDetail = f.addressDetail.value;
+			let platform = f.platform.value;
 			
 			// 유효성 검사
 			
-			if ( name == '' ) {
-				alert("이름을 입력하세요");
-				return;
-			}
 			if ( identityNum == '' ) {
 				alert("주민번호를 입력하세요");
 				return;
@@ -186,11 +187,33 @@
 				return;
 			}
 			
-			alert("가입이 완료되었습니다");
-			alert("로그인 페이지로 이동합니다");
-			f.action = "welcome.do";
-			f.method = "POST";
-			f.submit();
+			url = "welcome.do";
+			param = "name=" + name +
+					"&identityNum=" + identityNum +
+					"&gender=" + gender +
+					"&email=" + email +
+					"&phoneNumber=" + phoneNumber +
+					"&address=" + address +
+					"&addressDetail=" + addressDetail +
+					"&platform=" + platform;
+			sendRequest(url, param, resultJoin, "POST");
+		}
+		// 콜백메소드
+		function resultJoin() {
+			if ( xhr.readyState == 4 && xhr.status == 200 ) {
+				
+				let data = xhr.responseText;
+				
+				if ( data == "no" ) {
+					alert("가입된 회원정보가 있습니다");
+					alert("로그인 혹은 아이디/비밀번호 찾기를 이용해주세요");
+					location.href = "login.do";
+				} else {
+					alert("가입이 완료되었습니다");
+					alert("로그인 페이지로 이동합니다");
+					location.href = "login.do";
+				}
+			}
 		}
 	</script>
 	<!-- 카카오 로그아웃 -->

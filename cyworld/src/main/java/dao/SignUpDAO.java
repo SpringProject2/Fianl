@@ -27,6 +27,12 @@ public class SignUpDAO {
 		return vo;
 	}
 	
+	// 가입전 가입자인지 체크
+	public SignUpVO selectJoinCheck(SignUpVO vo) {
+		SignUpVO svo = sqlSession.selectOne("s.selectJoinCheck", vo);
+		return svo;
+	}
+	
 	// 가입 성공시 고객 정보 저장
 	public int insertJoinSuccess(SignUpVO vo) {
 		int res = sqlSession.insert("s.joinSuccess", vo);
@@ -55,6 +61,14 @@ public class SignUpDAO {
 	public SignUpVO selectOneIdx(Object idx) {
 		SignUpVO vo = sqlSession.selectOne("s.selectIdx", idx);
 		return vo;
+	}
+	
+	/////////////// 도토리 구역 ///////////////
+	
+	//도토리 구매
+	public int buyDotory(SignUpVO vo) {
+		int res = sqlSession.update("s.dotory_buy", vo);
+		return res;
 	}
 	
 	/////////////// 프로필 구역 ///////////////

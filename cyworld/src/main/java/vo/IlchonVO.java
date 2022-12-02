@@ -1,31 +1,31 @@
 package vo;
 
 public class IlchonVO {
-	private int folloIdx, followSession, followUp;
-
-	// getter / setter
+	private int ilchonIdx, ilchonSession, ilchonUp;
 	
-	public int getFolloIdx() {
-		return folloIdx;
+	// getter / setter
+
+	public int getIlchonIdx() {
+		return ilchonIdx;
 	}
 
-	public void setFolloIdx(int folloIdx) {
-		this.folloIdx = folloIdx;
+	public void setIlchonIdx(int ilchonIdx) {
+		this.ilchonIdx = ilchonIdx;
 	}
 
-	public int getFollowSession() {
-		return followSession;
+	public int getIlchonSession() {
+		return ilchonSession;
 	}
 
-	public void setFollowSession(int followSession) {
-		this.followSession = followSession;
+	public void setIlchonSession(int ilchonSession) {
+		this.ilchonSession = ilchonSession;
 	}
 
-	public int getFollowUp() {
-		return followUp;
+	public int getIlchonUp() {
+		return ilchonUp;
 	}
 
-	public void setFollowUp(int followUp) {
-		this.followUp = followUp;
+	public void setIlchonUp(int ilchonUp) {
+		this.ilchonUp = ilchonUp;
 	}
 }

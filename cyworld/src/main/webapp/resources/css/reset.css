@@ -7,11 +7,21 @@
     /* box-sizing: border-box; */
 }
 
+html, body { cursor: url('../images/HeartCursor1.cur'), auto;} 
+
+a, 
 a:link,
 a:active,
-a:visited {
+a:visited,
+a:hover, 
+a:focus,
+button:active,
+button:visited,
+button:hover,
+button:focus {
     text-decoration: none;
     color: inherit;
+    cursor: url('../images/HeartCursor2.cur'), auto;
 }
 
 a:hover {
