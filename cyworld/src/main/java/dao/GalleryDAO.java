@@ -86,14 +86,14 @@ public class GalleryDAO {
 	}
 	
 	// 게시글 삭제시 해당 댓글 내역도 모두 삭제
-	public int deleteCommentAll(GalleryCommentVO vo) {
-		int res = sqlSession.delete("gc.deleteCommentAll", vo);
+	public int deleteCommentAll(HashMap<String, Integer> map) {
+		int res = sqlSession.delete("gc.deleteCommentAll", map);
 		return res;
 	}
 	
 	// 댓글 삭제
-	public int deleteGComment(GalleryCommentVO vo) {
-		int res = sqlSession.update("gc.deleteComment", vo);
+	public int updateDeleteComment(GalleryCommentVO vo) {
+		int res = sqlSession.update("gc.updateDeleteComment", vo);
 		return res;
 	}
 	
@@ -130,8 +130,8 @@ public class GalleryDAO {
 	}
 	
 	// 게시글 삭제시 해당 좋아요 내역도 모두 삭제
-	public int deleteLikeAll(GalleryLikeVO vo) {
-		int res = sqlSession.delete("gl.deleteLikeAll", vo);
+	public int deleteLikeAll(HashMap<String, Integer> map) {
+		int res = sqlSession.delete("gl.deleteLikeAll", map);
 		return res;
 	}
 }

@@ -109,7 +109,7 @@
                                         
                                     <!-- 좋아요, 수정, 삭제 기능 -->
                                         <div class="type_gallerycontent">
-                                            <pre>${ vo.galleryContent }</pre> 
+                                            <pre><textarea class="galleryContent" id="scrollBar1" readonly>${ vo.galleryContent }</textarea></pre> 
                                                 <div class="myButton">
                                                     <p class="like">
                                                         <span id="galleryLikeNum">${ vo.galleryLikeNum }</span>

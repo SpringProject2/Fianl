@@ -43,7 +43,7 @@
                         <div class="right-dashed-line">
                             <div class="right-gray-background">
                                 <form name="sf" method="GET">
-									<input class="search" type="button" value="검색" onclick="searchPopUp();"></input>
+									<input id="btn-cover" class="search" type="button" value="회원 검색" onclick="searchPopUp();"></input>
 									<input type="hidden" name="idx" value="${ signVo.idx }">	
 								</form>
                                 <aside class="right-aside">

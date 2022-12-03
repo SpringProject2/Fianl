@@ -44,7 +44,7 @@
    .left-aside {width:90%; background-color: white; height: 690px; border-radius: 30px; margin: 10px;  position: relative; left: 10px; top: 25px;
     box-shadow: 10px 10px  10px rgba(0, 0, 0, 0.356);}
     #right-aside{width:94%; background-color: white; height: 690px; border-radius: 30px; margin: 10px;
-        position: relative;  right: -25px; top:25px; box-shadow: 10px 10px  10px rgba(0, 0, 0, 0.356); z-index: 1;
+        position: relative;  right: -25px; top:19px; box-shadow: 10px 10px  10px rgba(0, 0, 0, 0.356); z-index: 1;
         overflow-x: hidden;
         overflow-y:auto;
    } 
@@ -62,11 +62,12 @@
    }
    .todayIcon img{position: absolute; left: 170px; top:7px;}
    .todayIconText{ font-size: 18px; font-weight: bold; position: absolute; margin: 10px; left: 15px;}
-   .left-image {position: relative; width: 300px; height: 310px; border: 1px solid black; left: 80px; top:-400px;
+   .left-image {position: relative; width: 300px; height: 345px; border: 1px solid black; left: 80px; top:-400px;
     }
     /* leftImg css 바꿔야 함 */
-   .leftImg{ width: 300px; height: 360px;}
-   .left-textarea { overflow: hidden; position: relative; width: 300px; height: 70px; left: 80px; top:-345px; border: none;  font-family: 'Jua', sans-serif;}
+   .leftImg{ width: 300px; height: 345px;}
+   .left-textarea { overflow-x:hidden; overflow-y:auto; position: relative; width: 300px; height: 70px; left: 80px; top:-345px; border: none;  font-size:24px;}
+   .selectFile { position:absolute; top:440px; left: 75px; width:300px;}
    .myFriend { 
     position: relative;
     width: 280px; 
@@ -78,19 +79,19 @@ border-radius: 0px;
 -webkit-appearance: none; 
 -moz-appearance: none;
 appearance: none;
-top:-250px;
+top:-305px;
 left: 88px;
 font-size: 18px;
 }
 .history { position: relative; top: -345px; left: 70px; }
 .history > img {position: absolute; left: 10px; top: -5px; }
 .history > h3 {position: absolute; width:258px; left: 50px; border-bottom: 1px solid black;}
-
+.saveLeftMain { position:absolute; width:150px; height:30px; top:655px; left:280px; font-size:14px; }
 .title { position: relative; left: 80px; top:27px; 
-   font-size: 18px; font-weight: bold;  color: skyblue; }
+   font-size: 24px; font-weight: bold;  color: skyblue; }
    /* .titleLink { position: relative; left: 930px; top:3px; 
    font-size: 18px; font-weight: bold;} */
-
+#mainTitle { width:400px; height:30px; font-size: 24px;}
    /* minimi */
    .miniRoomBox { position: relative; left: 80px; top:20px; width: 200px; height: 50px; border: 1px solid rgb(182, 180, 180); border-radius: 15px 15px 7px 7px;
 }
@@ -114,7 +115,8 @@ left:180px;
 .sorryText > span { font-size: 20px; width:500px;text-align: right;}
 .show > img { width: 120px; height: 120px;}
 .hover:hover { opacity: 1;}
-.Crayon { position: absolute; top:210px; left: 425px;
+/* 미니미 배치 */
+.Crayon { position: absolute; top:250px; left: 225px;
     user-select: none; 
   /*  drag cursor   */
   cursor: grab;
@@ -123,6 +125,37 @@ left:180px;
 .Crayon:active {cursor: grabbing; 
 }
 
+
+.zzang1 {
+	position: absolute;
+	top: 310px;
+	left: 824px;
+	z-index:5px;
+}
+.zzang2 {
+	position: absolute;
+	top: 270px;
+	left: 454px;
+	z-index:5px;
+}
+.zzang3 {
+	position: absolute;
+	top: 170px;
+	left: 654px;
+	z-index:5px;
+}
+.Crayonz {
+	position: absolute;
+	top: 190px;
+	left: 74px;
+	z-index:5px;	
+}
+.CrayonDog {
+	position: absolute;
+	top: 250px;
+	left: 94px;
+	z-index:5px;	
+}
 .check_btn { position: absolute; top:420px; left: 920px; }
 
 #minimi_correction { position: absolute; width: 910px; height: 200px;
@@ -151,7 +184,7 @@ background-position: center center; background-size: cover;}
 #my-minimi {margin-bottom: 10px;}
 .modify-user-profile > p > input {width: 160px; height: 25px;}
 .modify-user-profile > p > .myRadio { width: 15px;}
-.final-button { position: absolute; width: 100px; font-size: 20px; left:750px; bottom:20px;}
+.final-button { position: absolute; width: 100px; font-size: 20px; left:750px; top:40px;}
 
 /* tabs */
 .tabs input {display: none;}

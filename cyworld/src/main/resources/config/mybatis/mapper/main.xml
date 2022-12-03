@@ -21,7 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into ilchon values(
 			#{ilchonIdx},
 			#{ilchonSession},
-			#{ilchonUp}
+			#{ilchonUp},
+			#{ilchonName}
 		)
 	</insert>
 	
@@ -48,9 +49,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update signup set ilchon=#{ilchon} where idx=#{idx}
 	</update>
 	
-	<!-- <select id="selectIlchonList" resultType="ilchon" parameterType="signup">
-		select * from ilchon where ilchonUp=#{ilchonUp} and ilchonIdx{ilchonIdx}
-	</select> -->
+	<select id="selectIlchonUp" resultType="ilchon" parameterType="ilchon">
+		select * from ilchon where ilchonIdx=#{ilchonIdx} and ilchonSession=#{ilchonSession}
+	</select>
+	
+	<select id="selectIlchonList" resultType="ilchon" parameterType="ilchon">
+		select * from ilchon where ilchonUp=#{ilchonUp} and ilchonSession=#{ilchonSession}
+	</select>
 	
 	<!-- ////////// 일촌 구역 끝 ////////// -->
 	

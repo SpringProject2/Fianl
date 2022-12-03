@@ -2,6 +2,7 @@ package vo;
 
 public class IlchonVO {
 	private int ilchonIdx, ilchonSession, ilchonUp;
+	private String ilchonName;
 	
 	// getter / setter
 
@@ -27,5 +28,13 @@ public class IlchonVO {
 
 	public void setIlchonUp(int ilchonUp) {
 		this.ilchonUp = ilchonUp;
+	}
+
+	public String getIlchonName() {
+		return ilchonName;
+	}
+
+	public void setIlchonName(String ilchonName) {
+		this.ilchonName = ilchonName;
 	}
 }

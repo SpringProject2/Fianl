@@ -33,14 +33,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </select>
 
    <!-- 게시글 삭제시 해당 좋아요 내역도 모두 삭제 -->
-   <delete id="deleteCommentAll" parameterType="gcomment">
+   <delete id="deleteCommentAll" parameterType="java.util.HashMap">
       delete from
-      gallerycomment where galleryCommentIdx=#{galleryCommentIdx} and
-      galleryCommentRef=#{galleryCommentRef}
+      gallerycomment where galleryCommentIdx=#{1} and
+      galleryCommentRef=#{2}
    </delete>
    
    <!-- 댓글삭제 -->
-   <update id="deleteComment" parameterType="gcomment">
+   <update id="updateDeleteComment" parameterType="gcomment">
       update gallerycomment set galleryCommentDeleteCheck=#{galleryCommentDeleteCheck}
          where galleryCommentIdx=#{galleryCommentIdx} and galleryCommentRef=#{galleryCommentRef} and galleryNum=#{galleryNum}
    </update>

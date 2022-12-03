@@ -15,10 +15,18 @@ a:active,
 a:visited,
 a:hover, 
 a:focus,
-button:active,
-button:visited,
-button:hover,
-button:focus {
+input:active,
+input:visited,
+input:hover,
+input:focus,
+label:active,
+label:visited,
+label:hover,
+label:focus,
+select:active,
+select:visited,
+select:hover,
+select:focus  {
     text-decoration: none;
     color: inherit;
     cursor: url('../images/HeartCursor2.cur'), auto;

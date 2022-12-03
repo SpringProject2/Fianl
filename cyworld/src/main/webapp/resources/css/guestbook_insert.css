@@ -40,16 +40,16 @@
 
     /* table */
     caption  { position: absolute; top:-55px;  left:100px; font-size: 30px;}
-    .myImg {width: 100px; }
+    
     table { position: absolute; top:80px; left:35px; border-collapse: collapse;}
     table, th, td {  border: 1px solid black;  }
     th,td {font-size: 20px; }
     .lastTd {height: 50px;}
     #myIdx { position: absolute; width: 100px; left:20px; top:10px; background-color: skyblue; border-radius: 5px;}
     .galleryTitle { position: absolute; left:120px;}
-    .write { position: absolute; left:130px; top:260px; width: 80px;}
-    .cancel { position: absolute; left:220px; top:260px; width: 80px;}
-    .textChoice {position: absolute; left:220px; top:225px;}
+    .write { position: absolute; left:130px; top:230px; width: 80px;}
+    .cancel { position: absolute; left:220px; top:230px; width: 80px;}
+    .textChoice {position: absolute; left:220px; top:197px;}
      
     /* button */
     #btn-cover {  border: 1px solid skyblue;

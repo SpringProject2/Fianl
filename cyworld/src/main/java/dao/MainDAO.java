@@ -95,9 +95,15 @@ public class MainDAO {
 		return res;
 	}
 	
+	// 로그인한 유저와 해당 미니홈피 유저의 일촌관계
+	public IlchonVO selectIlchonUp(IlchonVO vo) {
+		IlchonVO ivo = sqlSession.selectOne("m.selectIlchonUp", vo);
+		return ivo;
+	}
+	
 	// 일촌 리스트 조회
-	public List<IlchonVO> selectIlchonList() {
-		List<IlchonVO> list = sqlSession.selectList("m.selectIlchonList");
+	public List<IlchonVO> selectIlchonList(IlchonVO vo) {
+		List<IlchonVO> list = sqlSession.selectList("m.selectIlchonList", vo);
 		return list;
 	}
 }

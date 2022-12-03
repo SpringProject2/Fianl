@@ -85,15 +85,21 @@ public class SignUpDAO {
 		return res;
 	}
 	
-	// 메인 타이틀 및 비밀번호 수정
+	// 프로필 좌측 - 메인 사진 및 메인 소개글 수정
+	public int updateMain(SignUpVO vo) {
+		int res = sqlSession.update("s.profile_modify_main", vo);
+		return res;
+	}
+	
+	// 프로필 우측 (cyworld 가입자) - 메인 타이틀 및 비밀번호 수정
 	public int updateUserData(SignUpVO vo) {
 		int res = sqlSession.update("s.profile_modify_userdata", vo);
 		return res;
 	}
 	
-	// 메인 사진 및 메인 소개글 수정
-	public int updateMain(SignUpVO vo) {
-		int res = sqlSession.update("s.profile_modify_main", vo);
+	// 프로필 우측 (소셜 가입자) - 비밀번호 없이 메인 타이틀만 수정
+	public int updateSocialUserData(SignUpVO vo) {
+		int res = sqlSession.update("s.profile_modify_social_userdata", vo);
 		return res;
 	}
 }

@@ -18,7 +18,7 @@
 		const naverLogin = new naver.LoginWithNaverId(
 				{
 					clientId: "eSWj7IYuFA0SbZBBHqva",
-					callbackUrl: "http://192.168.200.25:9090/cyworld/login_naver_callback.do",
+					callbackUrl: "http://localhost:9090/cyworld/login_naver_callback.do",
 					isPopup: false,
 					callbackHandle: true
 				}

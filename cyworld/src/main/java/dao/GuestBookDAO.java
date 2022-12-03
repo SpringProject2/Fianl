@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import vo.GalleryVO;
 import vo.GuestBookLikeVO;
 import vo.GuestBookVO;
 
@@ -99,8 +98,8 @@ public class GuestBookDAO {
 	}
 	
 	// 게시글 삭제시 해당 좋아요 내역도 모두 삭제
-	public int deleteLikeAll(GuestBookLikeVO vo) {
-		int res = sqlSession.delete("gbl.deleteLikeAll", vo);
+	public int deleteLikeAll(HashMap<String, Integer> map) {
+		int res = sqlSession.delete("gbl.deleteLikeAll", map);
 		return res;
 	}
 }

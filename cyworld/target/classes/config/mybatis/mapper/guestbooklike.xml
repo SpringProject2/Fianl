@@ -37,8 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 게시글 삭제시 해당 좋아요 내역도 모두 삭제 -->
-	<delete id="deleteLikeAll" parameterType="gblike">
-		delete from guestbooklike where guestbookLikeIdx=#{guestbookLikeIdx} and guestbookLikeRef=#{guestbookLikeRef}
+	<delete id="deleteLikeAll" parameterType="java.util.HashMap">
+		delete from guestbooklike where guestbookLikeIdx=#{1} and guestbookLikeRef=#{2}
 	</delete>
 	
 	

@@ -12,11 +12,9 @@
  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body>
-	<label>일촌</label><div id="ilchonNum">${ signVo.ilchon }</div>
 	<c:if test="${ signVo.idx ne sessionUser.idx }">
-	<input type="button" value="일촌 신청" onclick="ilchon();">
+		 <input id="btn_cover" class="returnMyHome" type="button" value="내 미니홈피로 가기" onclick="location.href='main.do?idx=${sessionUser.idx}'">
 	</c:if>
-	
 	<!--  플랫폼에 따른 로그아웃 버튼 생성  -->
 	<c:if test="${ sessionUser.platform eq 'cyworld' }">
 		<input id="btn_cover" class="cy_logout" type="button" value="로그아웃" onclick="location.href='logout.do'">
@@ -35,6 +33,25 @@
 		<section class="left-section">
 			<div class="left-dashed-line">
 				<div class="left-gray-background">
+				<c:if test="${ signVo.idx eq sessionUser.idx }">
+					<div id="ilchonNum">나의 일촌: ${ signVo.ilchon }</div>
+				</c:if>
+				<c:if test="${ signVo.idx ne sessionUser.idx }">
+					<div id="ilchonNum">${signVo.name}님의 일촌: ${ signVo.ilchon }</div>
+				</c:if>
+					<c:if test="${ signVo.idx ne sessionUser.idx }">
+						<input id="ilchonUp" type="hidden" value="${ ilchon.ilchonUp }">
+						<c:if test="${ ilchon eq null }">
+							<input id="btn_cover" class="wantIlchon" type="button" value="일촌 신청" onclick="ilchon();">
+						</c:if>
+						<c:if test="${ ilchon.ilchonUp eq 1 }">
+							<input id="btn_cover" class="wantIlchon" type="button" value="일촌 신청중" onclick="ilchon();">
+						</c:if>
+						<c:if test="${ ilchon.ilchonUp eq 2 }">
+							<input id="btn_cover" class="wantIlchon" type="button" value="일촌 해제" onclick="ilchon();">
+						</c:if>
+						<div class="IlchonAssist"> <p> <span>※  일촌 신청</span> <img class="IlchonAssistImg" src="resources/images/noneMain14.gif" alt="">  <br> 일촌 신청을 하고, <br> 상대방도 나에게 일촌 신청을 하면 일촌이 돼요!</p></div>
+					</c:if>
 					<p class="todayBanner"><span>Today</span> <span class="todayHere">156</span><span>&nbsp;｜ Total</span> 45,405</p>
 					<aside class="left-aside">
 						<div class="item item1"></div>
@@ -45,15 +62,13 @@
 							<span class="todayIconText">Today is..</span><img class="box animate__animated animate__headShake animate__infinite " src="resources/images/emoticon1.png" alt="">
 						</div>
 						<div class="left-image"><img class="leftImg" src="/cyworld/resources/mainphoto/${ signVo.mainPhoto }" alt=""></div>
-						<textarea class="left-textarea" readonly>${ signVo.mainText }</textarea>
+						<textarea class="left-textarea" id="scrollBar" readonly>${ signVo.mainText }</textarea>
 						<div class="history"><img src="resources/images/arrow.png" alt=""><h3>History</h3></div>
-						<select class="myFriend">
+						<select class="myFriend" onchange="if(this.value) location.href=(this.value);">
 							<option value="">::: 파도타기 :::</option>
-							<option><a href="#">이정현 ｜  친구</a></option>
-							<option><a href="#">박성철 ｜  친구</a></option>
-							<option><a href="#">장유진 ｜  친구</a></option>
-							<option><a href="#">황유진 ｜  친구</a></option>
-							<option><a href="#">장현중 ｜  친구</a></option>
+							<c:forEach var="ilchonList" items="${ ilchonList }">
+								<option value="main.do?idx=${ ilchonList.ilchonIdx }">ㆍ ${ ilchonList.ilchonName }</option>
+							</c:forEach>
 						</select>
 					</aside>
 				</div>
@@ -83,7 +98,7 @@
  				  <source src="/cyworld/resources/sound/main.mp3" type="audio/mp3">
  					  </audio>
  					  
-					<aside class="right-aside">
+					<aside class="right-aside" id="scrollBar">
 						<div class="dotory">도토리 보유량 : ${signVo.dotoryNum}개 <input id="btn_cover" class="dotoryBtn" type="button" value="도토리구매" onclick="DotoryPopUp()"></div> 
 						 <div class="miniRoomBox"><p>Mini Room</p>
                      <div class="miniRoom"><img src="resources/images/MainroomGif.gif" alt=""></div>
@@ -97,7 +112,7 @@
 						<form method="post">
 							<div class="Ilchonpyeong">
 							
-								<span>일촌평</span> <input type="text" name="ilchonpyeongText" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요"></input>
+								<span>일촌평</span> <input type="text" name="ilchonpyeongText"  onkeyup="check_length(this);" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요 (최대 45글자)"></input>
 								<input id="btn_cover" class="Ic-registration" type="button" value="확인" onclick="registration(this.form);"></input>
 								
 							</div>
@@ -287,14 +302,19 @@
 		
 		// 일촌평 작성
 		function registration(f){
-		
 			let ilchonpyeongText = f.ilchonpyeongText.value;
 			let idx = document.getElementById("idx").value;
 			let sessionIdx = document.getElementById("sessionIdx").value;
+			let ilchonUp = document.getElementById("ilchonUp").value;
 			
 			// 세션이 0이면 비회원이므로 일촌평을 달지 못하게 만든다.
 			if ( sessionIdx <= 0 ) {
 				alert("로그인후 이용 가능합니다");
+				return;
+			}
+			
+			if ( ilchonUp != 2 ) {
+				alert("일촌평은 서로 일촌 상태여야 작성 가능합니다");
 				return;
 			}
 			
@@ -328,6 +348,11 @@
 		function ilchon() {
 			let idx = document.getElementById("idx").value;
 			let sessionIdx = document.getElementById("sessionIdx").value;
+			
+			if ( sessionIdx <= 0 ) {
+				alert("로그인후 이용 가능합니다");
+				return;
+			}
 			
 			url = "main_ilchon.do";
 			param = "idx=" + idx +
@@ -428,5 +453,29 @@
          let pop = window.open(popUrl, "_blank", popOption);
       }
    </script>
+   <!-- textarea 글자 수 제한 -->
+	<script>
+	//입력 글자 수 제한
+    function check_length(area){
+    	var text = area.value;
+    	var test_length = text.length;
+    	
+    	//최대 글자수 
+    	var max_length = 45;
+    	
+    	if(test_length>max_length){
+    		alert(max_length+"자 이상 작성할 수 없습니다.")
+    		text = text.substr(0, max_length);
+    		/* substr() : 문자열에서 특정 부분만 골라낼 때 사용하는 메서드. 
+    		??.substr(start, length) 
+    		 즉, 여기서는 0부터 45글자까지만 가져와서 text에 저장 
+    		*/
+    		area.value = text;
+    		/* text를 다시 area.value로 반환 */
+    		area.focus();
+    		/* 다시 area의 위치로 반환 */
+    	}
+    }	
+	</script>
 </body>
 </html>

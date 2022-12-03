@@ -25,7 +25,7 @@
                                     <tr>
                                         <th>미니미</th>
                                             <td>
-                                                <img class="myImg" src="/cyworld/resources/minimi/${ minimi }" width="100"/>
+                                                <img class="myImg" src="/cyworld/resources/minimi/${ minimi }"/>
                                                 <input name="guestbookMinimi" type="hidden"  value="${ minimi }">
                                             </td>
                                     </tr>

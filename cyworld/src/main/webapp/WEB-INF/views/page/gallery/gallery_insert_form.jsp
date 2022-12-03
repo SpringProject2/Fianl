@@ -32,7 +32,7 @@
                                     
                                     <tr>
                                         <th>내용</th>
-                                        <td><textarea rows="5" cols="50" name="galleryContent" onkeyup="check_length(this);" placeholder="최대 작성글자는 50자 이내입니다."></textarea></td>
+                                        <td><textarea rows="5" cols="50" name="galleryContent" ></textarea></td>
                                     </tr>
                                     
                                     <tr>
@@ -80,29 +80,6 @@
 			f.submit();
 		}
 	</script>
-	<!-- textarea 글자 수 제한 -->
-	<script>
-	//입력 글자 수 제한
-    function check_length(area){
-    	var text = area.value;
-    	var test_length = text.length;
-    	
-    	//최대 글자수 
-    	var max_length = 50;
-    	
-    	if(test_length>max_length){
-    		alert(max_length+"자 이상 작성할 수 없습니다.")
-    		text = text.substr(0, max_length);
-    		/* substr() : 문자열에서 특정 부분만 골라낼 때 사용하는 메서드. 
-    		??.substr(start, length) 
-    		 즉, 여기서는 0부터 50글자까지만 가져와서 text에 저장 
-    		*/
-    		area.value = text;
-    		/* text를 다시 area.value로 반환 */
-    		area.focus();
-    		/* 다시 area의 위치로 반환 */
-    	}
-    }	
-	</script>
+	
 </body>
 </html>

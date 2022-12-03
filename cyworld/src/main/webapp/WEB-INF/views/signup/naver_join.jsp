@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/cyworld/resources/css/reset.css">
 <link rel="stylesheet" href="/cyworld/resources/css/animate.css">
 <link rel="stylesheet" href="/cyworld/resources/css/naverJoin.css">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div class="container">

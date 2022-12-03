@@ -83,6 +83,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update signup set minimi=#{minimi} where idx=#{idx}
 	</update>
 	
+	<update id="profile_modify_main" parameterType="signup">
+		update signup set
+			mainPhoto=#{mainPhoto},
+			mainText=#{mainText}
+			where idx=#{idx}
+	</update>
+	
 	<update id="profile_modify_userdata" parameterType="signup">
 		update signup set
 			info=#{info},
@@ -90,10 +97,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where idx=#{idx}
 	</update>
 	
-	<update id="profile_modify_main" parameterType="signup">
+	<update id="profile_modify_social_userdata" parameterType="signup">
 		update signup set
-			mainPhoto=#{mainPhoto},
-			mainText=#{mainText}
+			mainTitle=#{mainTitle}
 			where idx=#{idx}
 	</update>
 </mapper>

@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/cyworld/resources/css/reset.css">
 <link rel="stylesheet" href="/cyworld/resources/css/animate.css">
 <link rel="stylesheet" href="/cyworld/resources/css/login.css">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div class="container ">
@@ -133,7 +134,7 @@
 		const naverLogin = new naver.LoginWithNaverId(
 				{
 					clientId: "eSWj7IYuFA0SbZBBHqva", // 네이버에서 발급받은 API 사용 ID
-					callbackUrl: "http://192.168.200.25:9090/cyworld/login_naver_callback.do", // 로그인을 하고 정보동의 후 이동할 페이지 - 네이버에서 미리 등록해야한다.
+					callbackUrl: "http://localhost:9090/cyworld/login_naver_callback.do", // 로그인을 하고 정보동의 후 이동할 페이지 - 네이버에서 미리 등록해야한다.
 					loginButton: {color: "green", type: 3, height: 40}, // 위에 작성한 <div>태그에 만들어줄 로그인 버튼 모양 설정
 					isPopup: false, // callbackUrl을 팝업창으로 열건지 선택 - true : 팝업 / false : 다음 페이지 
 					callbackHandle: true // 콜백메소드에 핸들메소드 사용여부

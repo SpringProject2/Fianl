@@ -74,7 +74,7 @@
 .rAddress {position: absolute; width: 360px; height: 30px; top:815px; left:105px;}
 .rAddress > input {width: 230px; height: 25px;}
 .mJoin{position: absolute; width: 80px; height: 40px; top:920px; left:185px; letter-spacing: .15em;}
-
+.cancel{position:absolute; width: 40px; font-size:16px; left: 20px;}
 
 
 #btn-cover {  border: 1px solid skyblue;

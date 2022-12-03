@@ -64,7 +64,7 @@
                         <aside class="right-aside" id="scrollBar">
                                 <div class="fake"></div>
                             <div id="main_box">
-                                <h1>다이어리 목록</h1>
+                                <h1>다이어리</h1>
                                 <c:if test="${ sessionIdx eq param.idx }">
                                     <div>
                                         <input class="writing"  type="button" value="글쓰기" onclick="location.href='diary_insert_form.do?idx=${param.idx}'">
@@ -73,7 +73,7 @@
                             </div>
                             
                             <c:forEach var="vo" items="${ list }">
-                                <div class="diary_box" id="scrollBar">
+                                <div class="diary_box" >
                                     <form>
                                         <div class="type_diarycontent">
                                             <div class="top_section">
@@ -94,7 +94,9 @@
                                                 id="btn-cover"
                                                 type="button" value="삭제" onclick="del(this.form);">
                                             </c:if>
-                                            <pre  class="diaryContent">${ vo.diaryContent }</pre>
+                                            
+                                            <pre class="diaryContent"><textarea id="scrollBar1" readonly>${ vo.diaryContent }</textarea></pre>
+                                        
                                         </div>
                                     </form>
                                 </div>
@@ -126,6 +128,16 @@
         </section>
 </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+	<!-- 음악 재생  -->
+	<script type="text/javascript">
+		//Audio 사용을 위한 객체 생성
+		var audio = new Audio();
+		//오디오가 참조하는 노래 주소 지정
+		audio.src = "/cyworld/resources/sound/main.mp3";
+		myAudio.loop = true; //노래가 끝나도 loop가 가능하게 설정
+		audio.play();
+		audio.volume = 3;
+	</script> 
 	<script>
 		function profile(f) {
 			let sessionIdx = document.getElementById("sessionIdx").value;

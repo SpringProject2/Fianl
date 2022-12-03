@@ -45,9 +45,9 @@
     th,td {font-size: 20px; }
     .lastTd {height: 50px;}
     
-    .write { position: absolute; left:130px; top:232px; width: 80px;}
-    .cancel { position: absolute; left:220px; top:232px; width: 80px;}
-    .textChoice {position: absolute; left:220px; top:198px;}
+    .write { position: absolute; left:130px; top:230px; width: 80px;}
+    .cancel { position: absolute; left:220px; top:230px; width: 80px;}
+    .textChoice {position: absolute; left:220px; top:197px;}
      
     /* button */
     #btn-cover {  border: 1px solid skyblue;

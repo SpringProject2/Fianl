@@ -28,14 +28,12 @@
                             <div class="left-image"><img class="leftImg" src="/cyworld/resources/mainphoto/${ signVo.mainPhoto }" alt=""></div>
 						<textarea class="left-textarea" readonly>${ signVo.mainText }</textarea>
                            <div class="history"><img src="resources/images/arrow.png" alt=""><h3>History</h3></div>
-                            <select class="myFriend">
-                                <option value="">::: 파도타기 :::</option>
-                                    <option><a href="#">이정현 ｜  친구</a></option>
-                                    <option><a href="#">박성철 ｜  친구</a></option>
-                                    <option><a href="#">장유진 ｜  친구</a></option>
-                                    <option><a href="#">황유진 ｜  친구</a></option>
-                                    <option><a href="#">장현중 ｜  친구</a></option>
-                            </select>
+ 						<select class="myFriend" onchange="if(this.value) location.href=(this.value);">
+							<option value="">::: 파도타기 :::</option>
+							<c:forEach var="ilchonList" items="${ ilchonList }">
+								<option value="guestbook.do?idx=${ ilchonList.ilchonIdx }">ㆍ ${ ilchonList.ilchonName }</option>
+							</c:forEach>
+						</select>
                         </aside>
                     </div>
                 </div>
@@ -87,7 +85,7 @@
                                         
                                         
                                         
-                                        <div class="GuestContent">
+                                        <div class="GuestContent" >
                                             <img class="GuestMinimi"src="/cyworld/resources/minimi/${ vo.guestbookMinimi }" />
                                             
                                             <div class="GuestText">
@@ -100,7 +98,7 @@
 															        <div class="backdelComment" id="backColor">
 															   
                                                      <c:if test="${ sessionIdx eq vo.guestbookSession || sessionIdx eq vo.guestIdx }">
-                                                         <pre class="type_guestbookContent"> ${ vo.guestbookContent }</pre>
+                                                         <pre class="type_guestbookContent"> <textarea class="guestbookContent" id= "scrollBar1" readonly>${ vo.guestbookContent }</textarea></pre>
                                                      </c:if>
                                                     
                                                      <input name="guestbookSecretCheck" type="hidden" value="${ vo.guestbookSecretCheck }">
@@ -111,7 +109,7 @@
                                                  
                                                  <!-- 공개글 -->
                                                  <c:if test="${ vo.guestbookSecretCheck eq 0 }">
-                                                    <pre class="type_guestbookContent"> ${ vo.guestbookContent }</pre>
+                                                    <pre class="type_guestbookContent"> <textarea class="guestbookContent" id= "scrollBar1" readonly>${ vo.guestbookContent }</textarea></pre>
                                                 </c:if>
                                                 <input name="guestbookSecretCheck" type="hidden" value="${ vo.guestbookSecretCheck }">
                                             </div>
@@ -126,27 +124,37 @@
                     </div>
                 </div>
             
-                <div class="tabs">
-					<form>
-						<div class="tab-btns">
-							<input id="idx" name="idx" type="hidden" value="${ signVo.idx }" readonly>
-							<input id="sessionIdx" name="sessionIdx" type="hidden" value="${ sessionIdx }" readonly>
-							<label for="tab1" id="btn1">홈</label>
-							<input id="tab1" type="button" value="홈" style="display: none;" onclick="location.href='main.do?idx=${ signVo.idx }'">
-							<label for="tab2" id="btn2">프로필</label>
-							<input id="tab2" type="button" value="프로필" style="display: none;" onclick="profile(this.form);">
-							<label for="tab3" id="btn3">다이어리</label>
-							<input id="tab3" type="button" value="다이어리" style="display: none;" onclick="location.href='diary.do?idx=${ signVo.idx }'">
-							<label for="tab4" id="btn4">사진첩</label>
-							<input id="tab4" type="button" value="사진첩" style="display: none;" onclick="location.href='gallery.do?idx=${ signVo.idx }'">
-							<label for="tab5" id="btn5">방명록</label>
-							<input id="tab5" type="button" value="방명록" style="display: none;" onclick="location.href='guestbook.do?idx=${ signVo.idx }'">
-						</div>
-					</form>
-                </div>
+               <div class="tabs">
+							<form>
+								<div class="tab-btns">
+									<input id="idx" name="idx" type="hidden" value="${ signVo.idx }" readonly>
+									<input id="sessionIdx" name="sessionIdx" type="hidden" value="${ sessionIdx }" readonly>
+									<label for="tab1" id="btn1">홈</label>
+									<input id="tab1" type="button" value="홈" style="display: none;" onclick="location.href='main.do?idx=${ signVo.idx }'">
+									<label for="tab2" id="btn2">프로필</label>
+									<input id="tab2" type="button" value="프로필" style="display: none;" onclick="profile(this.form);">
+									<label for="tab3" id="btn3">다이어리</label>
+									<input id="tab3" type="button" value="다이어리" style="display: none;" onclick="location.href='diary.do?idx=${ signVo.idx }'">
+									<label for="tab4" id="btn4">사진첩</label>
+									<input id="tab4" type="button" value="사진첩" style="display: none;" onclick="location.href='gallery.do?idx=${ signVo.idx }'">
+									<label for="tab5" id="btn5">방명록</label>
+									<input id="tab5" type="button" value="방명록" style="display: none;" onclick="location.href='guestbook.do?idx=${ signVo.idx }'">
+								</div>
+							</form>
+                        </div>
         </section>
 </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->		
+	<!-- 음악 재생  -->
+	<script type="text/javascript">
+		//Audio 사용을 위한 객체 생성
+		var audio = new Audio();
+		//오디오가 참조하는 노래 주소 지정
+		audio.src = "/cyworld/resources/sound/main.mp3";
+		myAudio.loop = true; //노래가 끝나도 loop가 가능하게 설정
+		audio.play();
+		audio.volume = 3;
+	</script> 
 	<script>
 		function profile(f) {
 			let sessionIdx = document.getElementById("sessionIdx").value;
@@ -212,8 +220,7 @@
 			if( xhr.readyState == 4 && xhr.status == 200 ){
 				//xhr.responseText : 컨트롤러에서 return으로 보내준 결과값
 				let data = xhr.responseText;
-				alert(data[1]);
-				//location.href = "guestbook.do?idx=${param.idx}"
+				location.href = "guestbook.do?idx=${param.idx}"
 			}
 		}
 	</script>
