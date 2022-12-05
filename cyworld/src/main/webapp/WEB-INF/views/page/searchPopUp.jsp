@@ -30,7 +30,8 @@
                         <c:forEach var="name" items="${ list }">
                 <div class="wantSearch">
             <figure>
-                            <input class="memberMinimi" type="button" value="${ name.name }" onclick="opener.location.href='main.do?idx=${ name.idx }'; searchClick();"><a class="myname" onclick="opener.location.href='main.do?idx=${ name.idx }'; searchClick();">${ name.name } </a>  <span class="info1">Email: ${ name.email }</span>
+                            <input class="memberMinimi" type="image" src="/cyworld/resources/minimi/${ name.minimi }" value="${ name.name }" onclick="opener.location.href='main.do?idx=${ name.idx }'; searchClick();">
+                            <a class="myname" onclick="opener.location.href='main.do?idx=${ name.idx }'; searchClick();">${ name.name } </a>  <span class="info1">Email: ${ name.email }</span>
                             <span class="platform">Platform: ${ name.platform }</span>
             </figure>
                 </div>
@@ -41,11 +42,11 @@
                 <div class="wantSearch">
                 <figure>    
                     <c:if test="${ id.platform eq 'cyworld' }">
-                        <input class="memberMinimi" type="button" value="${ id.userID }"  onclick="opener.location.href='main.do?idx=${ id.idx }'; searchClick();"> 
+                        <input class="memberMinimi" type="image" src="/cyworld/resources/minimi/${ id.minimi }" value="${ id.userID }"  onclick="opener.location.href='main.do?idx=${ id.idx }'; searchClick();">
                         <a class="myname" onclick="opener.location.href='main.do?idx=${ id.idx }'; searchClick();">${ id.name }</a><span class="info1">ID: ${ id.userID }</span> <span class="platform">Platform: ${ id.platform }</span> 
                     </c:if>
                     <c:if test="${ id.platform ne 'cyworld' }">
-                        <input class="memberMinimi" type="button" value="socialUser"  onclick="opener.location.href='main.do?idx=${ id.idx }'; searchClick();"> 
+                        <input class="memberMinimi" type="image" src="/cyworld/resources/minimi/${ id.minimi }" value="socialUser"  onclick="opener.location.href='main.do?idx=${ id.idx }'; searchClick();">
                         <a class="myname" onclick="opener.location.href='main.do?idx=${ id.idx }'; searchClick();">${ id.name }</a><span class="info1">Email: ${ id.email }</span><span class="platform">Platform: ${ id.platform }</span> 
                     </c:if>
                 </figure>
@@ -69,4 +70,4 @@
       }
    </script>
 </body>
-</html>
+</html>   

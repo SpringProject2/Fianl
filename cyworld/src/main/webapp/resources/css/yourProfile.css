@@ -54,7 +54,7 @@
 
    /* content detail */
    /* left content */
-   .todayBanner { position: relative; left: 80px; top:25px; 
+   .todayBanner { position: relative; left: 120px; top:25px; 
    font-size: 18px; font-weight: bold; word-spacing: 30px;}
    /* word-spacing: 글자 간격 넓힘 */
    .todayHere { color:rgb(243, 43, 43)}
@@ -115,6 +115,8 @@ left:180px;
 .sorryText > span { font-size: 20px; width:500px;text-align: right;}
 .show > img { width: 120px; height: 120px;}
 .hover:hover { opacity: 1;}
+
+
 /* 미니미 배치 */
 .Crayon { position: absolute; top:250px; left: 225px;
     user-select: none; 
@@ -171,6 +173,24 @@ position: relative; left:50px; top:40px; background-image: center center;
 .minimi-select {position: absolute; left:-35px; top:-35px; width: 50px; }
 .minimi-choice { position: absolute; left:-25px;}
 #minimi_correction > .minimi-list > .minimi-area > img {position: absolute; left:23px; top: 15px;}
+
+/* 미니미 수정 form 막기 */
+.hover1 {width: 920px; height: 210px; 
+background-color: rgba(255, 0, 0, 0.301);
+border-radius: 20px;
+position: relative;
+top:410px; left:80px; z-index: 1; opacity: 0;
+}
+.show1 {position: absolute; width: 1820px; height: 200px;
+top:-10px;
+}
+.sorryText1 {font-size: 60px; color: black;
+position: absolute; font-weight: bold; top:30px; 
+left:180px;
+}
+.sorryText1 > span { font-size: 20px; width:500px;text-align: right;}
+.show1 > img { width: 120px; height: 120px;}
+.hover1:hover { opacity: 1;}
 
 .modify-user-profile { position:absolute; width: 930px; height:1190px;  top:680px; left:80px; color: skyblue; border: 1px solid black;
     font-family: 'Jua', sans-serif; font-weight: bold;

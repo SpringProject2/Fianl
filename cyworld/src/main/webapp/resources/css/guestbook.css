@@ -103,7 +103,8 @@
    top: 20px;
    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.356);
    z-index: 1;
-   overflow: auto;
+   overflow-x: hidden;
+   overflow-y: auto;
 }
 
 .left-aside>.item {
@@ -125,107 +126,39 @@
    top: 260px;
 }
    /* content detail */
-   /* left content */
-   
-.todayBanner {
-   position: relative;
-   left: 80px;
-   top: 25px;
-   font-size: 18px;
-   font-weight: bold;
-   word-spacing: 30px;
+  /* left content */
+   .todayBanner { position: relative; left: 120px; top:25px; 
+   font-size: 18px; font-weight: bold; word-spacing: 30px;}
+   /* word-spacing: 글자 간격 넓힘 */
+   .todayHere { color:rgb(243, 43, 43)}
+   .todayIcon {position: relative; width: 300px; height: 50px; border: 1px solid rgb(182, 180, 180); left: 80px; top: -410px; color: rgb(140, 208, 248);
+   }
+   .todayIcon img{position: absolute; left: 170px; top:7px;}
+   .todayIconText{ font-size: 18px; font-weight: bold; position: absolute; margin: 10px; left: 15px;}
+   .left-image {position: relative; width: 300px; height: 345px; border: 1px solid black; left: 80px; top:-400px;
+    }
+    /* leftImg css 바꿔야 함 */
+   .leftImg{ width: 300px; height: 345px;}
+   .left-textarea { overflow-x:hidden; overflow-y:auto; position: relative; width: 300px; height: 70px; left: 80px; top:-345px; border: none;  font-size:24px;}
+   .selectFile { position:absolute; top:440px; left: 75px; width:300px;}
+   .myFriend { 
+    position: relative;
+    width: 280px; 
+padding: .8em .5em; 
+border: 1px solid #999;
+font-family: inherit;  
+background: url(./images/arrow.png) no-repeat 95% 50%; 
+border-radius: 0px; 
+-webkit-appearance: none; 
+-moz-appearance: none;
+appearance: none;
+top:-305px;
+left: 88px;
+font-size: 18px;
 }
-/* word-spacing: 글자 간격 넓힘 */
-.todayHere {
-   color: rgb(243, 43, 43)
-}
-
-.todayIcon {
-   position: relative;
-   width: 300px;
-   height: 50px;
-   border: 1px solid rgb(182, 180, 180);
-   left: 80px;
-   top: -410px;
-   color: rgb(140, 208, 248);
-}
-
-.todayIcon img {
-   position: absolute;
-   left: 170px;
-   top: 7px;
-}
-
-.todayIconText {
-   font-size: 18px;
-   font-weight: bold;
-   position: absolute;
-   margin: 10px;
-   left: 15px;
-}
-
-.left-image {
-   position: relative;
-   width: 300px;
-   height: 360px;
-   border: 1px solid black;
-   left: 80px;
-   top: -400px;
-}
-
-
-.leftImg {
-   width: 300px;
-   height: 360px;
-}
-
-.left-textarea {
-   overflow-x: hidden;
-   overflow-y: auto;
-   position: relative;
-   width: 300px;
-   height: 70px;
-   left: 80px;
-   top: -395px;
-   border: none;
-   font-size:24px;
-}
-
-.myFriend {
-   position: relative;
-   width: 280px;
-   padding: .8em .5em;
-   border: 1px solid #999;
-   font-family: inherit;
-   /* 이미지 경로 설정 방식 */
-   background: url("../images/arrow.png") no-repeat 95% 50%;
-   border-radius: 0px;
-   -webkit-appearance: none;
-   -moz-appearance: none;
-   appearance: none;
-   top: -290px;
-   left: 88px;
-   font-size: 18px;
-}
-
-.history {
-   position: relative;
-   top: -380px;
-   left: 70px;
-}
-
-.history>img {
-   position: absolute;
-   left: 10px;
-   top: -5px;
-}
-
-.history>h3 {
-   position: absolute;
-   width: 258px;
-   left: 50px;
-   border-bottom: 1px solid black;
-}
+.history { position: relative; top: -345px; left: 70px; }
+.history > img {position: absolute; left: 10px; top: -5px; }
+.history > h3 {position: absolute; width:258px; left: 50px; border-bottom: 1px solid black;}
    
   /* right content */
 .title { position: relative; left: 80px; top:27px; 
@@ -255,7 +188,7 @@
  margin-top: 3px;
  margin-right:10px;
 }
-.textBtn { height:30px;}
+.textBtn { height:30px; margin-left:5px;}
 .GuestContent {margin-top:10px; margin-left: 40px; width:1080px; height: 240px; 
     font-size: 23px; border: 3px solid black;
 
@@ -424,3 +357,4 @@ border:  1px solid black; display: flex;
 #scrollBar1::-webkit-scrollbar-track {
     background: rgb(186 186 187 / 48%);  /*스크롤바 뒷 배경 색상*/
 }
+    

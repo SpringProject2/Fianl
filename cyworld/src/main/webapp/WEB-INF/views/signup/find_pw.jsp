@@ -24,6 +24,7 @@
 							<p class="myId">ID <br> <input id="userID" name="userID" type="text"></p>
 							<p class="myEmail">이메일 <br> <input name="email" type="text"></p>
 							<input id="btn-cover" type="button" value="비밀번호 찾기" onclick="findPW(this.form)">
+							<input  id="btn_cover" class="cancel" type="button" value="취소" onclick="location.href='logout.do'">
 						</form>
 						
 					</div>

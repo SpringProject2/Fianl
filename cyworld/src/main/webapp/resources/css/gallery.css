@@ -50,7 +50,7 @@
 
    /* content detail */
    /* left content */
-   .todayBanner { position: relative; left: 80px; top:25px; 
+   .todayBanner { position: relative; left: 120px; top:25px; 
    font-size: 18px; font-weight: bold; word-spacing: 30px;}
    /* word-spacing: 글자 간격 넓힘 */
    .todayHere { color:rgb(243, 43, 43)}

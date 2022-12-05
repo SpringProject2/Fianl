@@ -145,7 +145,7 @@ opacity:0; z-index:10; font-size:20px; line-height:40px; border: 3px solid black
 
 .todayBanner {
 	position: relative;
-	left: 80px;
+	left: 120px;
 	top: 25px;
 	font-size: 18px;
 	font-weight: bold;

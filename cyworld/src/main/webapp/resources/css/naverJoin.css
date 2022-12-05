@@ -53,6 +53,7 @@ box-shadow: 10px 10px  10px rgba(0, 0, 0, 0.356);}
 .rAddress { position: absolute; width: 360px; height: 30px; top:370px; left:40px; }
 .rAddress > input {width: 370px; height: 25px; font-size:15px;}
 .join { position: absolute; width: 80px; font-size: 15px; top: 470px; left:180px;}
+.cancel { position:absolute; left:20px; top:10px;}
 #btn-cover {  border: 1px solid skyblue;
             background-color: rgba(0,0,0,0);
             color: skyblue;

@@ -46,6 +46,7 @@
     .myId > input { width: 230px; height: 25px;}
     .myEmail {position: absolute; width: 360px; height: 30px; top:280px; left:110px;}
     .myEmail > input { width: 230px; height: 25px;}
+      .cancel{position: absolute; width: 40px; font-size:16px; left: 20px; top:10px;}
 
     #btn-cover {  border: 1px solid skyblue;
             background-color: rgba(0,0,0,0);
@@ -60,3 +61,14 @@
             background-color: skyblue;
             
         }
+           #btn_cover {  border: 1px solid skyblue;
+            background-color: rgba(0,0,0,0);
+            color: skyblue;
+            padding: 5px;
+            border-radius: 5px; font-weight: bold;   }
+#btn_cover:hover{
+            color:white;
+            background-color: skyblue;
+            
+
+        } 

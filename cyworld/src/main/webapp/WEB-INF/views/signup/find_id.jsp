@@ -23,6 +23,7 @@
 							<div class="myname">이름 <br> <input class="nameText" name="name" type="text"></div>
 							<div id="phone">휴대전화 <br> <input class="phoneText" id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"></div> 
 							<input id="btn-cover" type="button" value="아이디 찾기" onclick="findID(this.form)">
+							<input  id="btn_cover" class="cancel" type="button" value="취소" onclick="location.href='logout.do'">
 						</form>
 						
 					</div>

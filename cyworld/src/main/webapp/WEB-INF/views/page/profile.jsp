@@ -85,7 +85,12 @@
                                     </div>
                                   </div>
                                 </form>
-
+										<div class="hover1">
+												<div class="show1">
+													<img src="resources/images/sorryForShow.gif" alt="">
+													<p class="sorryText1">아직 개발중에 있습니다. <span>※개발진 일동</span></p>
+												</div>
+											</div>
                                 <!-- 개인정보 수정 form -->
                                 <form action="">
                                 <div class="modify-user-profile">

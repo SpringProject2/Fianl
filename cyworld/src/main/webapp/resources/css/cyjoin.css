@@ -90,18 +90,7 @@
         } 
 
 
-#btn-cover {  border: 1px solid skyblue;
-            background-color: rgba(0,0,0,0);
-            color: skyblue;
-            padding: 5px;
-            border-radius: 5px; font-weight: bold; 
-            font-family: 'Jua', sans-serif;
-        }
-#btn-cover:hover{
-            color:white;
-            background-color: skyblue;
-            
-        } 
+
                 /* scroll-bar */
 #scrollBar::-webkit-scrollbar {
     width: 8px;  /* 스크롤바의 너비 */
