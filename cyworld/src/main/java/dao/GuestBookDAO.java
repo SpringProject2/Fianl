@@ -8,14 +8,15 @@ import org.apache.ibatis.session.SqlSession;
 import vo.GuestBookLikeVO;
 import vo.GuestBookVO;
 
-
 public class GuestBookDAO {
-	
+	// SqlSession
 	SqlSession sqlSession;
+	// SI방식
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//방명록 전체 목록 조회
 	public List<GuestBookVO> selectList(int idx){

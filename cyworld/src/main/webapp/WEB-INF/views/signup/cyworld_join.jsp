@@ -158,6 +158,7 @@
 				}).open();
 			});
 		}
+		
 		// 휴대폰용 자동 하이픈
 		function phoneAutoHyphen(str){
 			str = str.replace(/[^0-9]/g, ''); // 입력값에 숫자만 적용

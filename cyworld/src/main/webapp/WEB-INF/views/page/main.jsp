@@ -12,7 +12,7 @@
  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body>
-	<c:if test="${ signVo.idx ne sessionUser.idx }">
+	<c:if test="${ signVo.idx ne sessionUser.idx && sessionUser.idx > 0 }">
 		 <input id="btn_cover" class="returnMyHome" type="button" value="내 미니홈피로 가기" onclick="location.href='main.do?idx=${sessionUser.idx}'">
 	</c:if>
 	<!--  플랫폼에 따른 로그아웃 버튼 생성  -->
@@ -52,7 +52,7 @@
 						</c:if>
 						<div class="IlchonAssist"> <p> <span>※  일촌 신청</span> <img class="IlchonAssistImg" src="resources/images/noneMain14.gif" alt="">  <br> 일촌 신청을 하고, <br> 상대방도 나에게 일촌 신청을 하면 일촌이 돼요!</p></div>
 					</c:if>
-					<p class="todayBanner"><span>Today</span> <span class="todayHere">156</span><span>&nbsp;｜ Total</span> 45,405</p>
+					<p class="todayBanner"><span>Today</span> <span class="todayHere">${ signVo.today }</span><span>&nbsp;｜ Total</span> ${ signVo.total }</p>
 					<aside class="left-aside">
 						<div class="item item1"></div>
 						<div class="item item1"></div>
@@ -87,19 +87,20 @@
                   
 					<form name="sf" method="GET">
 						<input id="btn_cover" class="search" type="button" value="회원 검색" onclick="searchPopUp();"></input>
-						<input type="hidden" name="idx" value="${ sighVo.idx }">	
 					</form>
 					<!-- main 페이지에 재생 플레이어와 노래 제목 표시  -->
   				 	<img class="musicLogo" src="resources/images/noneMain15.gif" alt="">
   				 	<a class="mp3_title" href="#" ><div class="circle-container">
-        <div class="circle circle1"> ♫ 오르트 구름 - 윤하</div>
-    </div></a>
+        				<div class="circle circle1"> ♫ 오르트 구름 - 윤하</div>
+    				</div></a>
    					<audio class="mp3" controls>
  				  <source src="/cyworld/resources/sound/main.mp3" type="audio/mp3">
  					  </audio>
  					  
 					<aside class="right-aside" id="scrollBar">
+					<c:if test="${ signVo.idx eq sessionUser.idx && sessionUser.idx > 0 }">
 						<div class="dotory">도토리 보유량 : ${signVo.dotoryNum}개 <input id="btn_cover" class="dotoryBtn" type="button" value="도토리구매" onclick="DotoryPopUp()"></div> 
+						</c:if>
 						 <div class="miniRoomBox"><p>Mini Room</p>
                      <div class="miniRoom"><img src="resources/images/MainroomGif.gif" alt=""></div>
                      <div class=" Crayon box animate__animated animate__bounce animate__infinite"><img src="resources/images/Crayon.png" alt=""></div>
@@ -256,11 +257,11 @@
 	<script>
 		//window.open (검색 결과창)
 		function searchPopUp() {
-			let popUrl = "main_search_popup.do";
+			//let popUrl = "main_search_popup.do";
 			let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
-			window.open(popUrl, "search", popOption);
+			window.open("", "search", popOption);
 			document.sf.action = "main_search_popup.do";
-		    document.sf.target="search";s
+		    document.sf.target="search";
 		    document.sf.submit();
 		}
 	</script>
@@ -305,7 +306,6 @@
 			let ilchonpyeongText = f.ilchonpyeongText.value;
 			let idx = document.getElementById("idx").value;
 			let sessionIdx = document.getElementById("sessionIdx").value;
-			let ilchonUp = document.getElementById("ilchonUp").value;
 			
 			// 세션이 0이면 비회원이므로 일촌평을 달지 못하게 만든다.
 			if ( sessionIdx <= 0 ) {
@@ -313,9 +313,13 @@
 				return;
 			}
 			
-			if ( ilchonUp != 2 ) {
-				alert("일촌평은 서로 일촌 상태여야 작성 가능합니다");
-				return;
+			if ( idx != sessionIdx ) {
+				let ilchonUp = document.getElementById("ilchonUp").value;
+				
+				if ( ilchonUp != 2 ) {
+					alert("일촌평은 서로 일촌 상태여야 작성 가능합니다");
+					return;
+				}
 			}
 			
 			if( ilchonpyeongText == ""){

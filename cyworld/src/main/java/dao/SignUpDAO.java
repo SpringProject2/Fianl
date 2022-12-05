@@ -15,6 +15,8 @@ public class SignUpDAO {
 		this.sqlSession = sqlSession;
 	}
 	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	// 플랫폼 + 이메일 확인 절차 (가입자와 비가입자 구분용)
 	public SignUpVO selectOnePlatformEmail(SignUpVO vo) {
 		SignUpVO joinVo = sqlSession.selectOne("s.join", vo);
@@ -63,9 +65,15 @@ public class SignUpDAO {
 		return vo;
 	}
 	
+	// 로그인시 접속 날짜 기록
+	public int updateTodayDate(SignUpVO vo) {
+		int res = sqlSession.update("s.updateTodayDate", vo);
+		return res;
+	}
+	
 	/////////////// 도토리 구역 ///////////////
 	
-	//도토리 구매
+	// 도토리 구매
 	public int buyDotory(SignUpVO vo) {
 		int res = sqlSession.update("s.dotory_buy", vo);
 		return res;

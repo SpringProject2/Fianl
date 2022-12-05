@@ -4,9 +4,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m">
 
+	<!-- ////////// 조회수 구역 시작 ////////// -->
+	
+	<!-- 현재 날짜로 로그인한 유저가 해당 미니홈피에 접속한 기록 조회 -->
+	<select id="selectViewsToday" resultType="views" parameterType="java.util.HashMap">
+		select * from views where viewsIdx=#{1} and viewsSession=#{2}
+	</select>
+	
+	<!-- 검색결과가 없을경우 첫방문 저장 -->
+	<insert id="insertViewsToday" parameterType="java.util.HashMap">
+		insert into views values(
+			#{1},
+			#{2},
+			#{3}
+		)
+	</insert>
+	
+	<!-- 검색결과가 있을경우 날짜비교후 날짜가 다르면 해당 날짜에 현재 날짜 갱신 -->
+	<update id="updateViewsToday" parameterType="java.util.HashMap">
+		update views set todayDate=#{3} where viewsIdx=#{1} and viewsSession=#{2}
+	</update>
+	
+	<!-- 일일 조회수 증가 -->
+	<update id="updateTodayCount" parameterType="signup">
+		update signup set today=#{today} where idx=#{idx}
+	</update>
+	
+	<!-- 날짜 바뀌어 총합 조회수 증가 및 일일 조회수 초기화 -->
+	<update id="updateTotalCount" parameterType="signup">
+		update signup set today=#{today}, total=#{total} where idx=#{idx}
+	</update>
+	
+	<!-- ////////// 조회수 구역 끝 ////////// -->
+
 	<!-- ////////// 일촌 구역 시작 ////////// -->
 	
-	<!-- 일촌 조회 -->
+	<!-- 일촌 이중 조회 -->
 	<select id="selectIlchonSearch" resultType="int" parameterType="java.util.HashMap">
 		<!-- Map에 VO를 통째로 담았을때 사용방법 -->
 		<!-- 키값에 .을 붙인뒤 뒤에 가져올 VO의 변수 이름을 작성하면 된다. -->
@@ -41,18 +74,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ilchon where ilchonIdx=#{ilchonIdx} and ilchonSession=#{ilchonSession}
 	</delete>
 	
+	<!-- 일촌수 조회 -->
 	<select id="selectIlchonNum" resultType="int" parameterType="ilchon">
 		select count(*) from ilchon where ilchonUp=#{ilchonUp} and ilchonIdx=#{ilchonIdx}
 	</select>
 	
+	<!-- 조회된 일촌수 갱신 -->
 	<update id="updateIlchonNum" parameterType="signup">
 		update signup set ilchon=#{ilchon} where idx=#{idx}
 	</update>
 	
+	<!-- 로그인한 유저와 해당 미니홈피 유저의 일촌관계 -->
 	<select id="selectIlchonUp" resultType="ilchon" parameterType="ilchon">
 		select * from ilchon where ilchonIdx=#{ilchonIdx} and ilchonSession=#{ilchonSession}
 	</select>
 	
+	<!-- 일촌 리스트 조회 -->
 	<select id="selectIlchonList" resultType="ilchon" parameterType="ilchon">
 		select * from ilchon where ilchonUp=#{ilchonUp} and ilchonSession=#{ilchonSession}
 	</select>
@@ -71,7 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from Ilchonpyeong where ilIdx=#{ilIdx}
 	</select>
 	
-	<!-- 새 글 추가 -->
+	<!-- 새 일촌평 추가 -->
 	<insert id = "ilchon_write" parameterType="main">
 		insert into Ilchonpyeong values(
 			#{num},
@@ -89,12 +126,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="main_search_name" resultType="signup" parameterType="String">
 		select * from signup where name like '%'||#{searchValue}||'%'
 	</select>
+	
 	<!-- cyworld 가입자 - ID로 친구 검색 -->
+	<!-- 소셜 가입자 - email로 친구 검색 -->
 	<select id="main_search_id" resultType="signup" parameterType="String">
 		select * from signup where
 			(platform='cyworld' and userID like '%'||#{searchValue}||'%') or
 			(platform='naver' or platform='kakao' and email like '%'||#{searchValue}||'%')
 	</select>
+	
 	<!-- ////////// 검색 구역 끝 ////////// -->
 	
 </mapper>

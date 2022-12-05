@@ -10,11 +10,14 @@ import vo.GalleryCommentVO;
 import vo.GalleryLikeVO;
 
 public class GalleryDAO {
-	
-	SqlSession sqlSession; //Mapper접근
+	// SqlSession
+	SqlSession sqlSession;
+	// SI방식
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// 사진첩 전체목록 조회
 	public List<GalleryVO> selectList(int idx){

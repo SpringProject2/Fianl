@@ -9,6 +9,9 @@ public class SignUpVO {
 	private String mainTitle, mainPhoto, mainText;
 	// 파일을 받기위한 클래스
 	private MultipartFile mainPhotoFile; // 물리적 파일
+	// 조회수 기록을 위한 요소들
+	private int today, total;
+	private String toDate;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// getter / setter
 	public int getIdx() { // IDX
@@ -124,5 +127,23 @@ public class SignUpVO {
 	}
 	public void setIlchon(int ilchon) {
 		this.ilchon = ilchon;
+	}
+	public int getToday() {
+		return today;
+	}
+	public void setToday(int today) {
+		this.today = today;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public String getToDate() {
+		return toDate;
+	}
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
 	}
 }

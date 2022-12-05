@@ -2,7 +2,8 @@ package com.korea.cyworld;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -35,6 +36,7 @@ import vo.GalleryCommentVO;
 import vo.GalleryLikeVO;
 import vo.MainVO;
 import vo.SignUpVO;
+import vo.ViewsVO;
 
 @Controller
 public class SignUpController {
@@ -353,6 +355,15 @@ public class SignUpController {
 			SignUpVO sessionIdx = signUp_dao.selectOneIdCheck(id);
 			// 로그인 세션으로 idx 지정
 			session.setAttribute("login", sessionIdx.getIdx());
+			
+			// 접속 날짜를 기록하기 위해 Date객체 사용
+			Date date = new Date();
+			// Date객체를 그냥 사용하면 뒤에 시간까지 모두 기록되기에 날짜만 따로 뺴는 작업을 한다.
+			SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd");
+			// 위에서 구한 현재 날짜를 로그인한 유저의 접속 날짜에 입력
+			sessionIdx.setToDate(today.format(date));
+			// 로그인한 유저의 접속 날짜를 갱신
+			signUp_dao.updateTodayDate(sessionIdx);
 		}
 		// 콜백메소드에 JSON형태로 전달
 		return "{'result':'clear'}";
@@ -373,6 +384,11 @@ public class SignUpController {
 			return result;
 		// 조회한 값이 없을 경우 - 비가입자
 		} else {
+			// 먼저 접속 날짜에 가입 날짜를 기록하기 위해 Date객체 사용
+			Date date = new Date();
+			// Date객체를 그냥 사용하면 뒤에 시간까지 모두 기록되기에 날짜만 따로 뺴는 작업을 한다.
+			SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd");
+			
 			// cyworld로 회원가입자가 들어올때
 			if ( vo.getPlatform().equals("cyworld") ) {
 				// 추가 정보들을 임의로 지정
@@ -382,9 +398,12 @@ public class SignUpController {
 				vo.setMainPhoto("no_photo"); // 메인화면 사진 지정
 				vo.setMainText(vo.getName() + "님의 미니홈피에 오신걸 환영합니다!"); // 메인화면 소개글
 				vo.setIlchon(0); // 일촌수 지정
+				vo.setToday(0); // 일일 조회수
+				vo.setTotal(0); // 누적 조회수
+				vo.setToDate(today.format(date)); // 접속 날짜 ( 가입 날짜 )
 				// 가입 성공시 유저 정보 저장
 				signUp_dao.insertJoinSuccess(vo);
-				// 가입 유저 정보 저장 성공할 경우
+				// 저장 성공할 경우
 				result = "yes";
 				// 콜백메소드에 전달
 				return result;
@@ -399,9 +418,12 @@ public class SignUpController {
 				vo.setMainPhoto("no_photo"); // 메인화면 사진 지정
 				vo.setMainText(vo.getName() + "님의 미니홈피에 오신걸 환영합니다!"); // 메인화면 소개글
 				vo.setIlchon(0); // 일촌수 지정
+				vo.setToday(0); // 일일 조회수
+				vo.setTotal(0); // 누적 조회수
+				vo.setToDate(today.format(date)); // 접속 날짜 ( 가입 날짜 )
 				// 가입 성공시 유저 정보 저장
 				signUp_dao.insertJoinSuccess(vo);
-				// 가입 유저 정보 저장 성공할 경우
+				// 저장 성공할 경우
 				result = "yes";
 				// 콜백메소드에 전달
 				return result;
@@ -411,7 +433,7 @@ public class SignUpController {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 메인페이지로 이동
 	@RequestMapping("/main.do")
-	public String main(Integer idx, Model model) {
+	public String main(int idx, Model model) {
 		// 메인페이지에 들어오면 가장 먼저 세션값이 있는지 확인
 		HttpSession session = request.getSession();
 		if ( session.getAttribute("login") == null ) {
@@ -426,13 +448,121 @@ public class SignUpController {
 			return Common.P_PATH + "nmain.jsp";
 		}
 		
+		// 조회수 구역 시작 //
+		
+		// 먼저 접속 날짜를 기록하기 위해 Date객체 사용
+		Date date = new Date();
+		// Date객체를 그냥 사용하면 뒤에 시간까지 모두 기록되기에 날짜만 따로 뺴는 작업을 한다.
+		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd");
+		
+		// 그리고 앞으로 사용할 로그인한 유저의 idx와 해당 미니홈피의 idx와 접속 날짜를 편하게 사용하기 위해 Map으로 만들어 둔다.
+		HashMap<String, Object> todayMap = new HashMap<String, Object>();
+		todayMap.put("1", idx); // 로그인한 유저의 idx
+		todayMap.put("2", session.getAttribute("login")); // 해당 미니홈피 유저의 idx
+		todayMap.put("3", today.format(date)); // 접속 날짜
+		
+		// 세션값이 비회원이 아닐 경우 - 세션값이 비회원일 경우 조회수 증가 X
+		if ( (int)session.getAttribute("login") > 0 ) {
+			
+			// 세션값과 idx값이 다를 경우 - 타 유저 미니홈피 조회 - 조회수 증가 O
+			if ( ( (int)session.getAttribute("login") != idx ) ) {
+				
+				// 그 다음 로그인한 유저의 현재 날짜로 접속 기록이 있는지 조회
+				ViewsVO loginUser = main_dao.selectViewsToday(todayMap);
+				
+				// 그 다음 idx에 해당하는 미니홈피 유저정보를 조회
+				SignUpVO miniUser = signUp_dao.selectOneIdx(idx);
+				
+				// 로그인한 유저의 조회된 기록이 있을 경우
+				if ( loginUser != null ) {
+					
+					// 로그인한 유저의 조회된 기록중 접속 날짜가 현재 날짜와 다를 경우
+					if ( !loginUser.getTodayDate().equals(today.format(date)) ) {
+						
+						// 로그인한 유저의 해당 미니홈피 접속 날짜를 현재 날짜로 갱신
+						main_dao.updateViewsToday(todayMap);
+						
+						// 해당 미니홈피 유저의 조회된 기록중 접속 날짜가 현재 날짜랑 다를 경우
+						if ( !miniUser.getToDate().equals(today.format(date)) ) {
+							
+							// 해당 미니홈피 유저의 일일 조회수를 누적 조회수에 추가
+							miniUser.setTotal(miniUser.getTotal() + miniUser.getToday());
+							// 해당 미니홈피 유저의 일일 조회수를 0으로 초기화후 1 증가
+							miniUser.setToday(1);
+							// 수정된 값들로 해당 미니홈피 유저의 유저정보 갱신
+							main_dao.updateTotalCount(miniUser);
+							
+						// 해당 미니홈피 유저의 조회된 기록중 접속 날짜가 현재 날짜랑 같을 경우
+						} else {
+							
+							// 해당 미니홈피 유저의 일일 조회수 1 증가
+							miniUser.setToday(miniUser.getToday() + 1);
+							// 증가된 일일 조회수로 해당 미니홈피 유저정보 갱신
+							main_dao.updateTodayCount(miniUser);
+							
+						}
+						
+					// 로그인한 유저의 조회된 기록중 접속 날짜가 현재 날짜와 같을 경우
+					} else {
+						
+						// 조회수를 증가시키지 않고 통과
+						
+					}
+					
+				// 로그인한 유저의 조회된 기록이 없을 경우
+				} else {
+					
+					// 로그인한 유저의 해당 미니홈피 접속 기록을 추가
+					main_dao.insertViewsToday(todayMap);
+					
+					// 해당 미니홈피 유저의 조회된 기록중 접속 날짜가 현재 날짜랑 다를 경우
+					if ( !miniUser.getToDate().equals(today.format(date)) ) {
+						
+						// 해당 미니홈피 유저의 일일 조회수를 누적 조회수에 추가
+						miniUser.setTotal(miniUser.getTotal() + miniUser.getToday());
+						// 해당 미니홈피 유저의 일일 조회수를 0으로 초기화후 1 증가
+						miniUser.setToday(1);
+						// 수정된 값들로 해당 미니홈피 유저의 유저정보 갱신
+						main_dao.updateTotalCount(miniUser);
+						
+					// 해당 미니홈피 유저의 조회된 기록중 접속 날짜가 현재 날짜랑 같을 경우
+					} else {
+						
+						// 해당 미니홈피 유저의 일일 조회수 1 증가
+						miniUser.setToday(miniUser.getToday() + 1);
+						// 증가된 일일 조회수로 해당 미니홈피 유저정보 갱신
+						main_dao.updateTodayCount(miniUser);
+						
+					}
+					
+				}
+				
+			// 세션값과 idx값이 같을 경우 - 내 미니홈피 조회 - 조회수 증가 X
+			} else {
+				
+				// 내 미니홈피 접속 날짜 조회
+				SignUpVO svo = signUp_dao.selectOneIdx(session.getAttribute("login"));
+				
+				// 조회된 접속 날짜와 현재 날짜가 다를 경우
+				if ( !svo.getToDate().equals(today.format(date)) ) {
+					
+					// 내 미니홈피의 일일 조회수를 누적 조회수에 추가
+					svo.setTotal(svo.getTotal() + svo.getToday());
+					// 내 미니홈피의 일일 조회수를 0으로 초기화
+					svo.setToday(0);
+					// 수정된 값들로 내 미니홈피 정보 갱신
+					main_dao.updateTotalCount(svo);
+					
+				}
+				
+			}
+			
+		}
+		
+		// 조회수 구역 끝 //
+		
 		// 그 다음 idx로 유저정보 조회
 		SignUpVO idxVo = signUp_dao.selectOneIdx(idx);
-		// 회원정보가 없을때
-		if ( idxVo == null ) {
-			// 에러페이지로 이동
-			return Common.P_PATH + "xmain.jsp";
-		}
 		//회원정보가 있다면 바인딩
 		model.addAttribute("signVo", idxVo);
 		
@@ -441,31 +571,34 @@ public class SignUpController {
 		// 조회된 일촌평을 리스트 형태로 바인딩
 		model.addAttribute("list", list);
 		
-		// 그 다음 로그인한 유저의 유저정보 조회
-		SignUpVO sessionVo = signUp_dao.selectOneIdx(session.getAttribute("login"));
-		// 조회된 유저정보 바인딩
-		model.addAttribute("sessionUser", sessionVo);
-		
-		// 그 다음 일촌관계를 알아보기 위해 IlchonVO를 생성
-		IlchonVO ilchonVo = new IlchonVO();
-		
-		// 맞일촌 상태를 알리는 ilchonUp을 2로 지정
-		ilchonVo.setIlchonUp(2);
-		// 일촌 idx에 idx를 지정
-		ilchonVo.setIlchonSession(sessionVo.getIdx());
-		// 그 다음 idx에 해당하는 일촌 조회
-		List<IlchonVO> ilchonList = main_dao.selectIlchonList(ilchonVo);
-		// 조회된 맞일촌을 리스트 형태로 바인딩
-		model.addAttribute("ilchonList", ilchonList);
-		
-		// 일촌 idx에 해당 미니홈피의 유저 idx를 지정
-		ilchonVo.setIlchonIdx(idx);
-		// 일촌 session에 로그인한 유저 idx를 지정
-		ilchonVo.setIlchonSession(sessionVo.getIdx());
-		// 타 유저 미니홈피에 놀러갔을때 해당 미니홈피 유저와의 일촌관계를 알기위해 조회
-		IlchonVO ilchon = main_dao.selectIlchonUp(ilchonVo);
-		// 조회된 일촌관계 바인딩
-		model.addAttribute("ilchon", ilchon);
+		// 세션값이 비회원이 아닐 경우
+		if ( (int)session.getAttribute("login") > 0 ) {
+			// 그 다음 로그인한 유저의 유저정보 조회
+			SignUpVO sessionVo = signUp_dao.selectOneIdx(session.getAttribute("login"));
+			// 조회된 유저정보 바인딩
+			model.addAttribute("sessionUser", sessionVo);
+			
+			// 그 다음 일촌관계를 알아보기 위해 IlchonVO를 생성
+			IlchonVO ilchonVo = new IlchonVO();
+			
+			// 맞일촌 상태를 알리는 ilchonUp을 2로 지정
+			ilchonVo.setIlchonUp(2);
+			// 일촌 idx에 idx를 지정
+			ilchonVo.setIlchonSession(sessionVo.getIdx());
+			// 그 다음 idx에 해당하는 일촌 조회
+			List<IlchonVO> ilchonList = main_dao.selectIlchonList(ilchonVo);
+			// 조회된 맞일촌을 리스트 형태로 바인딩
+			model.addAttribute("ilchonList", ilchonList);
+			
+			// 일촌 idx에 해당 미니홈피의 유저 idx를 지정
+			ilchonVo.setIlchonIdx(idx);
+			// 일촌 session에 로그인한 유저 idx를 지정
+			ilchonVo.setIlchonSession(sessionVo.getIdx());
+			// 타 유저 미니홈피에 놀러갔을때 해당 미니홈피 유저와의 일촌관계를 알기위해 조회
+			IlchonVO ilchon = main_dao.selectIlchonUp(ilchonVo);
+			// 조회된 일촌관계 바인딩
+			model.addAttribute("ilchon", ilchon);
+		}
 		
 		// 메인페이지로 이동
 		return Common.P_PATH + "main.jsp";
@@ -489,14 +622,14 @@ public class SignUpController {
 	
 	// 검색 팝업 이동
 	@RequestMapping("/main_search_popup.do")
-	public String main_search_popup(Integer idx) {
+	public String main_search_popup() {
 		// 검색페이지로 이동
 		return Common.P_PATH + "searchPopUp.jsp";
 	}
 	
 	// 이름 및 ID 및 Email로 유저 검색
 	@RequestMapping("/main_search.do")
-	public String main_search(SignUpVO vo, String searchType, String searchValue, Model model) {
+	public String main_search(String searchType, String searchValue, Model model) {
 		// 이름으로 검색할 경우
 		if ( searchType.equals("name") ) {
 			// 검색한 이름으로 조회
@@ -812,12 +945,18 @@ public class SignUpController {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 프로필 조회
 	@RequestMapping("/profile.do")
-	public String profile(Integer idx, Model model) {
+	public String profile(int idx, Model model) {
 		// 프로필에 들어오면 가장 먼저 세션값이 있는지 확인
 		HttpSession session = request.getSession();
 		if ( session.getAttribute("login") == null ) {
 			// 세션값이 없다면 로그인페이지로 이동
 			return "redirect:login.do";
+		}
+		
+		// 로그인한 유저의 idx와 해당 미니홈피 유저의 idx가 다를경우 - 프로필은 오로지 미니홈피 주인만이 들어갈 수 있다.
+		if ( (int)session.getAttribute("login") != idx ) {
+			// 해당 미니홈피 유저의 메인페이지로 이동
+			return "redirect:main.do?idx=" + idx ;
 		}
 		
 		// 그 다음 idx에 해당하는 프로필 조회
@@ -975,6 +1114,168 @@ public class SignUpController {
 			// 콜백메소드에 전달
 			return result;
 		}
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 다이어리 조회
+	@RequestMapping("/diary.do")
+	public String list(Integer idx,Model model) {
+		// 다이어리에 들어오면 가장 먼저 세션값이 있는지 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 로그인페이지로 이동
+			return "redirect:login.do";
+		}
+		
+		// 그 다음 idx에 해당하는 다이어리의 모든 글을 조회
+		List<DiaryVO> list = diary_dao.selectList(idx);
+		// 조회된 모든 다이어리 글을 리스트 형태로 바인딩
+		model.addAttribute("list", list);
+		
+		// 그 다음 idx에 해당하는 유저정보를 조회
+		SignUpVO svo = signUp_dao.selectOneIdx(idx);
+		// 조회된 유저정보를 바인딩
+		model.addAttribute("signVo", svo);
+		// 추가로 세션값도 바인딩
+		model.addAttribute("sessionIdx", session.getAttribute("login"));
+		
+		// 다이어리페이지로 이동
+		return Common.DP_PATH + "diary_list.jsp";
+	}
+	
+	// 다이어리 글 작성페이지로 이동
+	@RequestMapping("/diary_insert_form.do")
+	public String insert_form() {
+		// 세션값이 있는지 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 로그인페이지로 이동
+			return "redirect:login.do";
+		}
+		
+		// 세션값이 있다면 작성페이지로 이동
+		return Common.DP_PATH + "diary_insert_form.jsp";
+	}
+
+	// 다이어리 새 글 작성
+	@RequestMapping("/diary_insert.do")
+	public String insert(DiaryVO vo) {
+		// 세션값이 있는지 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 로그인페이지로 이동
+			return "redirect:login.do";
+		}
+		
+		// 해당 idx의 다이어리에 작성된 글 갯수 조회
+		int countNum = diary_dao.selectCountNum(vo.getDiaryIdx());
+		
+		// 다이어리에 글이 한개도 없을경우
+		if ( countNum == 0 ) {
+			// 다이어리에 시작번호 1 부여
+			vo.setDiaryContentRef(1);
+			// 작성한 다이어리 글을 저장
+			diary_dao.insert(vo);
+			// idx를 들고 다이어리페이지 URL로 이동
+			return "redirect:diary.do?idx=" + vo.getDiaryIdx();
+		// 작성된 다이어리 글이 있을경우
+		} else {
+			// 가장 최근에 작성한 다이어리 글의 번호에 1 더하기
+			vo.setDiaryContentRef(countNum + 1);
+			// 작성한 다이어리 글을 저장
+			diary_dao.insert(vo);
+			// idx를 들고 다이어리페이지 URL로 이동
+			return "redirect:diary.do?idx=" + vo.getDiaryIdx();
+		}
+	}
+	
+	// 다이어리 글 삭제
+	@RequestMapping("/diary_delete.do")
+	@ResponseBody
+	public String delete(DiaryVO vo) {
+		// 세션값이 있는지 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 로그인페이지로 이동
+			return "redirect:login.do";
+		}
+		
+		// 삭제할 다이어리의 글에 idx와 ref를 글을 삭제후에도 계속 사용하기 위해 VO에서 따로 분리해서 변수에 각각 저장한다.
+		int idx = vo.getDiaryIdx(); // 삭제할 다이어리의 idx
+		int ref = vo.getDiaryContentRef(); // 삭제할 다이어리 글 번호
+		
+		// 그리고 idx와 ref를 사용하기 편하게 Map으로 만들어 놓는다.
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("1", idx); // 삭제할 다이어리의 idx 저장
+		map.put("2", ref); // 삭제할 다이어리의 글 번호 저장
+		
+		// DB에 저장된 다이어리 글중 가져온 정보에 해당하는 다이어리 글 삭제
+		int res = diary_dao.delete(vo);
+		
+		// 삭제 실패할 경우
+		String result = "no";
+		
+		if (res == 1) {
+			// 삭제 성공할 경우
+			result = "yes";
+			
+			// 다이어리 글 삭제 후 다이어리 글 번호 재정렬
+			// 다이어리 글 삭제 후 삭제한 다이어리 글 번호보다 큰 번호의 다이어리 글들 조회
+			List<DiaryVO> list = diary_dao.selectListDelete(map);
+			// forEach문
+			for ( DiaryVO uref : list ) {
+				// 조회된 다이어리 글 번호들을 1씩 감소
+				uref.setDiaryContentRef(uref.getDiaryContentRef() - 1);
+				// 1씩 감소된 번호들을 다시 갱신
+				diary_dao.updateRefMinus(uref);
+			}
+		}
+		// 콜백메소드에 전달
+		return result;
+	}
+	
+	// 다이어리 글 수정페이지로 이동
+	@RequestMapping("/diary_modify_form.do")
+	public String modify_form(Model model, DiaryVO vo) {
+		// 세션값이 있는지 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 로그인페이지로 이동
+			return "redirect:login.do";
+		}
+		
+		// 해당 idx의 다이어리에 수정할 글을 조회
+		DiaryVO updateVo = diary_dao.selectOne(vo);
+		if (updateVo != null) {
+			// 조회된 다이어리 글을 바인딩
+			model.addAttribute("vo", updateVo);
+		}
+		// 수정페이지로 이동
+		return Common.DP_PATH + "diary_modify_form.jsp";
+		
+	}
+	
+	// 다이어리 글 수정하기
+	@RequestMapping("/diary_modify.do")
+	@ResponseBody
+	public String modify(DiaryVO vo) {
+		// 세션값이 있는지 확인
+		HttpSession session = request.getSession();
+		if ( session.getAttribute("login") == null ) {
+			// 세션값이 없다면 로그인페이지로 이동
+			return "redirect:login.do";
+		}
+		
+		// 수정된 다이어리 글로 갱신
+		int res = diary_dao.update(vo);
+		
+		// 갱신 실패할 경우 - JSON형태
+		String result = "{'result':'no'}";
+		if (res != 0) {
+			// 갱신 성공할 경우 - JSON형태
+			result = "{'result':'yes'}";
+		}
+		// 콜백메소드에 전달
+		return result;
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 사진첩 조회
@@ -1445,6 +1746,119 @@ public class SignUpController {
 			return "redirect:login.do";
 		}
 		
+		// 조회수 구역 시작 //
+		
+		// 먼저 접속 날짜를 기록하기 위해 Date객체 사용
+		Date date = new Date();
+		// Date객체를 그냥 사용하면 뒤에 시간까지 모두 기록되기에 날짜만 따로 뺴는 작업을 한다.
+		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd");
+		
+		// 그리고 앞으로 사용할 로그인한 유저의 idx와 해당 미니홈피의 idx와 접속 날짜를 편하게 사용하기 위해 Map으로 만들어 둔다.
+		HashMap<String, Object> todayMap = new HashMap<String, Object>();
+		todayMap.put("1", idx); // 로그인한 유저의 idx
+		todayMap.put("2", session.getAttribute("login")); // 해당 미니홈피 유저의 idx
+		todayMap.put("3", today.format(date)); // 접속 날짜
+		
+		// 세션값이 비회원이 아닐 경우 - 세션값이 비회원일 경우 조회수 증가 X
+		if ( (int)session.getAttribute("login") > 0 ) {
+			
+			// 세션값과 idx값이 다를 경우 - 타 유저 미니홈피 조회 - 조회수 증가 O
+			if ( ( (int)session.getAttribute("login") != idx ) ) {
+				
+				// 그 다음 로그인한 유저의 현재 날짜로 접속 기록이 있는지 조회
+				ViewsVO loginUser = main_dao.selectViewsToday(todayMap);
+				
+				// 그 다음 idx에 해당하는 미니홈피 유저정보를 조회
+				SignUpVO miniUser = signUp_dao.selectOneIdx(idx);
+				
+				// 로그인한 유저의 조회된 기록이 있을 경우
+				if ( loginUser != null ) {
+					
+					// 로그인한 유저의 조회된 기록중 접속 날짜가 현재 날짜와 다를 경우
+					if ( !loginUser.getTodayDate().equals(today.format(date)) ) {
+						
+						// 로그인한 유저의 해당 미니홈피 접속 날짜를 현재 날짜로 갱신
+						main_dao.updateViewsToday(todayMap);
+						
+						// 해당 미니홈피 유저의 조회된 기록중 접속 날짜가 현재 날짜랑 다를 경우
+						if ( !miniUser.getToDate().equals(today.format(date)) ) {
+							
+							// 해당 미니홈피 유저의 일일 조회수를 누적 조회수에 추가
+							miniUser.setTotal(miniUser.getTotal() + miniUser.getToday());
+							// 해당 미니홈피 유저의 일일 조회수를 0으로 초기화후 1 증가
+							miniUser.setToday(1);
+							// 수정된 값들로 해당 미니홈피 유저의 유저정보 갱신
+							main_dao.updateTotalCount(miniUser);
+							
+						// 해당 미니홈피 유저의 조회된 기록중 접속 날짜가 현재 날짜랑 같을 경우
+						} else {
+							
+							// 해당 미니홈피 유저의 일일 조회수 1 증가
+							miniUser.setToday(miniUser.getToday() + 1);
+							// 증가된 일일 조회수로 해당 미니홈피 유저정보 갱신
+							main_dao.updateTodayCount(miniUser);
+							
+						}
+						
+					// 로그인한 유저의 조회된 기록중 접속 날짜가 현재 날짜와 같을 경우
+					} else {
+						
+						// 조회수를 증가시키지 않고 통과
+						
+					}
+					
+				// 로그인한 유저의 조회된 기록이 없을 경우
+				} else {
+					
+					// 로그인한 유저의 해당 미니홈피 접속 기록을 추가
+					main_dao.insertViewsToday(todayMap);
+					
+					// 해당 미니홈피 유저의 조회된 기록중 접속 날짜가 현재 날짜랑 다를 경우
+					if ( !miniUser.getToDate().equals(today.format(date)) ) {
+						
+						// 해당 미니홈피 유저의 일일 조회수를 누적 조회수에 추가
+						miniUser.setTotal(miniUser.getTotal() + miniUser.getToday());
+						// 해당 미니홈피 유저의 일일 조회수를 0으로 초기화후 1 증가
+						miniUser.setToday(1);
+						// 수정된 값들로 해당 미니홈피 유저의 유저정보 갱신
+						main_dao.updateTotalCount(miniUser);
+						
+					// 해당 미니홈피 유저의 조회된 기록중 접속 날짜가 현재 날짜랑 같을 경우
+					} else {
+						
+						// 해당 미니홈피 유저의 일일 조회수 1 증가
+						miniUser.setToday(miniUser.getToday() + 1);
+						// 증가된 일일 조회수로 해당 미니홈피 유저정보 갱신
+						main_dao.updateTodayCount(miniUser);
+						
+					}
+					
+				}
+				
+			// 세션값과 idx값이 같을 경우 - 내 미니홈피 조회 - 조회수 증가 X
+			} else {
+				
+				// 내 미니홈피 접속 날짜 조회
+				SignUpVO svo = signUp_dao.selectOneIdx(session.getAttribute("login"));
+				
+				// 조회된 접속 날짜와 현재 날짜가 다를 경우
+				if ( !svo.getToDate().equals(today.format(date)) ) {
+					
+					// 내 미니홈피의 일일 조회수를 누적 조회수에 추가
+					svo.setTotal(svo.getTotal() + svo.getToday());
+					// 내 미니홈피의 일일 조회수를 0으로 초기화
+					svo.setToday(0);
+					// 수정된 값들로 내 미니홈피 정보 갱신
+					main_dao.updateTotalCount(svo);
+					
+				}
+				
+			}
+			
+		}
+		
+		// 조회수 구역 끝 //
+		
 		// 그 다음 idx에 해당하는 방명록의 모든 방문글을 조회
 		List<GuestBookVO> list = guestbook_dao.selectList(idx);
 		// 조회된 모든 방문글을 리스트 형태로 바인딩
@@ -1710,167 +2124,5 @@ public class SignUpController {
 			// 콜백메소드에 전달
 			return "yes";
 		}
-	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 다이어리 조회
-	@RequestMapping("/diary.do")
-	public String list(Integer idx,Model model) {
-		// 다이어리에 들어오면 가장 먼저 세션값이 있는지 확인
-		HttpSession session = request.getSession();
-		if ( session.getAttribute("login") == null ) {
-			// 세션값이 없다면 로그인페이지로 이동
-			return "redirect:login.do";
-		}
-		
-		// 그 다음 idx에 해당하는 다이어리의 모든 글을 조회
-		List<DiaryVO> list = diary_dao.selectList(idx);
-		// 조회된 모든 다이어리 글을 리스트 형태로 바인딩
-		model.addAttribute("list", list);
-		
-		// 그 다음 idx에 해당하는 유저정보를 조회
-		SignUpVO svo = signUp_dao.selectOneIdx(idx);
-		// 조회된 유저정보를 바인딩
-		model.addAttribute("signVo", svo);
-		// 추가로 세션값도 바인딩
-		model.addAttribute("sessionIdx", session.getAttribute("login"));
-		
-		// 다이어리페이지로 이동
-		return Common.DP_PATH + "diary_list.jsp";
-	}
-	
-	// 다이어리 글 작성페이지로 이동
-	@RequestMapping("/diary_insert_form.do")
-	public String insert_form() {
-		// 세션값이 있는지 확인
-		HttpSession session = request.getSession();
-		if ( session.getAttribute("login") == null ) {
-			// 세션값이 없다면 로그인페이지로 이동
-			return "redirect:login.do";
-		}
-		
-		// 세션값이 있다면 작성페이지로 이동
-		return Common.DP_PATH + "diary_insert_form.jsp";
-	}
-
-	// 다이어리 새 글 작성
-	@RequestMapping("/diary_insert.do")
-	public String insert(DiaryVO vo) {
-		// 세션값이 있는지 확인
-		HttpSession session = request.getSession();
-		if ( session.getAttribute("login") == null ) {
-			// 세션값이 없다면 로그인페이지로 이동
-			return "redirect:login.do";
-		}
-		
-		// 해당 idx의 다이어리에 작성된 글 갯수 조회
-		int countNum = diary_dao.selectCountNum(vo.getDiaryIdx());
-		
-		// 다이어리에 글이 한개도 없을경우
-		if ( countNum == 0 ) {
-			// 다이어리에 시작번호 1 부여
-			vo.setDiaryContentRef(1);
-			// 작성한 다이어리 글을 저장
-			diary_dao.insert(vo);
-			// idx를 들고 다이어리페이지 URL로 이동
-			return "redirect:diary.do?idx=" + vo.getDiaryIdx();
-		// 작성된 다이어리 글이 있을경우
-		} else {
-			// 가장 최근에 작성한 다이어리 글의 번호에 1 더하기
-			vo.setDiaryContentRef(countNum + 1);
-			// 작성한 다이어리 글을 저장
-			diary_dao.insert(vo);
-			// idx를 들고 다이어리페이지 URL로 이동
-			return "redirect:diary.do?idx=" + vo.getDiaryIdx();
-		}
-	}
-	
-	// 다이어리 글 삭제
-	@RequestMapping("/diary_delete.do")
-	@ResponseBody
-	public String delete(DiaryVO vo) {
-		// 세션값이 있는지 확인
-		HttpSession session = request.getSession();
-		if ( session.getAttribute("login") == null ) {
-			// 세션값이 없다면 로그인페이지로 이동
-			return "redirect:login.do";
-		}
-		
-		// 삭제할 다이어리의 글에 idx와 ref를 글을 삭제후에도 계속 사용하기 위해 VO에서 따로 분리해서 변수에 각각 저장한다.
-		int idx = vo.getDiaryIdx(); // 삭제할 다이어리의 idx
-		int ref = vo.getDiaryContentRef(); // 삭제할 다이어리 글 번호
-		
-		// 그리고 idx와 ref를 사용하기 편하게 Map으로 만들어 놓는다.
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("1", idx); // 삭제할 다이어리의 idx 저장
-		map.put("2", ref); // 삭제할 다이어리의 글 번호 저장
-		
-		// DB에 저장된 다이어리 글중 가져온 정보에 해당하는 다이어리 글 삭제
-		int res = diary_dao.delete(vo);
-		
-		// 삭제 실패할 경우
-		String result = "no";
-		
-		if (res == 1) {
-			// 삭제 성공할 경우
-			result = "yes";
-			
-			// 다이어리 글 삭제 후 다이어리 글 번호 재정렬
-			// 다이어리 글 삭제 후 삭제한 다이어리 글 번호보다 큰 번호의 다이어리 글들 조회
-			List<DiaryVO> list = diary_dao.selectListDelete(map);
-			// forEach문
-			for ( DiaryVO uref : list ) {
-				// 조회된 다이어리 글 번호들을 1씩 감소
-				uref.setDiaryContentRef(uref.getDiaryContentRef() - 1);
-				// 1씩 감소된 번호들을 다시 갱신
-				diary_dao.updateRefMinus(uref);
-			}
-		}
-		// 콜백메소드에 전달
-		return result;
-	}
-	
-	// 다이어리 글 수정페이지로 이동
-	@RequestMapping("/diary_modify_form.do")
-	public String modify_form(Model model, DiaryVO vo) {
-		// 세션값이 있는지 확인
-		HttpSession session = request.getSession();
-		if ( session.getAttribute("login") == null ) {
-			// 세션값이 없다면 로그인페이지로 이동
-			return "redirect:login.do";
-		}
-		
-		// 해당 idx의 다이어리에 수정할 글을 조회
-		DiaryVO updateVo = diary_dao.selectOne(vo);
-		if (updateVo != null) {
-			// 조회된 다이어리 글을 바인딩
-			model.addAttribute("vo", updateVo);
-		}
-		// 수정페이지로 이동
-		return Common.DP_PATH + "diary_modify_form.jsp";
-		
-	}
-	
-	// 다이어리 글 수정하기
-	@RequestMapping("/diary_modify.do")
-	@ResponseBody
-	public String modify(DiaryVO vo) {
-		// 세션값이 있는지 확인
-		HttpSession session = request.getSession();
-		if ( session.getAttribute("login") == null ) {
-			// 세션값이 없다면 로그인페이지로 이동
-			return "redirect:login.do";
-		}
-		
-		// 수정된 다이어리 글로 갱신
-		int res = diary_dao.update(vo);
-		
-		// 갱신 실패할 경우 - JSON형태
-		String result = "{'result':'no'}";
-		if (res != 0) {
-			// 갱신 성공할 경우 - JSON형태
-			result = "{'result':'yes'}";
-		}
-		// 콜백메소드에 전달
-		return result;
 	}
 }

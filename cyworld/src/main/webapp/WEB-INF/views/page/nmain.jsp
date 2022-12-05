@@ -44,7 +44,6 @@
                             <div class="right-gray-background">
                                 <form name="sf" method="GET">
 									<input id="btn-cover" class="search" type="button" value="회원 검색" onclick="searchPopUp();"></input>
-									<input type="hidden" name="idx" value="${ signVo.idx }">	
 								</form>
                                 <aside class="right-aside">
                                <pre>
@@ -81,11 +80,11 @@
 	<script>
 		//window.open (검색 결과창)
 		function searchPopUp() {
-			let popUrl = "main_search_popup.do";
+			//let popUrl = "main_search_popup.do";
 			let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
-			window.open(popUrl, "search", popOption);
+			window.open("", "search", popOption);
 			document.sf.action = "main_search_popup.do";
-		    document.sf.target="search";s
+		    document.sf.target="search";
 		    document.sf.submit();
 		}
 	</script>

@@ -16,7 +16,7 @@
         <section class="left-section">
                 <div class="left-dashed-line">
                     <div class="left-gray-background">
-                        <p class="todayBanner"><span>Today</span> <span class="todayHere">156</span><span>&nbsp;｜ Total</span> 45,405</p>
+                        <p class="todayBanner"><span>Today</span> <span class="todayHere">${ signVo.today }</span><span>&nbsp;｜ Total</span> ${ signVo.total }</p>
                         <aside class="left-aside">
                             <div class="item item1"></div>
                             <div class="item item1"></div>

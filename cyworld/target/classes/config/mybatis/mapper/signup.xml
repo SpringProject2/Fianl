@@ -38,7 +38,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{mainTitle},
 			#{mainPhoto},
 			#{mainText},
-			#{ilchon}
+			#{ilchon},
+			#{today},
+			#{total},
+			#{toDate}
 		)
 	</insert>
 	
@@ -62,6 +65,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from signup where idx=#{idx}
 	</select>
 	
+	<!-- 로그인시 접속 날짜 기록 -->
+	<update id="updateTodayDate" parameterType="signup">
+		update signup set toDate=#{toDate} where idx=#{idx}
+	</update>
+	
 	<!-- ////////// 도토리 구역 시작 ////////// -->
 	
 	<!-- 도토리 구매 -->
@@ -78,11 +86,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from signup where idx=#{idx}
 	</select>
 	
-	<!--  -->
+	<!-- 프로필 미니미 변경 -->
 	<update id="profile_minimi" parameterType="signup">
 		update signup set minimi=#{minimi} where idx=#{idx}
 	</update>
 	
+	<!-- 프로필 좌측 - 메인 사진 및 메인 소개글 수정 -->
 	<update id="profile_modify_main" parameterType="signup">
 		update signup set
 			mainPhoto=#{mainPhoto},
@@ -90,6 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where idx=#{idx}
 	</update>
 	
+	<!-- 프로필 우측 (cyworld 가입자) - 메인 타이틀 및 비밀번호 수정 -->
 	<update id="profile_modify_userdata" parameterType="signup">
 		update signup set
 			info=#{info},
@@ -97,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where idx=#{idx}
 	</update>
 	
+	<!-- 프로필 우측 (소셜 가입자) - 비밀번호 없이 메인 타이틀만 수정 -->
 	<update id="profile_modify_social_userdata" parameterType="signup">
 		update signup set
 			mainTitle=#{mainTitle}

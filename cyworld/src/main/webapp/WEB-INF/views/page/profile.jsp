@@ -16,7 +16,7 @@
                 <section class="left-section">
                         <div class="left-dashed-line">
                             <div class="left-gray-background">
-                                <p class="todayBanner"><span>Today</span> <span class="todayHere">156</span><span>&nbsp;｜ Total</span> 45,405</p>
+                                <p class="todayBanner"><span>Today</span> <span class="todayHere">${ signVo.today }</span><span>&nbsp;｜ Total</span> ${ signVo.total }</p>
                                 <aside class="left-aside">
                                     <div class="item item1"></div>
                                     <div class="item item1"></div>
@@ -97,7 +97,7 @@
                                   <input class="minimi-main" type="button" src="/cyworld/resources/minimi/${ signVo.minimi }" onclick="minimiPopUp();">
 									<input name="idx" type="hidden" value="${ signVo.idx }">
 									<input name="platform" type="hidden" value="${ signVo.platform }">
-									<!-- 싸이월드 가입자만 보이는 추가 항목들 -->
+									<!-- 싸이월드 가입자가 보이는 추가 항목들 -->
 									<c:if test="${ signVo.platform eq 'cyworld' }">
                                     	<p>ID : <input type="text" value="${ signVo.userID }" readonly></p>
                                     	<p>현재 PW : <input name="info" type="text" value="${ signVo.info }" readonly></p>
@@ -106,7 +106,12 @@
                                     	<p>PW 확인 : <input id="pw2" type="password" oninput="pw2Check();"></p>
                                     	<div class="pwText pT2"></div>
                                     </c:if>
-                                    <!-- 소셜가입자가 보이는 항목들 -->
+                                    <!-- 소셜가입자가 보이는 추가 항목들 -->
+                                    <c:if test="${ signVo.platform ne 'cyworld' }">
+                                    	<p>ID : <input type="text" value="소셜 로그인 이용중" readonly></p>
+                                    	<p>PW : <input name="info" type="text" value="소셜 로그인 이용중" readonly></p>
+                                    </c:if>
+                                    <!-- 공통으로 보이는 항목들 -->
                                     <p>이름 : <input type="text" value="${ signVo.name }" readonly></p>
                                     <p>주민번호 : <input type="text" value="${ signVo.identityNum }" readonly></p>
                                     <c:if test="${ signVo.gender eq 'M' || signVo.gender eq 'male' }">

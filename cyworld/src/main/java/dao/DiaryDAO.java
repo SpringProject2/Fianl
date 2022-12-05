@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 
 
 import vo.DiaryVO;
-import vo.GuestBookVO;
 
 public class DiaryDAO{
 	

@@ -8,16 +8,50 @@ import org.apache.ibatis.session.SqlSession;
 import vo.IlchonVO;
 import vo.MainVO;
 import vo.SignUpVO;
+import vo.ViewsVO;
 
 public class MainDAO {
-
+	// SqlSession
 	SqlSession sqlSession;
-	
+	// CI방식
 	public MainDAO(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	
+	/////////////// 조회수 구역 ///////////////
+	
+	// 현재 날짜로 로그인한 유저가 해당 미니홈피에 접속한 기록 조회
+	public ViewsVO selectViewsToday(HashMap<String, Object> map) {
+		ViewsVO vo = sqlSession.selectOne("m.selectViewsToday", map);
+		return vo;
+	}
+	
+	// 검색결과가 없을경우 첫방문 저장
+	public int insertViewsToday(HashMap<String, Object> map) {
+		int res = sqlSession.insert("m.insertViewsToday", map);
+		return res;
+	}
+	
+	// 검색결과가 있을경우 날짜비교후 날짜가 다르면 해당 날짜에 현재 날짜 갱신
+	public int updateViewsToday(HashMap<String, Object> map) {
+		int res = sqlSession.update("m.updateViewsToday", map);
+		return res;
+	}
+	
+	// 일일 조회수 증가
+	public int updateTodayCount(SignUpVO vo) {
+		int res = sqlSession.update("m.updateTodayCount", vo);
+		return res;
+	}
+	
+	// 날짜 바뀌어 총합 조회수 증가 및 일일 조회수 초기화
+	public int updateTotalCount(SignUpVO vo) {
+		int res = sqlSession.update("m.updateTotalCount", vo);
+		return res;
+	}
+	
 	/////////////// 일촌평 구역 ///////////////
 	
 	// 일촌평 전체목록 조회
@@ -53,7 +87,7 @@ public class MainDAO {
 	
 	/////////////// 일촌 구역 ///////////////
 	
-	// 일촌 조회
+	// 일촌 이중 조회
 	public int selectIlchonSearch(HashMap<String, Object> ilchonMap) {
 		int res = sqlSession.selectOne("m.selectIlchonSearch", ilchonMap);
 		return res;
