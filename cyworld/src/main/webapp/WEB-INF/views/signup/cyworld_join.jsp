@@ -80,6 +80,7 @@
 				if ( json.result == "no" ) {
 					alert("아이디 사용가능");
 					doubleId.value = "1";
+					document.getElementById("userID").readOnly = true;
 					return;
 				}
 				

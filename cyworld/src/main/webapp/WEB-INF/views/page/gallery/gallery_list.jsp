@@ -364,33 +364,5 @@
          }
    }
    </script>
-
-	<script>
-    // 사진첩 목록 배경색 랜덤
-    const colors = ['#83BEF4', '#42D3FB', '#00E6E9',  '#5BF3C3', '#AAFA94', '#F9F871', '#EFA2C2', '#FFAFC8','#B495FF','#E4F7D2','#FDD785','#DFF980','#F9AA80'];
-
-    const LENGTH = colors.length;
-
-    // setInterval(callback, delay); 지연시간동안 callback을 호출   
-    const timer = setInterval(randomColor,3000);
-
-    function randomColor(){
-        let num1 = Math.floor(Math.random()*LENGTH);
-        let num2 = Math.floor(Math.random()*LENGTH);
-        let num3 = Math.floor(Math.random()*LENGTH);
-        let num4 = Math.floor(Math.random()*LENGTH);
-        let num5 = Math.floor(Math.random()*LENGTH);
-        //document.body.style.backgroundColor = colors[num];
-        document.getElementById('writing').style.background  = "linear-gradient(45deg,"+colors[num1]+"," + colors[num2]+"," + colors[num3] + ","+ colors[num4] + "," + colors[num5] + ")";
-    }
-
-	randomColor();
-	//맨 처음부터 배경색 지정
-	</script>
-
-
-
-    
-
 </body>
 </html>

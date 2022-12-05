@@ -953,7 +953,7 @@ public class SignUpController {
 			return "redirect:login.do";
 		}
 		
-		// 로그인한 유저의 idx와 해당 미니홈피 유저의 idx가 다를경우 - 프로필은 오로지 미니홈피 주인만이 들어갈 수 있다.
+		// 로그인한 유저의 idx와 해당 미니홈피 유저의 idx가 다를경우 - 프로필은 오로지 미니홈피 주인만 들어갈 수 있다.
 		if ( (int)session.getAttribute("login") != idx ) {
 			// 해당 미니홈피 유저의 메인페이지로 이동
 			return "redirect:main.do?idx=" + idx ;

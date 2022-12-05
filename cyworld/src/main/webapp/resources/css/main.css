@@ -105,7 +105,8 @@ body {
 	top: 20px;
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.356);
 	z-index: 1;
-	overflow: auto;
+	overflow-x:hidden;
+	overflow-y: auto;
 }
 
 .left-aside>.item {
@@ -247,26 +248,25 @@ opacity:0; z-index:10; font-size:20px; line-height:40px; border: 3px solid black
 
 /* right content */
 .returnMyHome { position:absolute; top:5px; left:1560px; width:120px; height:30px;}
-
 .cy_logout {
-   position: absolute;
-   left: 1700px;
-   top: 5px;
-   width: 100px;
-   height: 30px;
-   font-size: 18px;
+	position: absolute;
+	left: 1700px;
+	top: 5px;
+	width: 100px;
+	height: 30px;
+	font-size: 18px;
 }
 
 .na_logout {
-   position: absolute;
-   left: 1700px;
-   top: 5px;
+	position: absolute;
+	left: 1700px;
+	top: 5px;
 }
 
 .ka_logout {
-   position: absolute;
-   left: 1700px;
-   top: 5px;
+	position: absolute;
+	left: 1700px;
+	top: 5px;
 }
 
 .title {
@@ -275,7 +275,7 @@ opacity:0; z-index:10; font-size:20px; line-height:40px; border: 3px solid black
 	top: 27px;
 	font-size: 24px;
 	font-weight: bold;
-	color: skyblue;
+	color: black;
 }
 /* .titleLink { position: relative; left: 930px; top:3px; 
    font-size: 18px; font-weight: bold;} */
@@ -343,7 +343,43 @@ opacity:0; z-index:10; font-size:20px; line-height:40px; border: 3px solid black
 	left: 94px;
 	z-index:5px;	
 }
+/* banner */
+.right-banner { width:120px; height:480px; 
+position: absolute; top:50px; left:1322px; border-radius: 20px;
+    border: 3px solid black; text-align: center;
+}
+.right-banner > .title { font-size: 23px; 
+margin-top: -10px; margin-left:-160px; color:black; font-weight: bold;}
 
+.img { width:95px; height: 95px; border: 2px solid black; margin-bottom: 30px;
+ margin-left: 10px; margin-top: 35px; border-radius: 20px; 
+ background-color:white;
+ }
+ .container:hover .right-banner { animation: banner-ani 1s forwards; }
+    
+    @keyframes banner-ani {
+   0% { transform: translateX(0); }
+   100% { transform: translateX(-300px); }
+}
+ @keyframes blink-effect {
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink-effect 1s step-end infinite;
+  color: #f33a3adb;
+    font-weight: bold;
+    position: absolute;  
+    margin-left: 15px;
+    -webkit-transform: rotate(-30deg);
+    -moz-transform: rotate(-30deg);
+    font-size: 18px;
+}
+.blink1 { position: absolute; top:96px;}
+.blink2 { position: absolute; top:230px;}
+.blink3 { position: absolute; top:363px;}
 .Ilchonpyeong {
 	position: absolute;
 	width: 932px;
@@ -572,6 +608,7 @@ input::placeholder {
 	 border-radius: 50%;
 	 position: absolute;
 	 top: -5vh;
+	 z-index: 100;
 }
  @keyframes snowfall {
 	 0% {

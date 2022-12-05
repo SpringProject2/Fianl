@@ -34,13 +34,11 @@
                                     	<input id="btn-cover" class="saveLeftMain" type="button" value="좌측 프로필 수정" onclick="modify_main(this.form)">
                                     </form>
                                     <div class="history"><img src="resources/images/arrow.png" alt=""><h3>History</h3></div>
-                                    <select class="myFriend">
-                                        <option value="">::: 파도타기 :::</option>
-                                            <option><a href="#">이정현 ｜  친구</a></option>
-                                            <option><a href="#">박성철 ｜  친구</a></option>
-                                            <option><a href="#">장유진 ｜  친구</a></option>
-                                            <option><a href="#">황유진 ｜  친구</a></option>
-                                            <option><a href="#">장현중 ｜  친구</a></option>
+                                    <select class="myFriend" onchange="if(this.value) location.href=(this.value);">
+										<option value="">::: 파도타기 :::</option>
+										<c:forEach var="ilchonList" items="${ ilchonList }">
+											<option value="main.do?idx=${ ilchonList.ilchonIdx }">ㆍ ${ ilchonList.ilchonName }</option>
+										</c:forEach>
                                     </select>
                                 </aside>
                             </div>
@@ -55,23 +53,22 @@
                                 <!-- <p class="titleLink"><a href="#">http://www.zenghyun.com</a></p> -->
                                 <aside id="right-aside"
                                 class="scrollBar">
-                                    <div class="miniRoomBox"><p>Mini Room</p>
-                                   <div class="miniRoom"><img class="miniRoomImg" src="resources/images/MainroomGif.gif" alt="">
-                                    <div class="hover">
-                                        <div class="show">
-                                             <img src="resources/images/sorryForShow.gif" alt="">
-                                        <p class="sorryText">
-                                            아직 개발중에 있습니다. <span>※개발진 일동</span>
-                                        </p>
-                                        </div>
-                                    </div>
-                                    <div class="Crayon"><img src="resources/images/Crayon.png" alt=""></div></div>
-    								<div class="zzang1"><img src="resources/images/zzang.gif" alt=""></div>
-                     <div class="zzang2"><img src="resources/images/zzang2.gif" alt=""></div>
-                     <div class="zzang3"><img src="resources/images/zzang3.gif" alt=""></div>
-                     <div class="Crayonz"><img class="friends" src="resources/images/Crayonz.gif" alt=""></div>
-                     <div class="CrayonDog"><img src="resources/images/CrayonDog.gif" alt=""></div>	                            
-	                                </div>
+									<div class="miniRoomBox"><p>Mini Room</p>
+										<div class="miniRoom"><img class="miniRoomImg" src="resources/images/MainroomGif.gif" alt="">
+											<div class="hover">
+												<div class="show">
+													<img src="resources/images/sorryForShow.gif" alt="">
+													<p class="sorryText">아직 개발중에 있습니다. <span>※개발진 일동</span></p>
+												</div>
+											</div>
+											<div class="Crayon"><img src="resources/images/Crayon.png" alt=""></div>
+										</div>
+    									<div class="zzang1"><img src="resources/images/zzang.gif" alt=""></div>
+                     					<div class="zzang2"><img src="resources/images/zzang2.gif" alt=""></div>
+                     					<div class="zzang3"><img src="resources/images/zzang3.gif" alt=""></div>
+                     					<div class="Crayonz"><img class="friends" src="resources/images/Crayonz.gif" alt=""></div>
+                     					<div class="CrayonDog"><img src="resources/images/CrayonDog.gif" alt=""></div>	                            
+									</div>
                                 <!-- 미니미 수정 form -->
                                 <form action="">
                                 <input class="check_btn" id="btn-cover" type="button" value="미니미수정" onclick="toggle();"></input>

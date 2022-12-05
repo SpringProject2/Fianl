@@ -2,235 +2,236 @@
    /* https://projects.verou.me/css3patterns/#blueprint-grid
            배경 격자무늬 생성  */
   body {
-	height: 100vh;
-	background-color: rgb(103, 106, 109);
-	background-image: linear-gradient(rgba(255, 255, 255, .3) 3px,
-		transparent 3px), linear-gradient(90deg, rgba(255, 255, 255, .3) 3px,
-		transparent 3px), linear-gradient(rgba(255, 255, 255, .3) 3px,
-		transparent 3px), linear-gradient(90deg, rgba(255, 255, 255, .3) 3px,
-		transparent 3px);
-	background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-	background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
-	overflow: hidden;
+   height: 100vh;
+   background-color: rgb(103, 106, 109);
+   background-image: linear-gradient(rgba(255, 255, 255, .3) 3px,
+      transparent 3px), linear-gradient(90deg, rgba(255, 255, 255, .3) 3px,
+      transparent 3px), linear-gradient(rgba(255, 255, 255, .3) 3px,
+      transparent 3px), linear-gradient(90deg, rgba(255, 255, 255, .3) 3px,
+      transparent 3px);
+   background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+   background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+   overflow: hidden;
 }
 /* position */
 .container {
-	padding-top: 10px;
-	height: 860px;
-	width: 1800px;
-	margin: auto;
-	border-radius: 100px;
-	display: flex;
-	position: relative;
-	top:30px;
+   padding-top: 10px;
+   height: 860px;
+   width: 1800px;
+   margin: auto;
+   border-radius: 100px;
+   display: flex;
+   position: relative;
+   top:30px;
 }
 
 .left-section {
-	width: 30%;
-	background-color: rgb(158, 218, 241);
-	border-radius: 80px;
+   width: 30%;
+   background-color: rgb(158, 218, 241);
+   border-radius: 80px;
 }
 
 .right-section {
-	width: 70%;
-	background-color: rgb(158, 218, 241);
-	border-radius: 80px;
-	position: relative;
+   width: 70%;
+   background-color: rgb(158, 218, 241);
+   border-radius: 80px;
+   position: relative;
 }
 
 .left-dashed-line {
-	width: 98%;
-	height: 800px;
-	border-radius: 50px;
-	margin: 30px;
-	border: 3px dashed white;
-	position: relative;
-	left: -20px;
-	border-right: none;
+   width: 98%;
+   height: 800px;
+   border-radius: 50px;
+   margin: 30px;
+   border: 3px dashed white;
+   position: relative;
+   left: -20px;
+   border-right: none;
 }
 
 .right-dashed-line {
-	width: 99%;
-	height: 800px;
-	border-radius: 50px;
-	margin: 30px;
-	border: 3px dashed white;
-	position: relative;
-	right: 32px;
-	border-left: none;
+   width: 99%;
+   height: 800px;
+   border-radius: 50px;
+   margin: 30px;
+   border: 3px dashed white;
+   position: relative;
+   right: 32px;
+   border-left: none;
 }
 
 .left-gray-background {
-	width: 98%;
-	height: 780px;
-	background-color: rgb(235, 232, 232);
-	border-radius: 50px;
-	margin: 10px;
-	position: relative;
-	left: 5px;
+   width: 98%;
+   height: 780px;
+   background-color: rgb(235, 232, 232);
+   border-radius: 50px;
+   margin: 10px;
+   position: relative;
+   left: 5px;
 }
 
 .right-gray-background {
-	width: 99%;
-	height: 780px;
-	background-color: rgb(235, 232, 232);
-	border-radius: 50px;
-	margin: 10px;
-	position: relative;
-	right: 13px;
+   width: 99%;
+   height: 780px;
+   background-color: rgb(235, 232, 232);
+   border-radius: 50px;
+   margin: 10px;
+   position: relative;
+   right: 13px;
 }
 
 .left-aside {
-	width: 90%;
-	background-color: white;
-	height: 690px;
-	border-radius: 30px;
-	margin: 10px;
-	position: relative;
-	left: 10px;
-	top: 25px;
-	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.356);
+   width: 90%;
+   background-color: white;
+   height: 690px;
+   border-radius: 30px;
+   margin: 10px;
+   position: relative;
+   left: 10px;
+   top: 25px;
+   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.356);
 }
 
 .right-aside {
-	width: 94%;
-	background-color: white;
-	height: 690px;
-	border-radius: 30px;
-	margin: 10px;
-	position: relative;
-	right: -25px;
-	top: 20px;
-	box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.356);
-	z-index: 1;
-	overflow: auto;
+   width: 94%;
+   background-color: white;
+   height: 690px;
+   border-radius: 30px;
+   margin: 10px;
+   position: relative;
+   right: -25px;
+   top: 20px;
+   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.356);
+   z-index: 1;
+   overflow: auto;
 }
 
 .left-aside>.item {
-	width: 100px;
-	height: 25px;
-	background: linear-gradient(120deg, rgb(192, 192, 192) 5%, white);
-	border-radius: 50px;
-	position: relative;
-	margin-bottom: 80px;
-	left: 443px;
-	top: 90px;
-	z-index: 1;
-	border: 1px solid rgba(0, 0, 0, 0.178);
-	box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.356);
-	z-index: 2;
+   width: 100px;
+   height: 25px;
+   background: linear-gradient(120deg, rgb(192, 192, 192) 5%, white);
+   border-radius: 50px;
+   position: relative;
+   margin-bottom: 80px;
+   left: 443px;
+   top: 90px;
+   z-index: 1;
+   border: 1px solid rgba(0, 0, 0, 0.178);
+   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.356);
+   z-index: 2;
 }
 
 .left-aside>.item2 {
-	top: 260px;
+   top: 260px;
 }
    /* content detail */
    /* left content */
    
 .todayBanner {
-	position: relative;
-	left: 80px;
-	top: 25px;
-	font-size: 18px;
-	font-weight: bold;
-	word-spacing: 30px;
+   position: relative;
+   left: 80px;
+   top: 25px;
+   font-size: 18px;
+   font-weight: bold;
+   word-spacing: 30px;
 }
 /* word-spacing: 글자 간격 넓힘 */
 .todayHere {
-	color: rgb(243, 43, 43)
+   color: rgb(243, 43, 43)
 }
 
 .todayIcon {
-	position: relative;
-	width: 300px;
-	height: 50px;
-	border: 1px solid rgb(182, 180, 180);
-	left: 80px;
-	top: -410px;
-	color: rgb(140, 208, 248);
+   position: relative;
+   width: 300px;
+   height: 50px;
+   border: 1px solid rgb(182, 180, 180);
+   left: 80px;
+   top: -410px;
+   color: rgb(140, 208, 248);
 }
 
 .todayIcon img {
-	position: absolute;
-	left: 170px;
-	top: 7px;
+   position: absolute;
+   left: 170px;
+   top: 7px;
 }
 
 .todayIconText {
-	font-size: 18px;
-	font-weight: bold;
-	position: absolute;
-	margin: 10px;
-	left: 15px;
+   font-size: 18px;
+   font-weight: bold;
+   position: absolute;
+   margin: 10px;
+   left: 15px;
 }
 
 .left-image {
-	position: relative;
-	width: 300px;
-	height: 360px;
-	border: 1px solid black;
-	left: 80px;
-	top: -400px;
+   position: relative;
+   width: 300px;
+   height: 360px;
+   border: 1px solid black;
+   left: 80px;
+   top: -400px;
 }
 
 
 .leftImg {
-	width: 300px;
-	height: 360px;
+   width: 300px;
+   height: 360px;
 }
 
 .left-textarea {
-	overflow: hidden;
-	position: relative;
-	width: 300px;
-	height: 70px;
-	left: 80px;
-	top: -395px;
-	border: none;
-	font-size:24px;
+   overflow-x: hidden;
+   overflow-y: auto;
+   position: relative;
+   width: 300px;
+   height: 70px;
+   left: 80px;
+   top: -395px;
+   border: none;
+   font-size:24px;
 }
 
 .myFriend {
-	position: relative;
-	width: 280px;
-	padding: .8em .5em;
-	border: 1px solid #999;
-	font-family: inherit;
-	/* 이미지 경로 설정 방식 */
-	background: url("../images/arrow.png") no-repeat 95% 50%;
-	border-radius: 0px;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	top: -290px;
-	left: 88px;
-	font-size: 18px;
+   position: relative;
+   width: 280px;
+   padding: .8em .5em;
+   border: 1px solid #999;
+   font-family: inherit;
+   /* 이미지 경로 설정 방식 */
+   background: url("../images/arrow.png") no-repeat 95% 50%;
+   border-radius: 0px;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   top: -290px;
+   left: 88px;
+   font-size: 18px;
 }
 
 .history {
-	position: relative;
-	top: -380px;
-	left: 70px;
+   position: relative;
+   top: -380px;
+   left: 70px;
 }
 
 .history>img {
-	position: absolute;
-	left: 10px;
-	top: -5px;
+   position: absolute;
+   left: 10px;
+   top: -5px;
 }
 
 .history>h3 {
-	position: absolute;
-	width: 258px;
-	left: 50px;
-	border-bottom: 1px solid black;
+   position: absolute;
+   width: 258px;
+   left: 50px;
+   border-bottom: 1px solid black;
 }
    
   /* right content */
 .title { position: relative; left: 80px; top:27px; 
    font-size: 24px; font-weight: bold;  color: skyblue; }
  
- .fake {width:1100px; height: 65px; background-color: white; margin-left: 10px; z-index: 5; position: fixed ; top:152px;
+ .fake {width:1100px; height: 70px; background-color: white; margin-left: 10px; z-index: 5; position: fixed ; top:146px;
     left:655px;  border-radius: 5px; }
  #main_box { 
  width:1080px; height: 70px; background-color: #79aaee; margin-left: 10px; z-index: 10; position: fixed ; top:170px;
@@ -238,14 +239,14 @@
 }
    #main_box > h1 { font-size: 48px; margin-top: 4px; margin-left: 20px;}
  .textWrite { position:absolute; left:960px; top:30px; margin-left: 10px;}
-  .contentIntroduce {margin-top:140px; margin-left: 40px; width:1080px; height: 40px; background-color: lightgray;
+  .contentIntroduce {margin-top:140px; margin-left: 40px; width:1080px; height: 60px; background-color: lightgray;
     font-size: 18px; display: flex; border: 3px solid black; 
 } 
-.contentIntroduce >label {margin-left:15px; margin-top:3px;}
-.contentRef { border: none; background-color: transparent; font-size: 18px; margin-top:0px; width:30px;}
-.type_guestbookContentName { color:#74a4e8; margin-top:3px;}
-.type_guestbookRegdate {margin-left:20px; margin-top:3px;}
-.likeHeart {margin-left:435px; margin-top:5px; margin-right:10px;}
+.contentIntroduce >label {margin-left:15px; margin-top:3px; width:100px; height:30px; }
+.contentRef { border: none; margin-left:-12px; background-color: transparent;  margin-top:-19px; width:30px;   font-size: 18px; }
+.type_guestbookContentName { color:#74a4e8; margin-left:0px;  width:300px; height:30px; margin-top:3px; display:block;}
+.type_guestbookRegdate { width:350px; margin-left:-418px; margin-top:28px;  height:30px; }
+.likeHeart {margin-left:565px; margin-top:5px; margin-right:10px;}
 #heart { width:30px; height:30px;
  background-image: url(../images/fullHeart.png);
  background-size: cover;
@@ -254,6 +255,7 @@
  margin-top: 3px;
  margin-right:10px;
 }
+.textBtn { height:30px;}
 .GuestContent {margin-top:10px; margin-left: 40px; width:1080px; height: 240px; 
     font-size: 23px; border: 3px solid black;
 
@@ -282,7 +284,7 @@
    margin-top: -181px;
 }
 .frontdelComment, .backdelComment {
-	 position: absolute;
+    position: absolute;
     width: 1080px;
     height: 240px;
     backface-visibility: hidden;
