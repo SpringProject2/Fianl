@@ -5,7 +5,7 @@
 <head>
 </head>
 <body>
-	<!-- 네이버 회원가입 -->
+	<!-- 네이버 회원가입에 미리 작성될 정보들 -->
 	<form id="ff" action="login_authentication.do" method="POST">
 		<input name="platform" type="hidden" value="naver">
 		<input name="name" id="name" type="hidden">
@@ -18,7 +18,7 @@
 		const naverLogin = new naver.LoginWithNaverId(
 				{
 					clientId: "eSWj7IYuFA0SbZBBHqva",
-					callbackUrl: "http://localhost:9090/cyworld/login_naver_callback.do",
+					callbackUrl: "http://192.168.200.12:9090/cyworld/login_naver_callback.do",
 					isPopup: false,
 					callbackHandle: true
 				}

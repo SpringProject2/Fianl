@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Cyworld 로그인</title>
 <link rel="stylesheet" href="/cyworld/resources/css/reset.css">
 <link rel="stylesheet" href="/cyworld/resources/css/animate.css">
 <link rel="stylesheet" href="/cyworld/resources/css/login.css">
@@ -21,9 +21,10 @@
 						<img class="login-minimi" alt="" src="resources/images/minimi_main.png">
 						
 						<div class="user-info">
+						
 							<!-- 로그인 -->
 							<form id="ff">
-								<!-- 로그인을 구별할 플랫폼과 아이디와 비밀번호 -->
+								<!-- 로그인을 구별할 플랫폼 -->
 								<input name="platform" type="hidden" value="cyworld">
 								<p class="userID">ID :&nbsp;<input name="userID" type="text"></p>
 								<p class="userPW">PW :&nbsp;<input name="info" type="password"> </p>
@@ -50,8 +51,11 @@
 								<input name="gender" id="gender" type="hidden">
 							</form>
 							
+							<!-- ID 찾기 -->
 							<input id="btn-cover" class="findID" type="button" value="아이디 찾기" onclick="find_id();">
+							<!-- PW 찾기 -->
 							<input id="btn-cover" class="findPW" type="button" value="비밀번호 찾기" onclick="find_pw();">
+							<!-- 비회원 로그인 -->
 							<input id="btn-cover" class="none-join" type="button" value="비회원으로 입장" onclick="nmain();">
 						</div>
 					</div>
@@ -67,14 +71,15 @@
 		}
 	</script>
 	
-	<!-- cyworld 로그인 -->
 	<!-- Ajax사용을 위한 js를 추가 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
+	<!-- cyworld 로그인 -->
 	<script>
 		// ID 찾기
 		function find_id() {
 			location.href = "findID.do";
 		}
+		
 		// PW 찾기
 		function find_pw() {
 			location.href = "findPW.do";
@@ -97,13 +102,13 @@
 			
 			// Ajax로 ID와 PWD를 전달
 			let url = "login_check.do";
-			let param = "userID=" + userID + "&info=" + info;
-			sendRequest(url, param, resultFn, "POST");
+			let param = "userID=" + userID +
+						"&info=" + info;
+			sendRequest(url, param, resultLogin, "POST");
 		}
-		
-		function resultFn() {
+		// 로그인 콜백메소드
+		function resultLogin() {
 			if ( xhr.readyState == 4 && xhr.status == 200 ) {
-				// "{'result:'clear'}"
 				let data = xhr.responseText;
 				
 				// 서버에서 넘어온 데이터를 실제 JSON형식으로 변환
@@ -112,7 +117,8 @@
 				if ( json.result == 'no_id' ) {
 					alert("아이디가 틀렸습니다");
 					return;
-				} else if ( json.result == 'no_info' ) {
+				}
+				if ( json.result == 'no_info' ) {
 					alert("비밀번호가 틀렸습니다");
 					return;
 				}
@@ -129,12 +135,12 @@
 	
 	<!-- 네이버 로그인 API -->
 	<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
-	<script type="text/javascript">
+	<script>
 		// 네이버 로그인 정보
 		const naverLogin = new naver.LoginWithNaverId(
 				{
 					clientId: "eSWj7IYuFA0SbZBBHqva", // 네이버에서 발급받은 API 사용 ID
-					callbackUrl: "http://localhost:9090/cyworld/login_naver_callback.do", // 로그인을 하고 정보동의 후 이동할 페이지 - 네이버에서 미리 등록해야한다.
+					callbackUrl: "http://192.168.200.12:9090/cyworld/login_naver_callback.do", // 로그인을 하고 정보동의 후 이동할 페이지 - 네이버에서 미리 등록해야한다.
 					loginButton: {color: "green", type: 3, height: 40}, // 위에 작성한 <div>태그에 만들어줄 로그인 버튼 모양 설정
 					isPopup: false, // callbackUrl을 팝업창으로 열건지 선택 - true : 팝업 / false : 다음 페이지 
 					callbackHandle: true // 콜백메소드에 핸들메소드 사용여부

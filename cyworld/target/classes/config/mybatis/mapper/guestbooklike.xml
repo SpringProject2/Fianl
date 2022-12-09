@@ -4,13 +4,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gbl">
 	
-	<!-- 갤러리 좋아요 -->
-	<!-- 좋아요를 눌렀는지 확인 작업 -->
+	<!-- 방명록 좋아요 -->
+	
+	<!-- 좋아요를 이미 눌렀는지 확인하기 위한 조회 -->
 	<select id="selectLike" resultType="gblike" parameterType="gblike">
 		select * from guestbooklike where guestbookLikeIdx=#{guestbookLikeIdx} and guestbookLikeRef=#{guestbookLikeRef} and guestbookLikeSession=#{guestbookLikeSession}
 	</select>
 	
-	<!-- 게시물 좋아요 추가 -->
+	<!-- 방명록 좋아요 추가 -->
 	<insert id="addLike" parameterType="gblike">
 		insert into guestbooklike values(
 			#{guestbookLikeIdx},
@@ -19,28 +20,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<!-- 게시물 좋아요 취소 -->
+	<!-- 방명록 좋아요 취소 -->
 	<delete id="cancleLike" parameterType="gblike">
 		delete from guestbooklike where guestbookLikeIdx=#{guestbookLikeIdx} and guestbookLikeRef=#{guestbookLikeRef} and guestbookLikeSession=#{guestbookLikeSession}
 	</delete>
 	
-	<!-- 게시물 좋아요 갯수 구하기 -->
+	<!-- 방명록 좋아요 갯수 구하기 -->
 	<select id="likeCountNum" resultType="int" parameterType="gblike">
 		select count(guestbookLikeSession) from guestbooklike where guestbookLikeIdx=#{guestbookLikeIdx} and guestbookLikeRef=#{guestbookLikeRef}
 	</select>
 	
-	<!-- 구해낸 게시물 좋아요 갯수를 보여주기위해 컬럼에 작성하기 -->
+	<!-- 구해낸 방명록 좋아요 갯수를 보여주기위해 컬럼에 작성하기 -->
 	<update id="likeNum" parameterType="guestbook">
 		update guestbook
 			set guestbookLikeNum=#{guestbookLikeNum}
 			where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
 	</update>
 	
-	<!-- 게시글 삭제시 해당 좋아요 내역도 모두 삭제 -->
+	<!-- 방명록 삭제시 해당 좋아요 내역도 모두 삭제 -->
 	<delete id="deleteLikeAll" parameterType="java.util.HashMap">
 		delete from guestbooklike where guestbookLikeIdx=#{1} and guestbookLikeRef=#{2}
 	</delete>
-	
 	
 </mapper>
 

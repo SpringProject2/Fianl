@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import vo.BuyMinimiVO;
 import vo.SignUpVO;
 
 public class SignUpDAO {
@@ -77,6 +78,32 @@ public class SignUpDAO {
 	public int buyDotory(SignUpVO vo) {
 		int res = sqlSession.update("s.dotory_buy", vo);
 		return res;
+	}
+	
+	/////////////// 미니미 구매 구역 ///////////////
+	
+	// 구매한 미니미 전체 조회
+	public List<BuyMinimiVO> selectBuyMinimiList(int idx) {
+		List<BuyMinimiVO> list = sqlSession.selectList("s.selectBuyMinimiList", idx);
+		return list;
+	}
+	
+	// 구매한 미니미 추가
+	public int insertBuyMinimi(BuyMinimiVO vo) {
+		int res = sqlSession.insert("s.insertBuyMinimi", vo);
+		return res;
+	}
+	
+	// 미니미를 구매하고 줄어든 도토리 보유 개수 갱신
+	public int updateDotoryNum(SignUpVO vo) {
+		int res = sqlSession.update("s.updateDotoryNum", vo);
+		return res;
+	}
+	
+	// 이미 구매한 미니미인지 조회
+	public BuyMinimiVO selectIdxBuyMinimi(BuyMinimiVO vo) {
+		BuyMinimiVO bvo = sqlSession.selectOne("s.selectIdxBuyMinimi", vo);
+		return bvo;
 	}
 	
 	/////////////// 프로필 구역 ///////////////

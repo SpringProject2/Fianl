@@ -79,7 +79,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- ////////// 도토리 구역 끝 ////////// -->
 	
-	<!-- ////////// 프로필 영역 ////////// -->
+	<!-- ////////// 미니미 구매 구역 시작 ////////// -->
+	
+	<!-- 구매한 미니미 전체 조회 -->
+	<select id="selectBuyMinimiList" resultType="buy" parameterType="int">
+		select * from buyminimi where buyIdx=#{idx}
+	</select>
+	
+	<!-- 구매한 미니미 추가 -->
+	<insert id="insertBuyMinimi" parameterType="buy">
+		insert into buyminimi values(
+			#{buyIdx},
+			#{buyMinimiName}
+		)
+	</insert>
+	
+	<!-- 미니미를 구매하고 줄어든 도토리 보유 개수 갱신 -->
+	<update id="updateDotoryNum" parameterType="signup">
+		update signup set dotoryNum=#{dotoryNum} where idx=#{idx}
+	</update>
+	
+	<!-- 이미 구매한 미니미인지 조회 -->
+	<select id="selectIdxBuyMinimi" resultType="buy" parameterType="buy">
+		select * from buyminimi where buyIdx=#{buyIdx} and buyMinimiName=#{buyMinimiName}
+	</select>
+	
+	<!-- ////////// 미니미 구매 구역 끝 ////////// -->
+	
+	<!-- ////////// 프로필 구역 시작 ////////// -->
 	
 	<!-- 프로필 조회 -->
 	<select id="profile_list" resultType="signup" parameterType="int">
@@ -93,36 +120,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 프로필 좌측 - 메인 사진 및 메인 소개글 수정 -->
 	<update id="profile_modify_main" parameterType="signup">
-		update signup set
-			mainPhoto=#{mainPhoto},
-			mainText=#{mainText}
+		update signup
+			set mainPhoto=#{mainPhoto},
+				mainText=#{mainText}
 			where idx=#{idx}
 	</update>
 	
 	<!-- 프로필 우측 (cyworld 가입자) - 메인 타이틀 및 비밀번호 수정 -->
 	<update id="profile_modify_userdata" parameterType="signup">
-		update signup set
-			info=#{info},
-			mainTitle=#{mainTitle}
+		update signup
+			set info=#{info},
+				mainTitle=#{mainTitle}
 			where idx=#{idx}
 	</update>
 	
 	<!-- 프로필 우측 (소셜 가입자) - 비밀번호 없이 메인 타이틀만 수정 -->
 	<update id="profile_modify_social_userdata" parameterType="signup">
-		update signup set
-			mainTitle=#{mainTitle}
+		update signup
+			set mainTitle=#{mainTitle}
 			where idx=#{idx}
 	</update>
+	
+	<!-- ////////// 프로필 구역 끝 ////////// -->
+	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

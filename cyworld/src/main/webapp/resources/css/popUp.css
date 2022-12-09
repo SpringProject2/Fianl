@@ -40,13 +40,21 @@
     }
   
     .change { position: relative; left:175px; 
-    top: -170px;
+    top: -200px;
     width: 50px; height: 30px;
     }
-   
+   .buy {position:relative; top:-235px; left:175px;
+    width: 50px; height: 30px;
+   }
+   .price { background-color:transparent; border:none; width:60px; font-size:20px; font-weight:bold; margin-top:40px; margin-left:50px;}
+   #price1 { width:55px;}
+   #price2 { margin-left:70px;}
+   #price3 { margin-left:90px;}
+    #font { font-size:20px; font-weight:bold;}
+   .close { position:relative; top:-35px; left:230px;  width: 50px; height: 30px;}
     .list > img { width: 130px; height: 130px; }
     .buyMinimi {position: absolute; top:700px; left: 30px;
-        width: 480px; height: 350px; 
+        width: 480px; height: 450px; 
         overflow-x: auto; overflow-y: hidden;
     }
    
@@ -55,7 +63,7 @@
     .subTitle { font-size: 30px; font-weight: bold;}
     #lastTitle { margin-bottom: 30px; }
     /* tabs */
-    .tabs {  width: 500px; height: 250px;}
+    .tabs {  width: 1000px; height: 320px;}
     .tabs > .btn {display: none;}
     .tab-btns>label {
         position: relative; background-color: white;
@@ -67,11 +75,14 @@
     }
 
 .tabs> #tab1:checked ~.tab-btns > #btn1 { border: 10px solid rgba(193, 114, 250, 0.636); }
-.tabs> #tab2:checked ~.tab-btns > #btn2 { border: 10px solid rgba(193, 114, 250, 0.636); ; }
-.tabs> #tab3:checked ~.tab-btns > #btn3 { border: 10px solid rgba(193, 114, 250, 0.636); ; }
-.tabs> #tab4:checked ~.tab-btns > #btn4 { border: 10px solid rgba(193, 114, 250, 0.636); ; }
-.tabs> #tab5:checked ~.tab-btns > #btn5 { border: 10px solid rgba(193, 114, 250, 0.636); ; }
-.tabs> #tab6:checked ~.tab-btns > #btn6 { border: 10px solid rgba(193, 114, 250, 0.636); ; }
+.tabs> #tab2:checked ~.tab-btns > #btn2 { border: 10px solid rgba(193, 114, 250, 0.636); }
+.tabs> #tab3:checked ~.tab-btns > #btn3 { border: 10px solid rgba(193, 114, 250, 0.636); }
+.tabs> #tab4:checked ~.tab-btns > #btn4 { border: 10px solid rgba(193, 114, 250, 0.636); }
+.tabs> #tab5:checked ~.tab-btns > #btn5 { border: 10px solid rgba(193, 114, 250, 0.636); }
+.tabs> #tab6:checked ~.tab-btns > #btn6 { border: 10px solid rgba(193, 114, 250, 0.636); }
+.tabs> #tab7:checked ~.tab-btns > #btn7 { border: 10px solid rgba(193, 114, 250, 0.636); }
+.tabs> #tab8:checked ~.tab-btns > #btn8 { border: 10px solid rgba(193, 114, 250, 0.636); }
+.tabs> #tab9:checked ~.tab-btns > #btn9 { border: 10px solid rgba(193, 114, 250, 0.636); }
 
 
 /* button */

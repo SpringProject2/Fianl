@@ -20,6 +20,7 @@
 		<typeAlias type="vo.GuestBookLikeVO" alias="gblike"/>
 		<typeAlias type="vo.DiaryVO" alias="diary"/>
 		<typeAlias type="vo.ViewsVO" alias="views"/>
+		<typeAlias type="vo.BuyMinimiVO" alias="buy"/>
 	</typeAliases>
 	
 	<mappers>

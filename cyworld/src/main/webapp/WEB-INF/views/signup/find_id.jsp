@@ -21,7 +21,7 @@
 						
 						<form>
 							<div class="myname">이름 <br> <input class="nameText" name="name" type="text"></div>
-							<div id="phone">휴대전화 <br> <input class="phoneText" id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"></div> 
+							<div id="phone">휴대전화 <br> <input class="phoneText" id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"></div>
 							<input id="btn-cover" type="button" value="아이디 찾기" onclick="findID(this.form)">
 							<input  id="btn_cover" class="cancel" type="button" value="취소" onclick="location.href='logout.do'">
 						</form>
@@ -35,7 +35,7 @@
 	<!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
-		// ID 중복 확인
+		// ID 찾기
 		function findID(f) {
 			let name = f.name.value;
 			let phoneNumber = f.phoneNumber.value;
@@ -51,13 +51,13 @@
 				return;
 			}
 			
-			// ID 중복 확인을 위한 URL, ID 입력값
 			let url = "findIdCheck.do";
-			let param = "name=" + name + "&phoneNumber=" + phoneNumber;
-			sendRequest(url, param, resultFn, "POST");
+			let param = "name=" + name +
+						"&phoneNumber=" + phoneNumber;
+			sendRequest(url, param, resultId, "POST");
 		}
-		// 콜백메소드
-		function resultFn() {
+		// ID 찾기 콜백메소드
+		function resultId() {
 			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				let data = xhr.responseText;
 				
@@ -71,6 +71,7 @@
 			}
 		}
 	</script>
+	
 	<script>
 		// 휴대폰용 자동 하이픈
 		function phoneAutoHyphen(str){

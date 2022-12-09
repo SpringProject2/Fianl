@@ -4,13 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gb">
 	
-	<!-- 갤러리 조회  -->
+	<!-- 방명록 전체 조회  -->
 	<select id="guestbook_list" resultType="guestbook" parameterType="int">
 		select * from guestbook where guestIdx=#{idx} order by guestbookContentRef DESC
-		<!-- idx 내림차순 -->
 	</select>
 	
-	<!-- idx에 해당하는 방명록 갯수 구하기 -->
+	<!-- 작성된 방명록 갯수 구하기 -->
 	<select id="countNum" resultType="int" parameterType="int">
 		select count(*) from guestbook where guestIdx=#{idx}
 	</select>
@@ -35,34 +34,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from guestbook where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
 	</delete>
 	
-	<!-- 삭제한 방명록 번호보다 큰 번호들을 조회 -->
+	<!-- 방명록 삭제 후 삭제한 방명록 번호보다 큰 번호들을 조회 -->
 	<select id="guestbook_list_delete" resultType="guestbook" parameterType="java.util.HashMap">
 		select * from guestbook where guestIdx=#{1} and guestbookContentRef > #{2}
 	</select>
 	
-	<!-- 삭제한 게시물 번호보다 큰 번호들을 1씩 감소시켜서 갱신 -->
+	<!-- 방명록 삭제 후 삭제한 방명록 번호보다 큰 번호들을 1씩 감소시켜서 갱신 -->
 	<update id="guestbook_update_ref_minus" parameterType="guestbook">
-		update guestbook set
-			guestbookContentRef=#{guestbookContentRef}
+		update guestbook
+			set guestbookContentRef=#{guestbookContentRef}
 			where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef} + 1
 	</update>
 	
-	<!-- 수정을 위한 게시글 한 건 조회 -->
-    <select id="guestbook_one" resultType="guestbook" parameterType="guestbook">
-        select * from guestbook where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
-    </select>
-
-    <!-- 글 수정 -->
-    <update id="guestbook_update" parameterType="guestbook">
-        update guestbook set
-        	guestbookContent=#{ guestbookContent },
-        	guestbookContentName=#{ guestbookContentName },
-        	guestbookRegdate=SYSDATE,
-        	guestbookSecretCheck=#{guestbookSecretCheck},
-        	guestbookMinimi=#{guestbookMinimi}
-        	where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef} and guestbookSession=#{guestbookSession}
-    </update>
-    
+	<!-- 수정을 위한 방명록 한 건 조회 -->
+	<select id="guestbook_one" resultType="guestbook" parameterType="guestbook">
+		select * from guestbook where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef}
+	</select>
+	
+	<!-- 방명록 수정 -->
+	<update id="guestbook_update" parameterType="guestbook">
+		update guestbook
+			set guestbookContent=#{ guestbookContent },
+				guestbookContentName=#{ guestbookContentName },
+				guestbookRegdate=SYSDATE,
+				guestbookSecretCheck=#{guestbookSecretCheck},
+				guestbookMinimi=#{guestbookMinimi}
+			where guestIdx=#{guestIdx} and guestbookContentRef=#{guestbookContentRef} and guestbookSession=#{guestbookSession}
+	</update>
+	
 </mapper>
 
 

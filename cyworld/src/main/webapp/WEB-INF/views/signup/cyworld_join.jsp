@@ -11,48 +11,46 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body>
- <div class="container ">
-        <section class="section">
-                <div class="dashed-line">
-                    <div class="gray-background">
-                        <div class="main" id="scrollBar">
-                           
-                            <img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
-                          
-                            <form>
-                                <!-- 플랫폼을 받아와 숨겨놓는다 -->
-                                <input name="platform" type="hidden" value="${ vo.platform }">
-                                <p class="userID"> ID<br>  <input id="userID" name="userID" type="text"></p>
-                                <input id="doubleId" type="hidden">
-                                <input class="checkButton" id="btn-cover" type="button" value="중복확인" onclick="doubleCheck();"> 
-                                <p class="userPW"> PW<br> <input id="pw" name="info" type="password" oninput="pwCheck();"></p>
-                                <div class="pwText" id="pT1"></div>
-                                <p class="userPW2">PW 확인<br> <input id="pw2" type="password" oninput="pw2Check();"> </p>
-                                <div class="pwText pT2"></div>
-                                <p class="name">이름<br> <input name="name" type="text"></p>
-                                <p class="rNumber">주민번호<br> <input name="identityNum" id="identityNum" type="text" placeholder="주민번호 13자리를 입력해주세요" maxlength="14"></p> 
-                                <p class="gender">
-                                    성별<br> <input name="gender" type="radio" value="male">&nbsp; 남자
-                                                         <input name="gender" type="radio" value="female">&nbsp; 여자
-                                </p>
-                                <p class="email">이메일<br> <input id="email" name="email" type="text"></p>
-                                <input class="sendANum1" id="btn-cover" type="button" value="인증번호 전송" onclick="emailCheckSend();"> 
-                                <p class="ANum">인증번호<br> <input id="i_email" type="text"></p>
-                                							<input id="h_email" type="hidden">
-                                <input class="sendANum2" ID="btn-cover" type="button" value="인증번호 확인" onclick="emailCheck();" >
-                                <p class="phone">휴대전화<br> <input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대폰 번호를 입력해주세요" maxlength="13"></p> 
-                                <p class="address">주소<br> <input class="address_kakao" name="address" type="text"></p>
-                                <input class="address2 address_kakao" id="btn-cover" type="button" value="주소찾기"> <br>
-                                <p class="rAddress">상세 주소<br> <input class="address_kakao" name="addressDetail" type="text"></p>
-                                <input class="mJoin" id="btn-cover" type="button" value="가입" onclick="cyworldJoin(this.form);">
-                                <input  id="btn-cover" class="cancel" type="button" value="취소" onclick="location.href='logout.do'">
-                            </form>
-
-</div>
-                    </div>
-                </div>
-        </section>
-</div>
+	<div class="container ">
+		<section class="section">
+			<div class="dashed-line">
+				<div class="gray-background">
+					<div class="main" id="scrollBar">
+					
+						<img class="logo-main box animate__animated animate__rubberBand animate__" src="resources/images/logo_cyworld.png" alt="">
+						
+						<form>
+							<!-- 플랫폼을 받아와 숨겨놓는다 -->
+							<input name="platform" type="hidden" value="${ vo.platform }">
+							<p class="userID">ID <br> <input id="userID" name="userID" type="text"></p>
+														<input id="doubleId" type="hidden">
+							<input class="checkButton" id="btn-cover" type="button" value="중복 확인" onclick="doubleCheck();"> 
+							<p class="userPW">PW <br> <input id="pw" name="info" type="password" oninput="pwCheck();"></p>
+							<div class="pwText" id="pT1"></div>
+							<p class="userPW2">PW 확인 <br> <input id="pw2" type="password" oninput="pw2Check();"></p>
+							<div class="pwText pT2"></div>
+							<p class="name">이름 <br> <input name="name" type="text"></p>
+							<p class="rNumber">주민번호 <br> <input name="identityNum" id="identityNum" type="text" placeholder="주민번호 13자리를 입력해주세요" maxlength="14"></p>
+							<p class="gender">성별 <br> <input name="gender" type="radio" value="male">&nbsp; 남자
+														<input name="gender" type="radio" value="female">&nbsp; 여자</p>
+							<p class="email">이메일 <br> <input id="email" name="email" type="text"></p>
+							<input class="sendANum1" id="btn-cover" type="button" value="인증번호 전송" onclick="emailCheckSend();">
+							<p class="ANum">인증번호 <br> <input id="i_email" type="text"></p>
+														<input id="h_email" type="hidden">
+							<input class="sendANum2" ID="btn-cover" type="button" value="인증번호 확인" onclick="emailCheck();" >
+							<p class="phone">휴대전화 <br> <input id="phoneNumber" name="phoneNumber" type="text" placeholder="휴대전화 번호를 입력해주세요" maxlength="13"></p>
+							<p class="address">주소 <br> <input class="address_kakao" name="address" type="text"></p>
+							<input class="address2 address_kakao" id="btn-cover" type="button" value="주소찾기"> <br>
+							<p class="rAddress">상세 주소 <br> <input class="address_kakao" name="addressDetail" type="text"></p>
+							<input class="mJoin" id="btn-cover" type="button" value="가입" onclick="cyworldJoin(this.form);">
+							<input  id="btn-cover" class="cancel" type="button" value="취소" onclick="location.href='logout.do'">
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
@@ -67,10 +65,9 @@
 			let param = "userID=" + userID;
 			sendRequest(url, param, resultId, "POST");
 		}
-		// 콜백메소드
+		// ID 중복 확인 콜백메소드
 		function resultId() {
 			if ( xhr.readyState == 4 && xhr.status == 200 ) {
-				// "{'result':'no'}"
 				let data = xhr.responseText;
 				let doubleId = document.getElementById("doubleId"); // 중복체크용 값
 				
@@ -78,7 +75,7 @@
 				let json = (new Function('return'+data)());
 				
 				if ( json.result == "no" ) {
-					alert("아이디 사용가능");
+					alert("아이디 사용 가능");
 					doubleId.value = "1";
 					document.getElementById("userID").readOnly = true;
 					return;
@@ -90,9 +87,9 @@
 		}
 	</script>
 	
-	<!-- email 인증 Ajex -->
+	<!-- email 인증 -->
 	<script>
-		// 이메일 인증
+		// 이메일 인증번호 전송
 		function emailCheckSend() {
 			let email = document.getElementById("email").value; // email 입력값 가져오기
 			
@@ -101,7 +98,7 @@
 			let param = "email=" + encodeURIComponent(email);
 			sendRequest(url, param, resultEmail, "POST");
 		}
-		// 콜백메소드
+		// 이메일 인증번호 전송 콜백메소드
 		function resultEmail() {
 			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				
@@ -117,7 +114,8 @@
 				h_email.value = data;
 			}
 		}
-		// 인증 확인 메소드
+		
+		// 이메일 인증번호 확인
 		function emailCheck() {
 			let i_email = document.getElementById("i_email").value; // 인증번호 입력값
 			let h_email = document.getElementById("h_email").value; // 인증번호 체크용
@@ -238,7 +236,7 @@
 			}
 		}
 		
-		// 비밀번호와 비밀번호 확인이 일지한지 확인용
+		// 비밀번호와 비밀번호 확인이 동일한지 확인용
 		function pw2Check() {
 			let pwText = document.getElementsByClassName("pwText"); // 비밀번호 아래에 글이 작성될 <div>
 			let pw = document.getElementById("pw").value; // 비밀번호 값
@@ -365,7 +363,7 @@
 					"&platform=" + platform;
 			sendRequest(url, param, resultJoin, "POST");
 		}
-		// 콜백메소드
+		// 회원가입 콜백메소드
 		function resultJoin() {
 			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				

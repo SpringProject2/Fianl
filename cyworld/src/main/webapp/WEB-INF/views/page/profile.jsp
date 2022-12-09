@@ -275,7 +275,7 @@
         function minimiPopUp() {
             let popUrl = "profile_minimi_popup.do?idx=${signVo.idx}";
             let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
-    	window.open(popUrl, "minimi", popOption);
+    		window.open(popUrl, "minimi", popOption);
         }
 	</script>
 	
@@ -420,7 +420,6 @@ useStorage.css({ left: left + "px", top: top + "px" });
 
 useStorage[0].offsetTop = top;
 useStorage[0].offsetLeft = left;
-
 
 }
 </script>
