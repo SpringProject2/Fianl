@@ -67,6 +67,7 @@
 	<!-- 비회원 접속 -->
 	<script>
 		function nmain() {
+			// idx로 -1을 부여받게 된다
 			location.href = "nmain.do?idx=" + -1;
 		}
 	</script>
