@@ -12,19 +12,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body>
+	<!-- 타 유저의 미니홈피에서 내 미니홈피로 바로 갈수 있는 버튼 -->
 	<c:if test="${ signVo.idx ne sessionUser.idx && sessionUser.idx > 0 }">
 		<input id="btn_cover" class="returnMyHome" type="button" value="내 미니홈피로 가기" onclick="location.href='main.do?idx=${sessionUser.idx}'">
 	</c:if>
-	<!--  플랫폼에 따른 로그아웃 버튼 생성  -->
+	<!-- 로그인한 유저의 플랫폼에 따른 로그아웃 버튼 생성 -->
+	<!-- 플랫폼이 싸이월드일 경우 -->
 	<c:if test="${ sessionUser.platform eq 'cyworld' }">
 		<input id="btn_cover" class="cy_logout" type="button" value="로그아웃" onclick="location.href='logout.do'">
 	</c:if>
+	<!-- 플랫폼이 네이버일 경우 -->
 	<c:if test="${ sessionUser.platform eq 'naver' }">
 		<input id="btn_cover" class="na_logout" type="button" value="네이버 로그아웃" onclick="naverLogout();">
 	</c:if>
+	<!-- 플랫폼이 카카오일 경우 -->
 	<c:if test="${ sessionUser.platform eq 'kakao' }">
 		<input id="btn_cover" class="ka_logout" type="button" value="카카오 로그아웃" onclick="kakaoLogout();">
 	</c:if>
+	<!-- 비회원일 경우 -->
 	<c:if test="${ sessionUser eq null }">
 		<input id="btn_cover" class="ka_logout" type="button" value="로그인" onclick="location.href='logout.do'">
 	</c:if>
@@ -150,9 +155,9 @@
 					</aside>
 				</div>
 			</div>
+			<!-- 오른쪽 탭 -->
 			<div class="tabs">
 				<form>
-					<!-- 오른쪽 탭 -->
 					<div class="tab-btns">
 						<!-- 해당 미니홈피 유저의 idx -->
 						<input id="idx" name="idx" type="hidden" value="${ signVo.idx }">
@@ -241,7 +246,7 @@
 	<!-- 각종 팝업창 -->
 	<script>
 		// 도토리 구매 팝업창
-		function DotoryPopUp(){
+		function DotoryPopUp() {
 			let popUrl = "dotory.do?idx=${param.idx}&dotoryNum=${signVo.dotoryNum}";
 			let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
 			let pop = window.open(popUrl, "_blank", popOption);
@@ -296,7 +301,7 @@
 		}
 		
 		// 일촌평 작성
-		function registration(f){
+		function registration(f) {
 			let ilchonpyeongText = f.ilchonpyeongText.value;
 			let idx = document.getElementById("idx").value;
 			let sessionIdx = document.getElementById("sessionIdx").value;
@@ -319,7 +324,7 @@
 			}
 			
 			// 공백일 경우
-			if( ilchonpyeongText == ""){
+			if ( ilchonpyeongText == "") {
 				alert("일촌평을 작성해주세요.");
 				return;
 			}
@@ -371,7 +376,7 @@
 		// setInterval(callback, delay); 지연시간동안 callback을 호출   
 		const timer = setInterval(randomColor,3000);
 		
-		function randomColor(){
+		function randomColor() {
 			let num1 = Math.floor(Math.random()*LENGTH);
 			let num2 = Math.floor(Math.random()*LENGTH);
 			let num3 = Math.floor(Math.random()*LENGTH);
@@ -452,7 +457,7 @@
 	<!-- textarea 글자 수 제한 -->
 	<script>
 		// 입력 글자 수 제한
-		function check_length(area){
+		function check_length(area) {
 			let text = area.value;
 			let test_length = text.length;
 			
@@ -462,9 +467,9 @@
 			if (test_length>max_length) {
 				alert(max_length+"자 이상 작성할 수 없습니다.")
 				text = text.substr(0, max_length);
-				/* substr() : 문자열에서 특정 부분만 골라낼 때 사용하는 메서드. 
-				??.substr(start, length) 
-				즉, 여기서는 0부터 45글자까지만 가져와서 text에 저장 
+				/* substr() : 문자열에서 특정 부분만 골라낼 때 사용하는 메소드
+				??.substr(start, length)
+				즉, 여기서는 0부터 45글자까지만 가져와서 text에 저장
 				*/
 				area.value = text;
 				/* text를 다시 area.value로 반환 */
@@ -485,7 +490,7 @@
 			naverLogoutPopUp = window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
 		}
 		// 팝업창 닫기 메소드
-		function naverClosePopUp(){
+		function naverClosePopUp() {
 			naverLogoutPopUp.close(); // 열린 팝업창을 다시 닫는 기능
 		}
 		// 네이버 로그아웃 실행 메소드
@@ -509,7 +514,7 @@
 			kakaoLogoutPopUp = window.open("https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
 		}
 		// 팝업창 닫기 메소드
-		function kakaoClosePopUp(){
+		function kakaoClosePopUp() {
 			kakaoLogoutPopUp.close(); // 열린 팝업창을 다시 닫는 기능
 		}
 		// 카카오 로그아웃 실행 메소드
