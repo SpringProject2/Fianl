@@ -67,7 +67,9 @@
 					</c:if>
 					<!-- 조회수 -->
 					<p class="todayBanner"><span>Today</span> <span class="todayHere">${ signVo.today }</span><span>&nbsp;｜ Total</span> ${ signVo.total }</p>
+					
 					<aside class="left-aside">
+						<!-- 좌측, 우측 페이지 이어주는 스프링 디자인 -->
 						<div class="item item1"></div>
 						<div class="item item1"></div>
 						<div class="item item2"></div>
@@ -104,7 +106,7 @@
 					<form name="sf" method="GET">
 						<input id="btn_cover" class="search" type="button" value="회원 검색" onclick="searchPopUp();"></input>
 					</form>
-					<!-- bgm - main 페이지에 재생 플레이어와 노래 제목 표시 -->
+					<!-- bgm - 페이지 오른쪽 상단에 재생 플레이어와 노래 제목 표시 -->
 					<img class="musicLogo" src="resources/images/noneMain15.gif" alt="">
 					<a class="mp3_title" href="#" ><div class="circle-container">
 						<div class="circle circle1"> ♫ 오르트 구름 - 윤하</div>
@@ -241,7 +243,7 @@
 		myAudio.loop = true; //노래가 끝나도 loop가 가능하게 설정
 		audio.play();
 		audio.volume = 3;
-	</script> 
+	</script>
 	
 	<!-- 각종 팝업창 -->
 	<script>

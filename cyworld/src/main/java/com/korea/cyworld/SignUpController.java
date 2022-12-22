@@ -790,6 +790,7 @@ public class SignUpController {
 	}
 	
 	/////////////// 일촌 구역 ///////////////
+	
 	@RequestMapping("/main_ilchon")
 	@ResponseBody
 	public String main_follow(Integer idx, Integer sessionIdx, IlchonVO ivo) {

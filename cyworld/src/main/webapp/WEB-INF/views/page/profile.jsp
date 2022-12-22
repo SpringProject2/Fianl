@@ -18,7 +18,9 @@
 				<div class="left-gray-background">
 					<!-- 조회수 -->
 					<p class="todayBanner"><span>Today</span> <span class="todayHere">${ signVo.today }</span><span>&nbsp;｜ Total</span> ${ signVo.total }</p>
+					
 					<aside class="left-aside">
+						<!-- 좌측, 우측 페이지 이어주는 스프링 디자인 -->
 						<div class="item item1"></div>
 						<div class="item item1"></div>
 						<div class="item item2"></div>
@@ -292,12 +294,12 @@
 	</script>
 	
 	<script>
-        //window.open (미니미 수정창)
-        function minimiPopUp() {
-            let popUrl = "profile_minimi_popup.do?idx=${signVo.idx}";
-            let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
-    		window.open(popUrl, "minimi", popOption);
-        }
+		//window.open (미니미 수정창)
+		function minimiPopUp() {
+			let popUrl = "profile_minimi_popup.do?idx=${signVo.idx}";
+			let popOption = "top=100, left=800, width=600, height=800, status=no, menubar=no, toolbar=no, resizable=no";
+			window.open(popUrl, "minimi", popOption);
+		}
 	</script>
 	
 	<script>
@@ -415,83 +417,77 @@
 			/* 요소 위에서 마우스 왼쪽 버튼을 클릭할 시 발생되는 mousedown 이벤트로 함수 호출, 요소가 위치한 좌표를 얻어서 변수에 저장해주고,
 			마우스 버튼 누름 여부 저장
 			*/
-			
-		function start(e) {
-			prevPosX = e.clientX;
-			prevPosY = e.clientY;
-			
-			isPress = true;
-		}
-		
-		// mousemove
-		/*
-		요소 위에서 마우스를 움직이면 이벤트가 발생되는 mousemove 이벤트는 "드래그"가 아닌 "움직임"을 감지
-		그러므로 드래그의 충족 조건인 왼쪽 마우스 버튼 클릭 여부를 체크함
-		마우스 클릭 여부가 체크되었다면, 이제 마우스를 움직인 만큼 요소를 이동시켜야 함. 요소를 이동시키는 방법은 이전에 위치했던 좌표에서 현재 마우스를 움직인 좌표를 뺌으로 차이 값을 구해주고, top과 left 속성으로 이동시켜줌
-		*/
-		
-		function move(e) {
-			if (!isPress) {
-				return;
+			function start(e) {
+				prevPosX = e.clientX;
+				prevPosY = e.clientY;
+				
+				isPress = true;
 			}
 			
-			// 이전 좌표와 현재 좌표 차이값
-			const posX = prevPosX - e.clientX; 
-			const posY = prevPosY - e.clientY; 
+			// mousemove
+			/*
+			요소 위에서 마우스를 움직이면 이벤트가 발생되는 mousemove 이벤트는 "드래그"가 아닌 "움직임"을 감지
+			그러므로 드래그의 충족 조건인 왼쪽 마우스 버튼 클릭 여부를 체크함
+			마우스 클릭 여부가 체크되었다면, 이제 마우스를 움직인 만큼 요소를 이동시켜야 함. 요소를 이동시키는 방법은 이전에 위치했던 좌표에서 현재 마우스를 움직인 좌표를 뺌으로 차이 값을 구해주고, top과 left 속성으로 이동시켜줌
+			*/
+			function move(e) {
+				if (!isPress) {
+					return;
+				}
+				
+				// 이전 좌표와 현재 좌표 차이값
+				const posX = prevPosX - e.clientX; 
+				const posY = prevPosY - e.clientY; 
+				
+				// 현재 좌표가 이전 좌표로 바뀜
+				prevPosX = e.clientX; 
+				prevPosY = e.clientY;
+				
+				// left, top으로 이동 
+				$target.style.left = ($target.offsetLeft - posX) + "px";
+				$target.style.top = ($target.offsetTop - posY) + "px";
+			}
 			
-			// 현재 좌표가 이전 좌표로 바뀜
-			prevPosX = e.clientX; 
-			prevPosY = e.clientY;
-			
-			// left, top으로 이동 
-			$target.style.left = ($target.offsetLeft - posX) + "px";
-			$target.style.top = ($target.offsetTop - posY) + "px";
+			// mouseup
+			/* 마우스를 때면 move 함수의 코드가 실행되지 않도록 isPress 변수 값을
+			false로 바꿔서 마우스 버튼을 땠다는 것을 알 수 있게 해줌
+			*/
+			function end() {
+				isPress = false;
+			}
 		}
 		
-  // mouseup
-  /* 마우스를 때면 move 함수의 코드가 실행되지 않도록 isPress 변수 값을 
-    false로 바꿔서 마우스 버튼을 땠다는 것을 알 수 있게 해줌 
-  */
-  
-  function end() {
-    isPress = false;
-  }
-}
-
-window.onload = () => {
-  const $target = document.querySelector(".Crayon");
-  
-  draggable($target);
-}
-
-$(function () {
-
-const useStorage = $(".Crayon");
-
-useStorage.draggable({cancel: '.notDrag',scroll: false},{ stop: function () {
-
-      const left = this.offsetLeft;
-      const top = this.offsetTop;
-
-      sessionStorage.setItem("left", left);
-      sessionStorage.setItem("top", top);
-    }
-  });
-  update(useStorage);
-
-
-});
-
-function update(useStorage) {
-
-const left = sessionStorage.getItem("left");
-const top = sessionStorage.getItem("top");
-useStorage.css({ left: left + "px", top: top + "px" });
-
-useStorage[0].offsetTop = top;
-useStorage[0].offsetLeft = left;
-
-}
-</script>
+		window.onload = () => {
+			const $target = document.querySelector(".Crayon");
+			
+			draggable($target);
+		}
+		
+		$(function () {
+			const useStorage = $(".Crayon");
+			
+			useStorage.draggable({cancel: '.notDrag',scroll: false},{ 
+				stop: function () {
+					const left = this.offsetLeft;
+					const top = this.offsetTop;
+					
+					sessionStorage.setItem("left", left);
+					sessionStorage.setItem("top", top);
+				}
+			});
+			
+			update(useStorage);
+			
+		});
+		
+		function update(useStorage) {
+			const left = sessionStorage.getItem("left");
+			const top = sessionStorage.getItem("top");
+			useStorage.css({ left: left + "px", top: top + "px" });
+			
+			useStorage[0].offsetTop = top;
+			useStorage[0].offsetLeft = left;
+		}
+	</script>
 </body>
 </html>

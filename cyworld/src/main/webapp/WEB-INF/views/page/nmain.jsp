@@ -70,7 +70,7 @@
 		<img  class="noneMain8" src="resources/images/noneMain8.gif" alt="">
 	</div>
 	
-	<!-- 좌측, 우측 페이지 이어주는 막대 디자인 -->
+	<!-- 좌측, 우측 페이지 이어주는 스프링 디자인 -->
 	<div class="item item1"></div>
 	<div class="item item1"></div>
 	<div class="item item2"></div>
