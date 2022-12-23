@@ -31,11 +31,52 @@
 	<context:annotation-config/>
 	
 	<!-- 컨트롤러의 수동생성 -->
+	
+	<!-- 회원가입 -->
 	<beans:bean class="com.korea.cyworld.SignUpController">
 		<beans:property name="signUp_dao" ref="signUp_daoBean"/>
 		<beans:property name="main_dao" ref="main_daoBean"/>
 		<beans:property name="gallery_dao" ref="gallery_daoBean"/>
-		<!-- GuestBookController컨트롤러의 수동생성 -->
+		<beans:property name="guestbook_dao" ref="guestbook_daoBean"/>
+		<beans:property name="diary_dao" ref="diary_daoBean"/>
+	</beans:bean>
+	<!-- 메인 -->
+	<beans:bean class="com.korea.cyworld.MainController">
+		<beans:property name="signUp_dao" ref="signUp_daoBean"/>
+		<beans:property name="main_dao" ref="main_daoBean"/>
+		<beans:property name="gallery_dao" ref="gallery_daoBean"/>
+		<beans:property name="guestbook_dao" ref="guestbook_daoBean"/>
+		<beans:property name="diary_dao" ref="diary_daoBean"/>
+	</beans:bean>
+	<!-- 프로필 -->
+	<beans:bean class="com.korea.cyworld.ProfileController">
+		<beans:property name="signUp_dao" ref="signUp_daoBean"/>
+		<beans:property name="main_dao" ref="main_daoBean"/>
+		<beans:property name="gallery_dao" ref="gallery_daoBean"/>
+		<beans:property name="guestbook_dao" ref="guestbook_daoBean"/>
+		<beans:property name="diary_dao" ref="diary_daoBean"/>
+	</beans:bean>
+	<!-- 다이어리 -->
+	<beans:bean class="com.korea.cyworld.DiaryController">
+		<beans:property name="signUp_dao" ref="signUp_daoBean"/>
+		<beans:property name="main_dao" ref="main_daoBean"/>
+		<beans:property name="gallery_dao" ref="gallery_daoBean"/>
+		<beans:property name="guestbook_dao" ref="guestbook_daoBean"/>
+		<beans:property name="diary_dao" ref="diary_daoBean"/>
+	</beans:bean>
+	<!-- 사진첩 -->
+	<beans:bean class="com.korea.cyworld.GalleryController">
+		<beans:property name="signUp_dao" ref="signUp_daoBean"/>
+		<beans:property name="main_dao" ref="main_daoBean"/>
+		<beans:property name="gallery_dao" ref="gallery_daoBean"/>
+		<beans:property name="guestbook_dao" ref="guestbook_daoBean"/>
+		<beans:property name="diary_dao" ref="diary_daoBean"/>
+	</beans:bean>
+	<!-- 방명록 -->
+	<beans:bean class="com.korea.cyworld.GuestBookController">
+		<beans:property name="signUp_dao" ref="signUp_daoBean"/>
+		<beans:property name="main_dao" ref="main_daoBean"/>
+		<beans:property name="gallery_dao" ref="gallery_daoBean"/>
 		<beans:property name="guestbook_dao" ref="guestbook_daoBean"/>
 		<beans:property name="diary_dao" ref="diary_daoBean"/>
 	</beans:bean>

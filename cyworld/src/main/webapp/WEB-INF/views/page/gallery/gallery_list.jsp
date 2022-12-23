@@ -12,7 +12,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <body >
-
 	  <div class="container">
         <section class="left-section">
                 <div class="left-dashed-line">
