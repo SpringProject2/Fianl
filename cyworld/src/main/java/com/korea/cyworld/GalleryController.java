@@ -117,7 +117,7 @@ public class GalleryController {
 		
 		// 사진첩 페이지로 이동
 		return Common.GP_PATH + "gallery_list.jsp";
-	 }
+	}
 	
 	// 사진첩 글 작성 페이지로 이동
 	@RequestMapping("/gallery_insert_form.do")
@@ -467,6 +467,7 @@ public class GalleryController {
 	}
 	
 	/////////////// 사진첩 좋아요 구역 ///////////////
+	
 	@RequestMapping("/gallery_like.do")
 	@ResponseBody
 	public String gallery_like(GalleryVO vo, GalleryLikeVO lvo) {

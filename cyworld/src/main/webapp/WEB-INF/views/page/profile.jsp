@@ -189,7 +189,8 @@
 			f.submit();
 		}
 	</script>
-    <!-- Ajax 사용을 위한 js를 로드 -->
+	
+	<!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		// 메인 타이틀 및 비밀번호 수정
@@ -258,7 +259,7 @@
 				}
 			}
 		}
-		// 콜백메소드
+		// 수정 콜백메소드
 		function resultModify() {
 			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				// "{'result':'no'}"

@@ -91,7 +91,6 @@
 								<option value="main.do?idx=${ ilchonList.ilchonIdx }">ㆍ ${ ilchonList.ilchonName }</option>
 							</c:forEach>
 						</select>
-						
 					</aside>
 				</div>
 			</div>
@@ -164,7 +163,7 @@
 						<!-- 해당 미니홈피 유저의 idx -->
 						<input id="idx" name="idx" type="hidden" value="${ signVo.idx }">
 						<!-- 로그인한 유저의 idx -->
-						<input id="sessionIdx" name="sessionIdx" type="hidden" value="${ sessionUser.idx }">
+						<input id="sessionIdx" type="hidden" value="${ sessionUser.idx }">
 						<!-- 홈 탭 -->
 						<label for="tab1" id="btn1">홈</label>
 						<input id="tab1" type="button" value="홈" style="display: none;" onclick="location.href='main.do?idx=${ signVo.idx }'">

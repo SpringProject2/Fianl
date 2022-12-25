@@ -46,6 +46,7 @@
 	<!-- Ajax 사용을 위한 js를 로드 -->
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
+		// 도토리 구매
 		function buy(f) {
 			let dotoryNum = f.dotoryNum;
 			
@@ -69,17 +70,18 @@
 			}
 				alert("구매완료");
 		}
+		
 		// 팝업창 닫기
 		function buyclose(){
 			return window.close();
 		}
 	</script>
 	
-	<!-- checkbox 중복 체크 불가 -->
+	<!-- checkbox 중복 체크 방지 -->
 	<script>
 		function NoMultiChk(chk) {
 			let obj = document.getElementsByName("dotoryNum");
-			for (let i=0; i<obj.length; i++) {
+			for (let i=0; i < obj.length; i++) {
 				if (obj[i] != chk) {
 					obj[i].checked = false;
 				}
@@ -123,9 +125,9 @@
 				count = 0;
 			}
 		}
+		
 		labelHandler();
 		setInterval( labelHandler, 3000);
-		
 	</script>
 </body>
 </html>

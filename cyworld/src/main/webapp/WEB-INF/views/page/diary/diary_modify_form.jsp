@@ -44,21 +44,20 @@
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		// 다이어리 글 수정
-		function send(f){
+		function send(f) {
 			var url = "diary_modify.do";
 			var param = "diaryContentRef="+f.diaryContentRef.value +
 						"&diaryContent="+ encodeURIComponent(f.diaryContent.value);
 			sendRequest( url, param, sendCallback, "POST");
 		}
 		// 다이어리 글 수정 콜백메소드
-		function sendCallback(){
-			if( xhr.readyState == 4 && xhr.status == 200 ){
+		function sendCallback() {
+			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				var data = xhr.responseText;
 				
-				// 문자열 구조로 넘어온 data를 실제 JSON타입으로 변경
 				var json = (new Function('return'+data))();
 				
-				if( json.result == 'no' ){
+				if ( json.result == 'no' ) {
 					alert("수정실패");
 					return;
 				}

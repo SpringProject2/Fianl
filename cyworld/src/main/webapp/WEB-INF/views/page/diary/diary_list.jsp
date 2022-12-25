@@ -39,7 +39,6 @@
 								<li><a href="#">----- 기록</a></li>
 							</ul>
 						</details>
-						
 						<div class="hover">
 							<div class="show">
 								<img src="resources/images/sorryForShow.gif" alt="">
@@ -71,6 +70,7 @@
 						<div class="fake"></div>
 						<div id="main_box">
 							<h1>다이어리</h1>
+							<!-- 로그인한 유저가 다이어리 주인일 경우에만 보인다 -->
 							<c:if test="${ sessionIdx eq param.idx }">
 								<div>
 									<input class="writing"  type="button" value="글쓰기" onclick="location.href='diary_insert_form.do?idx=${param.idx}'">
@@ -90,6 +90,7 @@
 												<label class="date">작성일자 : ${ vo.diaryRegdate }</label>
 											</p>
 										</div>
+										<!-- 로그인한 유저가 다이어리 주인일 경우에만 보인다 -->
 										<c:if test="${ sessionIdx eq param.idx }">
 											<input class="modify" id="btn-cover" type="button" value="수정" onclick="modify(this.form);">
 											<input class="delete" id="btn-cover" type="button" value="삭제" onclick="del(this.form);">
@@ -103,7 +104,7 @@
 					</aside>
 				</div>
 			</div>
-			
+			<!-- 오른쪽 탭 -->
 			<div class="tabs">
  				<form>
 					<div class="tab-btns">
@@ -147,8 +148,8 @@
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		// 다이어리 글 삭제
-		function del(f){
-			if( !confirm('정말 삭제하시겠습니까?') ){
+		function del(f) {
+			if ( !confirm('정말 삭제하시겠습니까?') ) {
 				return;
 			}
 			
@@ -158,11 +159,11 @@
 			sendRequest( url, param, resultFn, "GET" );
 		}
 		// 다이어리 글 삭제 콜백메소드
-		function resultFn(){
-			if( xhr.readyState == 4 && xhr.status == 200 ){
+		function resultFn() {
+			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				var data = xhr.responseText;
 				
-				if( data == 'no' ){
+				if ( data == 'no' ) {
 					alert("삭제 실패");
 					return;
 				}
@@ -173,7 +174,7 @@
 		}
 		
 		// 다이어리 글 수정
-		function modify(f){
+		function modify(f) {
 			f.action = 'diary_modify_form.do';
 			f.method = "GET";
 			f.submit();

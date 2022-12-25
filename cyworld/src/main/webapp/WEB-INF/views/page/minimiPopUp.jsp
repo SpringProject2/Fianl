@@ -112,12 +112,12 @@
 		}
 	</script>
 	
-	<!-- checkbox 중복 체크 불가 -->
+	<!-- 보유 미니미 checkbox 중복 체크 방지 -->
 	<script>
 		function NoMultiChk1(chk){
 			let num = document.getElementsByName("minimi");
 			
-			for ( let i=0; i<num.length; i++ ) {
+			for ( let i=0; i < num.length; i++ ) {
 				if ( num[i] != chk ) {
 					num[i].checked = false;
 				}
@@ -125,12 +125,12 @@
 		}
 	</script>
 	
-	<!-- checkbox 중복 체크 불가 -->
+	<!-- 구매 미니미 checkbox 중복 체크 방지 -->
 	<script>
 		function NoMultiChk2(chk){
 			let obj = document.getElementsByName("buyMinimiName");
 			
-			for ( let i=0; i<obj.length; i++ ) {
+			for ( let i=0; i < obj.length; i++ ) {
 				if ( obj[i] != chk ) {
 					obj[i].checked = false;
 				}
