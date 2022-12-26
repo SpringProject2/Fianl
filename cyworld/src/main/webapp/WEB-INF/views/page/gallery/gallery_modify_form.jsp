@@ -16,8 +16,8 @@
 			<div class="dashed-line">
 				<div class="gray-background">
 					<div class="main">
-						<form method="post" enctype="multipart/form-data">
-							<input name="gallIdx" type="hidden" value="${ vo.gallIdx }">
+						<form method="POST" enctype="multipart/form-data">
+							<input name="galleryIdx" type="hidden" value="${ vo.galleryIdx }">
 							<input name="galleryContentRef" type="hidden" value="${ vo.galleryContentRef }">
 							<input name="galleryFileExtension" type="hidden" value="${ vo.galleryFileExtension }">
 							<table>
@@ -60,7 +60,7 @@
 								<tr>
 									<td colspan="2" >
 										<input id="btn-cover" class="modify" type="button" value="수정" onclick="modify(this.form);">
-										<input id="btn-cover" class="cancel" type="button" value="취소" onclick="location.href='gallery.do?idx=${vo.gallIdx}'">
+										<input id="btn-cover" class="cancel" type="button" value="취소" onclick="location.href='gallery.do?idx=${vo.galleryIdx}'">
 									</td>
 								</tr>
 							</table>
@@ -75,7 +75,7 @@
 		// 게시글 수정
 		function modify(f) {
 			f.action = "gallery_modify.do";
-			f.method = "post";
+			f.method = "POST";
 			f.submit();
 		}
 	</script>

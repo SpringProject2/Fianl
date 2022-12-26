@@ -118,12 +118,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 일촌평 전체 목록 조회 -->
 	<select id="ilchon_list" resultType="main" parameterType="int">
-		select * from Ilchonpyeong where ilIdx=#{idx} order by num DESC
+		select * from Ilchonpyeong where ilchonpyeongIdx=#{idx} order by num DESC
 	</select>
 	
 	<!-- 일촌평 갯수 구하기 -->
 	<select id="countNum" resultType="int" parameterType="int">
-		select count(*) from Ilchonpyeong where ilIdx=#{ilIdx}
+		select count(*) from Ilchonpyeong where ilchonpyeongIdx=#{ilchonpyeongIdx}
 	</select>
 	
 	<!-- 새 일촌평 작성 -->
@@ -131,7 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into Ilchonpyeong values(
 			#{num},
 			#{ilchonpyeongText},
-			#{ilIdx},
+			#{ilchonpyeongIdx},
 			#{ilchonSession}
 		)
 	</insert>

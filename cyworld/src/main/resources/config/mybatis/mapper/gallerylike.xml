@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="likeNum" parameterType="gallery">
 		update gallery
 			set galleryLikeNum=#{galleryLikeNum}
-			where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
+			where galleryIdx=#{galleryIdx} and galleryContentRef=#{galleryContentRef}
 	</update>
 	
 	<!-- 게시글 삭제시 해당 좋아요 내역도 모두 삭제 -->

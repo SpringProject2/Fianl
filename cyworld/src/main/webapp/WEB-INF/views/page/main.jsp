@@ -140,7 +140,7 @@
 							</div>
 						</c:if>
 						
-						<form method="post">
+						<form>
 							<div class="Ilchonpyeong">
 								<!-- 일촌평 작성 -->
 								<span>일촌평</span> <input type="text" name="ilchonpyeongText"  onkeyup="check_length(this);" placeholder="일촌과 나누고 싶은 이야기를 남겨보세요 (최대 45글자)"></input>
@@ -333,7 +333,7 @@
 			url = "ilchon_write.do";
 			param = "ilchonpyeongText=" + ilchonpyeongText +
 					"&idx=" + idx;
-			sendRequest(url, param, resultIlchonpyeong, "POST");
+			sendRequest(url, param, resultIlchonpyeong, "GET");
 		}
 		// 일촌평 콜백메소드
 		function resultIlchonpyeong() {
@@ -408,6 +408,7 @@
 			f.method = "POST";
 			f.submit();
 		}
+		
 		// 다이어리 탭
 		function diary(f) {
 			let sessionIdx = document.getElementById("sessionIdx").value;
@@ -423,6 +424,7 @@
 			f.method = "GET";
 			f.submit();
 		}
+		
 		// 사진첩 탭
 		function gallery(f) {
 			let sessionIdx = document.getElementById("sessionIdx").value;
@@ -438,6 +440,7 @@
 			f.method = "GET";
 			f.submit();
 		}
+		
 		// 방명록 탭
 		function guestbook(f) {
 			let sessionIdx = document.getElementById("sessionIdx").value;

@@ -37,7 +37,7 @@
 							<div class="left-image"><img class="leftImg" src="/cyworld/resources/mainphoto/${ signVo.mainPhoto }" alt=""></div>
 													<input name="mainPhoto" type="hidden" value="${ signVo.mainPhoto }">
 							<!-- 프로필 사진 수정 -->
-							<input id="btn-cover" class="selectFile"name="mainPhotoFile" type="file">
+							<input id="btn-cover" class="selectFile" name="mainPhotoFile" type="file">
 							<!-- 기존 프로필 소개글 및 수정 -->
 							<textarea name="mainText" class="left-textarea scrollBar"  onkeyup="check_length(this);" placeholder="최대 작성글자는 30자 이내입니다.">${ signVo.mainText }</textarea>
 							<input id="btn-cover" class="saveLeftMain" type="button" value="좌측 프로필 수정" onclick="modify_main(this.form)">

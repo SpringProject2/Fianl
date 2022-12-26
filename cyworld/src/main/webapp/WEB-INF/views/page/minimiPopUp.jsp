@@ -84,7 +84,7 @@
 				<div class="tabs">
 					<input name="idx" type="hidden" value="${ param.idx }">
 					<input name="dotoryNum" type="hidden" value="${ dotory }">
-					<!-- 구매가능한 미니미 -->
+					<!-- 유료 미니미 -->
 					<input id="tab7" class="btn" name="buyMinimiName" type="checkbox" value="cat.gif" onclick="NoMultiChk2(this)"></input>
 					<input name="price" type="number" class="price" id="price1" value="500" readonly></input><span id="font">개</span>
 					<input id="tab8" class="btn" name="buyMinimiName" type="checkbox" value="thePooh.gif" onclick="NoMultiChk2(this)"></input>
@@ -93,7 +93,7 @@
 					<input name="price" type="number" class="price" id="price3" value="2000" readonly></input><span id="font">개</span>
 					
 					<div class="tab-btns">
-						<!-- 구매가능한 미니미 -->
+						<!-- 유료 미니미 -->
 						<label for="tab7" id="btn7" ><div class="list"><img name="cat.gif" src="resources/images/cat.gif" alt="" ></div></label>
 						<label for="tab8" id="btn8" ><div class="list"><img name="thePooh.gif" src="resources/images/thePooh.gif" alt=""></div></label>
 						<label for="tab9" id="btn9" ><div class="list"><img name="fat.gif" src="resources/images/fat.gif" alt=""></div></label>
@@ -107,14 +107,14 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 	<script>
 		// 팝업 종료
-		function buyclose(){
+		function buyclose() {
 			return window.close();
 		}
 	</script>
 	
 	<!-- 보유 미니미 checkbox 중복 체크 방지 -->
 	<script>
-		function NoMultiChk1(chk){
+		function NoMultiChk1(chk) {
 			let num = document.getElementsByName("minimi");
 			
 			for ( let i=0; i < num.length; i++ ) {
@@ -127,7 +127,7 @@
 	
 	<!-- 구매 미니미 checkbox 중복 체크 방지 -->
 	<script>
-		function NoMultiChk2(chk){
+		function NoMultiChk2(chk) {
 			let obj = document.getElementsByName("buyMinimiName");
 			
 			for ( let i=0; i < obj.length; i++ ) {

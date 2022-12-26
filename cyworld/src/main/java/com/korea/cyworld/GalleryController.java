@@ -70,6 +70,12 @@ public class GalleryController {
 			return "redirect:login.do";
 		}
 		
+		// 비회원이 접근할 경우
+		if ( (int)session.getAttribute("login") < 0 ) {
+			// 해당 미니홈피 유저의 메인 페이지로 이동
+			return "redirect:main.do?idx=" + idx ;
+		}
+		
 		// 그 다음 idx에 해당하는 사진첩의 모든 게시물 조회
 		List<GalleryVO> galleryList = gallery_dao.selectList(idx);
 		// 조회된 모든 게시물을 리스트 형태로 바인딩
@@ -211,7 +217,7 @@ public class GalleryController {
 			// 게시글에 시작 번호 1 지정
 			vo.setGalleryContentRef(1);
 			// 사진첩의 idx 지정
-			vo.setGallIdx(idx);
+			vo.setGalleryIdx(idx);
 			// 파일 이름 지정
 			vo.setGalleryFileName(galleryFileName);
 			// 게시글에 좋아요 시작 개수 0 지정
@@ -225,7 +231,7 @@ public class GalleryController {
 			// 가장 최근에 작성한 게시글의 번호에 1 더하기
 			vo.setGalleryContentRef(countNum + 1);
 			// 사진첩의 idx 지정
-			vo.setGallIdx(idx);
+			vo.setGalleryIdx(idx);
 			// 파일 이름 지정
 			vo.setGalleryFileName(galleryFileName);
 			// 게시글에 좋아요 시작 개수 0 지정
@@ -249,7 +255,7 @@ public class GalleryController {
 		}
 		
 		// 삭제할 사진첩의 게시글에 idx와 ref를 게시글 삭제 후에도 계속 사용하기 위해 VO에서 따로 분리해서 변수에 각각 저장한다
-		int idx = vo.getGallIdx(); // 삭제할 사진첩의 idx
+		int idx = vo.getGalleryIdx(); // 삭제할 사진첩의 idx
 		int ref = vo.getGalleryContentRef(); // 삭제할 사진첩의 게시글에 ref
 		
 		// 그리고 idx와 ref를 사용하기 편하게 Map으로 만들어 놓는다
@@ -284,6 +290,7 @@ public class GalleryController {
 			// 게시글 삭제시 삭제된 게시글에 해당하는 좋아요만 모두 삭제
 			gallery_dao.deleteLikeAll(map);
 		}
+		
 		// 콜백 메소드에 전달
 		return result;
 	}
@@ -304,6 +311,7 @@ public class GalleryController {
 			// 조회된 게시글을 바인딩
 			model.addAttribute("vo", refVo);
 		}
+		
 		// 수정 페이지로 이동
 		return Common.GP_PATH + "gallery_modify_form.jsp";
 	}
@@ -386,8 +394,9 @@ public class GalleryController {
 		
 		// 수정된 파일 및 게시글로 갱신
 		gallery_dao.update(vo);
+		
 		// idx를 들고 사진첩 페이지 URL로 이동
-		return "redirect:gallery.do?idx=" + vo.getGallIdx();
+		return "redirect:gallery.do?idx=" + vo.getGalleryIdx();
 	}
 	
 	/////////////// 사진첩 댓글 구역 ///////////////
@@ -483,7 +492,7 @@ public class GalleryController {
 		// 좋아요를 누른 로그인한 유저의 세션값 지정
 		lvo.setGalleryLikeSession(sessionIdx);
 		// 사진첩의 idx 지정
-		lvo.setGalleryLikeIdx(vo.getGallIdx());
+		lvo.setGalleryLikeIdx(vo.getGalleryIdx());
 		// 좋아요를 누른 게시글의 번호
 		lvo.setGalleryLikeRef(vo.getGalleryContentRef());
 		// 먼저 DB에 로그인한 유저가 해당 idx의 사진첩 게시글에 좋아요를 눌렀는지 조회

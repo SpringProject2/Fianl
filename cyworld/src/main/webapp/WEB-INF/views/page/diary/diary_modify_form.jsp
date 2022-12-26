@@ -46,9 +46,9 @@
 		// 다이어리 글 수정
 		function send(f) {
 			var url = "diary_modify.do";
-			var param = "diaryContentRef="+f.diaryContentRef.value +
-						"&diaryContent="+ encodeURIComponent(f.diaryContent.value);
-			sendRequest( url, param, sendCallback, "POST");
+			var param = "diaryContentRef=" + f.diaryContentRef.value +
+						"&diaryContent=" + encodeURIComponent(f.diaryContent.value);
+			sendRequest( url, param, sendCallback, "GET");
 		}
 		// 다이어리 글 수정 콜백메소드
 		function sendCallback() {

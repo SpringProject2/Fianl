@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 사진첩 전체 목록 조회 -->
 	<select id="gallery_list" resultType="gallery" parameterType="int">
-		select * from gallery where gallIdx=#{idx} order by galleryContentRef DESC
+		select * from gallery where galleryIdx=#{idx} order by galleryContentRef DESC
 	</select>
 	
 	<!-- 새 게시글 추가 -->
@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{galleryContentRef},
 			#{galleryContent},
 			#{galleryFileName},
-			SYSDATE,
-			#{gallIdx},
+			sysdate,
+			#{galleryIdx},
 			#{galleryFileExtension},
 			#{galleryLikeNum},
 			#{galleryTitle}
@@ -25,29 +25,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 작성된 게시글 갯수 구하기 -->
 	<select id="countNum" resultType="int" parameterType="int">
-		select count(*) from gallery where gallIdx=#{idx}
+		select count(*) from gallery where galleryIdx=#{idx}
 	</select>
 	
 	<!-- 게시글 삭제 -->
 	<delete id="gallery_delete" parameterType="gallery">
-		delete from gallery where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
+		delete from gallery where galleryIdx=#{galleryIdx} and galleryContentRef=#{galleryContentRef}
 	</delete>
 	
 	<!-- 게시글 삭제 후 삭제한 게시글 번호보다 큰 번호들을 조회 -->
 	<select id="gallery_list_delete" resultType="gallery" parameterType="java.util.HashMap">
-		select * from gallery where gallIdx=#{1} and galleryContentRef > #{2}
+		select * from gallery where galleryIdx=#{1} and galleryContentRef > #{2}
 	</select>
 	
 	<!-- 게시글 삭제 후 삭제한 게시글 번호보다 큰 번호들을 1씩 감소시켜서 갱신 -->
 	<update id="gallery_update_ref_minus" parameterType="gallery">
 		update gallery
 			set galleryContentRef=#{galleryContentRef}
-			where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef} + 1
+			where galleryIdx=#{galleryIdx} and galleryContentRef=#{galleryContentRef} + 1
 	</update>
 	
 	<!-- 수정을 위한 게시글 한 건 조회 -->
 	<select id="gallery_one" resultType="gallery" parameterType="gallery">
-		select * from gallery where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
+		select * from gallery where galleryIdx=#{galleryIdx} and galleryContentRef=#{galleryContentRef}
 	</select>
 	
 	<!-- 게시글 수정 -->
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				galleryRegdate=sysdate,
 				galleryFileExtension=#{galleryFileExtension},
 				galleryTitle=#{galleryTitle}
-			where gallIdx=#{gallIdx} and galleryContentRef=#{galleryContentRef}
+			where galleryIdx=#{galleryIdx} and galleryContentRef=#{galleryContentRef}
 	</update>
 </mapper>
 

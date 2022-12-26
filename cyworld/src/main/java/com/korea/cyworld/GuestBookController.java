@@ -70,6 +70,12 @@ public class GuestBookController {
 			return "redirect:login.do";
 		}
 		
+		// 비회원이 접근할 경우
+		if ( (int)session.getAttribute("login") < 0 ) {
+			// 해당 미니홈피 유저의 메인 페이지로 이동
+			return "redirect:main.do?idx=" + idx ;
+		}
+		
 		// 조회수 구역 시작 //
 		
 		// 먼저 접속 날짜를 기록하기 위해 Date객체 사용

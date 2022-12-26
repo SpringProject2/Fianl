@@ -84,7 +84,7 @@
 								<div class="gallery_box">
 									<form>
 										<!-- 게시글 정보 구역 -->
-										<input type="hidden" name="gallIdx" value="${ vo.gallIdx }">
+										<input type="hidden" name="galleryIdx" value="${ vo.galleryIdx }">
 										<div class="galleryTitle"><span>게시글 제목:</span> ${ vo.galleryTitle }</div>
 										<div class="galleryDate">
 											<span class="contentNum"> &nbsp;&nbsp;게시글 번호: </span><input class="cNum" type="text" name="galleryContentRef" value="${ vo.galleryContentRef}">
@@ -96,13 +96,13 @@
 											<c:if test="${ vo.galleryFileName ne 'no_file' }">
 												<!-- 확장자가 image일 경우 -->
 												<c:if test="${ vo.galleryFileExtension eq 'image' }">
-													<div class="ImgPosition"> <img class="myImg" src="/cyworld/resources/upload/${ vo.galleryFileName }" /></div>
+													<div class="ImgPosition"><img class="myImg" src="/cyworld/resources/upload/${ vo.galleryFileName }"/></div>
 												</c:if>
 												<!-- 확장자가 video일 경우 -->
 												<c:if test="${ vo.galleryFileExtension eq 'video' }">
 													<div class="VideoPosition">
 														<!-- video태그 autoplay : 자동 재생 / controls loop : 반복 재생 / muted : 음소거 -->
-														<video  class="myVideo" autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }" />
+														<video class="myVideo" autoplay controls loop muted src="/cyworld/resources/upload/${ vo.galleryFileName }"/>
 													</div>
 												</c:if>
 											</c:if>
@@ -117,7 +117,7 @@
 													<input  id="heart" type="button" onclick="like(this.form)" >
 												</p>
 												<!-- 로그인한 유저가 사진첩 주인일 경우에만 보인다. -->
-												<c:if test="${ sessionIdx eq vo.gallIdx }">
+												<c:if test="${ sessionIdx eq vo.galleryIdx }">
 													<p class="changeBtn">
 														<input id="btn-cover" type="button" value="수정" onclick="modify(this.form);">
 														<input id="btn-cover" class="del"  type="button" value="삭제" onclick="del(this.form);">
@@ -133,7 +133,7 @@
 									<form method="post">
 										<div id="GalleryReply">
 											<!-- 사진첩 주인 idx -->
-											<input type="hidden" name="galleryCommentIdx" value="${ vo.gallIdx }">
+											<input type="hidden" name="galleryCommentIdx" value="${ vo.galleryIdx }">
 											<!-- 사진첩 댓글 번호 -->
 											<input type="hidden" name="galleryCommentRef" value="${ vo.galleryContentRef }">
 											<!-- 작성자 이름 -->
@@ -148,7 +148,7 @@
 									<!-- 게시글마다 댓글 보이는 구역 -->
 									<c:forEach var="cvo" items="${ commentList }">
 										<form>
-											<c:if test="${ cvo.galleryCommentIdx eq vo.gallIdx && cvo.galleryCommentRef eq vo.galleryContentRef }">
+											<c:if test="${ cvo.galleryCommentIdx eq vo.galleryIdx && cvo.galleryCommentRef eq vo.galleryContentRef }">
 												<div class="Gallerycomment">
 													<!-- 사진첩 주인 idx -->
 													<input type="hidden" name="galleryCommentIdx" value="${ cvo.galleryCommentIdx }">
@@ -232,13 +232,13 @@
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		// 게시글 삭제
-		function del(f){
+		function del(f) {
 			if ( !confirm('정말 삭제하시겠습니까?') ) {
 				return;
 			}
 			
 			var url = "gallery_delete.do";
-			var param = "gallIdx=" + f.gallIdx.value + 
+			var param = "galleryIdx=" + f.galleryIdx.value + 
 						"&galleryContentRef=" + f.galleryContentRef.value;
 			sendRequest( url, param, resultDel, "GET" );
 		}
@@ -269,11 +269,11 @@
 	<script>
 		// 게시글 좋아요
 		function like(f) {
-			let gallIdx = f.gallIdx.value;
+			let galleryIdx = f.galleryIdx.value;
 			let galleryContentRef = f.galleryContentRef.value;
 			
 			let url = "gallery_like.do";
-			let param = "gallIdx=" + gallIdx +
+			let param = "galleryIdx=" + galleryIdx +
 						"&galleryContentRef=" + galleryContentRef;
 			sendRequest(url, param, resultLike, "GET");
 		}
@@ -310,7 +310,7 @@
 					"&galleryCommentRef=" + galleryCommentRef +
 					"&galleryCommentContent=" + galleryCommentContent +
 					"&galleryCommentName=" + galleryCommentName;
-			sendRequest(url, param, resultWrite, "POST");
+			sendRequest(url, param, resultWrite, "GET");
 		}
 		// 댓글 작성 콜백메소드
 		function resultWrite() {
@@ -348,6 +348,7 @@
 					alert("삭제 실패");
 					return;
 				}
+				
 				alert("삭제성공");
 				location.href = "gallery.do?idx=${param.idx}";
 			}

@@ -318,7 +318,7 @@ public class MainController {
 			// 일촌평에 시작 번호 1을 지정
 			vo.setNum(1);
 			// 메인 페이지의 idx 지정
-			vo.setIlIdx(svo.getIdx());
+			vo.setIlchonpyeongIdx(svo.getIdx());
 			// 일촌평에 작성자 정보 지정
 			if ( sessionUser.getPlatform().equals("cyworld") ) {
 				// 플랫폼이 cyworld일 경우 - ID + @ + cyworld = qwer@cyworld - 폐기
@@ -354,7 +354,7 @@ public class MainController {
 		// 가장 최근에 작성한 일촌평의 번호에 1 더하기
 		vo.setNum(countNum + 1);
 		// 메인 페이지의 idx 지정
-		vo.setIlIdx(svo.getIdx());
+		vo.setIlchonpyeongIdx(svo.getIdx());
 		// 일촌평에 작성자 정보 지정
 		if ( sessionUser.getPlatform().equals("cyworld") ) {
 			// 플랫폼이 cyworld일 경우 - ID + @ + cyworld = qwer@cyworld - 폐기

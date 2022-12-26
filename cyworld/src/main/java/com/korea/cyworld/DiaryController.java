@@ -57,12 +57,18 @@ public class DiaryController {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 다이어리 조회
 	@RequestMapping("/diary.do")
-	public String list(Integer idx,Model model) {
+	public String list(int idx,Model model) {
 		// 다이어리에 들어오면 가장 먼저 세션값이 있는지 확인
 		HttpSession session = request.getSession();
 		if ( session.getAttribute("login") == null ) {
 			// 세션값이 없다면 로그인 페이지로 이동
 			return "redirect:login.do";
+		}
+		
+		// 비회원이 접근할 경우
+		if ( (int)session.getAttribute("login") < 0 ) {
+			// 해당 미니홈피 유저의 메인 페이지로 이동
+			return "redirect:main.do?idx=" + idx ;
 		}
 		
 		// 그 다음 idx에 해당하는 다이어리의 모든 글을 조회
@@ -168,6 +174,7 @@ public class DiaryController {
 				diary_dao.updateRefMinus(uref);
 			}
 		}
+		
 		// 콜백 메소드에 전달
 		return result;
 	}
@@ -188,9 +195,9 @@ public class DiaryController {
 			// 조회된 다이어리 글을 바인딩
 			model.addAttribute("vo", updateVo);
 		}
+		
 		// 수정 페이지로 이동
 		return Common.DP_PATH + "diary_modify_form.jsp";
-		
 	}
 	
 	// 다이어리 글 수정하기
@@ -213,6 +220,7 @@ public class DiaryController {
 			// 갱신 성공할 경우 - JSON형태
 			result = "{'result':'yes'}";
 		}
+		
 		// 콜백 메소드에 전달
 		return result;
 	}

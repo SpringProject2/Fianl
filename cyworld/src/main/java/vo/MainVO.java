@@ -6,7 +6,7 @@ public class MainVO {
 	private int today, todayTotal;
 	private String todayIs, profileImgName, profileText, history, ilchonList, introduceBanner, search, bgmName;
 	/////////////// 일촌평 ///////////////
-	private int num, ilIdx;
+	private int num, ilchonpyeongIdx;
 	private String ilchonSession, ilchonpyeongText;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//파일을 받기 위한 클래스
@@ -90,11 +90,11 @@ public class MainVO {
 	public void setIlchonpyeongText(String ilchonpyeongText) {
 		this.ilchonpyeongText = ilchonpyeongText;
 		}
-	public int getIlIdx() {
-		return ilIdx;
+	public int getIlchonpyeongIdx() {
+		return ilchonpyeongIdx;
 	}
-	public void setIlIdx(int ilIdx) {
-		this.ilIdx = ilIdx;
+	public void setIlchonpyeongIdx(int ilchonpyeongIdx) {
+		this.ilchonpyeongIdx = ilchonpyeongIdx;
 	}
 	public String getIlchonSession() {
 		return ilchonSession;

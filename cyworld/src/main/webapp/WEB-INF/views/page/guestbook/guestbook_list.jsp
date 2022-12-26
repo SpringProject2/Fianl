@@ -177,7 +177,7 @@
 			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				var data = xhr.responseText;
 				
-				if( data == 'no' ){
+				if ( data == 'no' ) {
 					alert("삭제 실패");
 					return;
 				}
@@ -209,7 +209,7 @@
 		}
 		// 좋아요 콜백메소드
 		function resultLike() {
-			if( xhr.readyState == 4 && xhr.status == 200 ){
+			if ( xhr.readyState == 4 && xhr.status == 200 ) {
 				let data = xhr.responseText;
 				
 				// 콜백으로 받아서 페이지를 갱신하지 않고 바로 바꿀수 있는 방법 구상중

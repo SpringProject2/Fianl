@@ -72,7 +72,7 @@
 		}
 		
 		// 팝업창 닫기
-		function buyclose(){
+		function buyclose() {
 			return window.close();
 		}
 	</script>
@@ -105,7 +105,7 @@
 			}
 			
 			let target = event.target;
-			target.classList.add('active');     
+			target.classList.add('active');
 			currentList = target;
 		}
 		
@@ -117,7 +117,7 @@
 			}
 			
 			let target = list[count];
-			target.classList.add('active');     
+			target.classList.add('active');
 			currentList = target;
 			count++;
 			
@@ -127,7 +127,7 @@
 		}
 		
 		labelHandler();
-		setInterval( labelHandler, 3000);
+		setInterval(labelHandler, 3000);
 	</script>
 </body>
 </html>

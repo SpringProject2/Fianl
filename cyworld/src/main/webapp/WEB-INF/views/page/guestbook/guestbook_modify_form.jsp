@@ -71,7 +71,7 @@
 	<script src="/cyworld/resources/js/httpRequest.js"></script>
 	<script>
 		// 방명록 수정
-		function send(f){
+		function send(f) {
 			var url = "guestbook_modify.do";
 			var param = "guestIdx=" + f.guestIdx.value +
 						"&guestbookContentRef=" + f.guestbookContentRef.value +

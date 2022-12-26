@@ -15,7 +15,7 @@
 			<div class="dashed-line">
 				<div class="gray-background">
 					<div class="main">
-						<form method="post" enctype="multipart/form-data">
+						<form method="POST" enctype="multipart/form-data">
 							<input id="myIdx" name="idx" type="hidden" value="${ param.idx }">
 							<table>
 								<caption>새 글 쓰기</caption>
@@ -69,7 +69,7 @@
 			}
 			
 			f.action = "gallery_insert.do";
-			f.method = "post";
+			f.method = "POST";
 			f.submit();
 		}
 	</script>
